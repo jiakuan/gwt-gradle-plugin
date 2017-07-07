@@ -1,0 +1,9 @@
+--------------------------------------------------------------------------------
+Usage: make clean|build|release|publish
+
+  clean       - clean projects
+  build       - build projects
+  build-fast  - build projects without quality checking
+  release     - release projects
+  publish     - publish projects to Maven local
+--------------------------------------------------------------------------------

@@ -4,98 +4,32 @@ buildscript {
 	repositories {
 		jcenter()
 	}
-	
+
 	dependencies {
-		classpath 'nl.javadude.gradle.plugins:license-gradle-plugin:0.11.0'
-		classpath 'me.tatarka:gradle-retrolambda:3.2.4'
+		classpath 'me.tatarka:gradle-retrolambda:3.6.1'
 	}
 }
 
 apply plugin: 'java'
-apply plugin: 'maven-publish'
-apply plugin: 'license'
+apply plugin: 'maven'
+apply plugin: 'signing'
 apply plugin: 'me.tatarka.retrolambda'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
-
-license {
-	ext.year = Calendar.getInstance().get(Calendar.YEAR)
-	ext.name = 'Steffen Schaefer'
-	header rootProject.file('LICENSE')
-}
 
 repositories { mavenCentral() }
 
 dependencies {
 	compile gradleApi()
 	testCompile group: 'junit', name: 'junit', version: '4.11'
-	retrolambdaConfig 'net.orfjackal.retrolambda:retrolambda:2.1.0'
 }
 
-retrolambda {
-	javaVersion JavaVersion.VERSION_1_6
-	if(System.getProperty("os.name").toLowerCase().contains('mac')) {
-		if(jdk == null) {
-			jdk = '/usr/libexec/java_home -v 1.8'.execute().text
-		}
-		if(oldJdk == null) {
-			oldJdk = '/usr/libexec/java_home -v 1.6'.execute().text
-		}
-	}
-}
+// Change the output directory for the main source set back to the old path
+sourceSets.main.output.classesDir = new File(buildDir, "classes/main")
+sourceSets.test.output.classesDir = new File(buildDir, "classes/test")
 
-tasks.withType(JavaCompile) {
-	options.encoding = rootProject.encoding
-}
-
-task sourceJar(type: Jar) {
-	from sourceSets.main.allJava
-}
-
-task javadocJar (type: Jar, dependsOn: javadoc) {
-	from javadoc.destinationDir
-}
-
-javadoc {
-	options {
-		links 'http://www.gradle.org/docs/current/javadoc/', 'http://docs.oracle.com/javase/6/docs/api/'
-	}
-}
-
-group='de.richsource.gradle.plugins'
-version='0.7-SNAPSHOT'
-publishing {
-	publications {
-		mavenJava(MavenPublication) {
-			from components.java
-			artifact javadocJar { classifier = 'javadoc' }
-			artifact sourceJar { classifier = 'sources' }
-			pom.withXml {
-				def root = asNode()
-				root.appendNode('packaging', 'jar')
-				root.appendNode('name', 'Gradle GWT plugin')
-				root.appendNode('description', 'Gradle plugin to support GWT related tasks.')
-				root.appendNode('inceptionYear', '2013')
-				root.appendNode('url', 'https://github.com/steffenschaefer/gwt-gradle-plugin')
-				def license = root.appendNode('licenses').appendNode('license')
-				license.appendNode('name', 'Apache License, Version 2.0')
-				license.appendNode('url', 'http://www.apache.org/licenses/LICENSE-2.0.txt')
-				license.appendNode('distribution', 'repo')
-				def scm = root.appendNode('scm')
-				scm.appendNode('url', 'https://github.com/steffenschaefer/gwt-gradle-plugin')
-				scm.appendNode('connection', 'scm:git:https://github.com/steffenschaefer/gwt-gradle-plugin.git')
-			}
-		}
-	}
-	repositories {
-		maven {
-			url new File(rootProject.projectDir, 'repo').toURI()
-		}
-	}
-}
-
-rootProject.tasks.publish.dependsOn project.tasks.publish
+rootProject.tasks.uploadArchives.dependsOn project.tasks.uploadArchives
 
 eclipse {
 	classpath {
@@ -110,5 +44,112 @@ eclipse {
 				}
 			}
 		}
+	}
+}
+
+ext.userHome = System.getProperty("user.home")
+
+tasks.withType(JavaCompile) {
+	options.compilerArgs += ["-sourcepath", ""]
+}
+
+javadoc {
+	// Avoid error: cannot access external classes
+	options.addStringOption("sourcepath", "")
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+	classifier = 'sources'
+	from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+	classifier = 'javadoc'
+	from 'build/docs/javadoc'
+}
+
+artifacts {
+	archives jar
+	archives sourcesJar
+	archives javadocJar
+}
+
+signing {
+	sign configurations.archives
+}
+
+uploadArchives {
+	repositories {
+		mavenDeployer {
+			beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+			repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+				authentication(userName: ossrhUsername, password: ossrhPassword)
+			}
+
+			snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+				authentication(userName: ossrhUsername, password: ossrhPassword)
+			}
+
+			pom.project {
+				name 'GWT Gradle Plugin'
+				packaging 'jar'
+				description 'Gradle plugin to support GWT (http://www.gwtproject.org/) related tasks.'
+				url 'https://github.com/jiakuan/gwt-gradle-plugin/'
+
+				scm {
+					connection 'scm:git:git@github.com:jiakuan/gwt-gradle-plugin.git'
+					developerConnection 'scm:git:git@github.com:jiakuan/gwt-gradle-plugin.git'
+					url 'git@github.com:jiakuan/gwt-gradle-plugin.git'
+				}
+
+				licenses {
+					license {
+						name 'The Apache Software License, Version 2.0'
+						url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+						distribution 'repo'
+					}
+				}
+
+				developers {
+					developer {
+						id 'jiakuan'
+						name 'Jiakuan Wang'
+						email 'delight.wjk@gmail.com'
+						organization 'WisePersist.org'
+						organizationUrl 'https://github.com/jiakuan/gwt-gradle-plugin'
+						roles {
+							role 'architect'
+							role 'developer'
+						}
+						timezone '+8'
+					}
+				}
+			}
+		}
+	}
+}
+
+task writeNewPom {
+	doLast {
+		pom {
+			project {
+				packaging 'jar'
+				build {
+					plugins {
+						plugin {
+							groupId 'org.apache.maven.plugins'
+							artifactId 'maven-compiler-plugin'
+							version '3.1'
+							configuration {
+								source '1.7'
+								target '1.7'
+								encoding 'UTF-8'
+							}
+						}
+					}
+				}
+			}
+		}.writeTo("$projectDir/pom.xml")
 	}
 }
