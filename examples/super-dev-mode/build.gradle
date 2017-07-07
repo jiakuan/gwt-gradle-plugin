@@ -1,6 +1,6 @@
 apply plugin: 'war'
 apply plugin: 'cargo'
-apply plugin: 'jetty'
+//apply plugin: 'jetty'
 apply plugin: 'gwt'
 apply plugin: 'eclipse'
 
@@ -61,11 +61,11 @@ cargo {
 	}
 }
 
-task jettyDraftWar(type: JettyRunWar) {
-	dependsOn draftWar
-	dependsOn.remove('war')
-	webApp=draftWar.archivePath
-}
+//task jettyDraftWar(type: JettyRunWar) {
+//	dependsOn draftWar
+//	dependsOn.remove('war')
+//	webApp=draftWar.archivePath
+//}
 
 afterEvaluate {
 	tasks.cargoStartLocal.dependsOn(tasks.draftWar)

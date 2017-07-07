@@ -1,6 +1,6 @@
 apply plugin: 'war'
 apply plugin: 'eclipse'
-apply plugin: 'jetty'
+//apply plugin: 'jetty'
 
 repositories { mavenCentral() }
 
