@@ -29,6 +29,7 @@ dependencies {
 sourceSets.main.output.classesDir = new File(buildDir, "classes/main")
 sourceSets.test.output.classesDir = new File(buildDir, "classes/test")
 
+rootProject.tasks.build.dependsOn project.tasks.build
 rootProject.tasks.uploadArchives.dependsOn project.tasks.uploadArchives
 
 eclipse {
