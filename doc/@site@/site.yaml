@@ -1,25 +1,27 @@
+name: "GWT Gradle Plugin"
 logo: "images/logo.png"
-topMenus:
+github_url: "https://github.com/jiakuan/gwt-gradle-plugin"
+top_menus:
   - text: "Overview"
     url: "overview.html"
   - text: "Quickstart"
-    url: "quickstart.html"
+    url: "setup-and-configuration/quickstart.html"
   - text: "Javadoc"
     url: "javadoc/index.html"
-  - text: "Need Help?"
-    url: "need-help.html"
-landingPage:
+  - text: "Version History"
+    url: "version-history.html"
+landing_page:
   template: "index.html"
-  heroTitle: "Get a nice website from a folder containing Markdown files"
-  heroDesc: "Welcome to the Sample: Solid Header theme. You'll find comprehensive guides
+  hero_title: "Get a nice website from a folder containing Markdown files"
+  hero_desc: "Welcome to the Sample: Solid Header theme. You'll find comprehensive guides
     and documentation to help you start working with Sample: Solid Header as quickly as
     possible, as well as support if you get stuck. What are you waiting for? Let's jump right in!"
-  actionBtn:
+  action_btn:
     text: "Get Started"
     url: "/tutorial"
-  usingSearchBox: false
-contentTemplate: "column_two.html"
-contentSorting:
+  using_search_box: false
+content_template: "column_two.html"
+content_sorting:
   - overview
   - setup-and-configuration
   - use-cases
