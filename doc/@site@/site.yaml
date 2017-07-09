@@ -1,0 +1,28 @@
+logo: "images/logo.png"
+topMenus:
+  - text: "Overview"
+    url: "overview.html"
+  - text: "Quickstart"
+    url: "quickstart.html"
+  - text: "Javadoc"
+    url: "javadoc/index.html"
+  - text: "Need Help?"
+    url: "need-help.html"
+landingPage:
+  template: "index.html"
+  heroTitle: "Get a nice website from a folder containing Markdown files"
+  heroDesc: "Welcome to the Sample: Solid Header theme. You'll find comprehensive guides
+    and documentation to help you start working with Sample: Solid Header as quickly as
+    possible, as well as support if you get stuck. What are you waiting for? Let's jump right in!"
+  actionBtn:
+    text: "Get Started"
+    url: "/tutorial"
+  usingSearchBox: false
+contentTemplate: "column_two.html"
+contentSorting:
+  - overview
+  - setup-and-configuration
+  - use-cases
+  - technical-details
+  - version-history
+  - need help
