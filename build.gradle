@@ -1,26 +1,39 @@
 plugins {
-	id 'net.researchgate.release' version '2.6.0'
+    id 'net.researchgate.release' version '2.6.0'
 }
 
 allprojects {
-	group = 'org.wisepersist'
-	version = "$version"
+    group = 'org.wisepersist'
+    version = "$version"
 }
 
 task build
 task uploadArchives
 
 ext {
-	encoding = 'UTF-8'
+    encoding = 'UTF-8'
 }
 
 allprojects {
-	apply plugin: 'eclipse'
-	tasks.eclipse.doLast {
-		File prefs = project.file('.settings/org.eclipse.core.resources.prefs');
-		if(!prefs.exists()) {
-			prefs.parentFile.mkdirs()
-			project.file('.settings/org.eclipse.core.resources.prefs')<< "eclipse.preferences.version=1\nencoding/<project>=$encoding\n";
-		}
-	}
+    apply plugin: 'eclipse'
+    tasks.eclipse.doLast {
+        File prefs = project.file('.settings/org.eclipse.core.resources.prefs');
+        if (!prefs.exists()) {
+            prefs.parentFile.mkdirs()
+            project.file('.settings/org.eclipse.core.resources.prefs') << "eclipse.preferences.version=1\nencoding/<project>=$encoding\n";
+        }
+    }
+}
+
+build.doFirst {
+    delete "$buildDir/site"
+}
+
+build.doLast {
+    exec {
+        commandLine "documentnode", "-i", "$projectDir/doc", "-o", "$buildDir/site/"
+    }
+    exec {
+        commandLine "cp", "-r", "$projectDir/gwt-gradle-plugin/build/docs/javadoc", "$buildDir/site/"
+    }
 }
