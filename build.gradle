@@ -1,14 +1,13 @@
+plugins {
+	id 'net.researchgate.release' version '2.4.1'
+}
+
 allprojects {
 	group = 'org.wisepersist'
 	version = "$version"
 }
 
 task uploadArchives
-
-task wrapper(type: Wrapper) {
-	gradleVersion = '4.0'
-	distributionUrl = 'https://services.gradle.org/distributions/gradle-4.0-all.zip'
-}
 
 ext {
 	encoding = 'UTF-8'

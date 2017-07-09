@@ -26,10 +26,12 @@ dependencies {
 }
 
 gwt {
-	gwtVersion='2.7.0'
+	gwtVersion='2.8.1'
+	minHeapSize = "512M"
+	maxHeapSize = "1024M"
 
-	modules 'de.richsource.gradle.plugins.gwt.example.Example'
-	devModules 'de.richsource.gradle.plugins.gwt.example.ExampleDev'
+	modules 'org.wisepersist.gradle.plugins.gwt.example.Example'
+	devModules 'org.wisepersist.gradle.plugins.gwt.example.ExampleDev'
 	
 	maxHeapSize = "1024M"
 	

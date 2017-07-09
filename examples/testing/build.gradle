@@ -12,5 +12,7 @@ dependencies {
 }
 
 gwt {
-	gwtVersion='2.7.0'
+	gwtVersion='2.8.1'
+	minHeapSize = "512M"
+	maxHeapSize = "1024M"
 }

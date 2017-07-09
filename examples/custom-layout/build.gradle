@@ -17,9 +17,11 @@ war{
 }
 
 gwt {
-	gwtVersion='2.7.0'
+	gwtVersion='2.8.1'
+	minHeapSize = "512M"
+	maxHeapSize = "1024M"
 
-	modules 'de.richsource.gradle.plugins.gwt.example.Example'
+	modules 'org.wisepersist.gradle.plugins.gwt.example.Example'
 	
 	devWar = file('devWar')
 }

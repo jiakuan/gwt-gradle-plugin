@@ -33,7 +33,7 @@ The following example shows the code to set up gwt-gradle-plugin for a GWT web a
 	//        }
         }
         dependencies {
-            classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.6'
+            classpath 'org.wisepersist:gwt-gradle-plugin:0.6'
         }
     }
 
@@ -41,7 +41,7 @@ The following example shows the code to set up gwt-gradle-plugin for a GWT web a
     apply plugin: 'gwt'
 
     gwt {
-        gwtVersion='2.7.0'
+        gwtVersion='2.8.1'
         modules '<YOUR-GWT-MODULE>'
     }
     

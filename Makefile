@@ -17,6 +17,9 @@ build-fast:
 release:
 	./gradlew release
 
+publish-snapshot:
+	./gradlew build install uploadArchives
+
 publish:
 	git checkout tags/${LATEST_TAG}
 	./gradlew build install uploadArchives

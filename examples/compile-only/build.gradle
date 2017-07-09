@@ -4,14 +4,15 @@ apply plugin: 'eclipse'
 repositories { mavenCentral() }
 
 gwt {
-	gwtVersion='2.7.0'
+	gwtVersion='2.8.1'
+	minHeapSize = "512M"
+	maxHeapSize = "1024M"
 
-	modules 'de.richsource.gradle.plugins.gwt.example.Example'
+	modules 'org.wisepersist.gradle.plugins.gwt.example.Example'
 
 	compiler {
-		strict = true;
-		enableClosureCompiler = true;
-		disableClassMetadata = true;
-		disableCastChecking = true;
+		strict = true
+		disableClassMetadata = true
+		disableCastChecking = true
 	}
 }
