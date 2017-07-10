@@ -137,7 +137,7 @@ public class GwtBasePlugin implements Plugin<Project> {
 				if(versionSet) {
 					project.getDependencies().add(GWT_SDK_CONFIGURATION, gwtDependency(GWT_DEV, gwtVersion));
 					project.getDependencies().add(GWT_SDK_CONFIGURATION, gwtDependency(GWT_USER, gwtVersion));
-					project.getDependencies().add(JavaPlugin.RUNTIME_CONFIGURATION_NAME, gwtDependency(GWT_SERVLET, gwtVersion));
+					project.getDependencies().add(JavaPlugin.RUNTIME_ELEMENTS_CONFIGURATION_NAME, gwtDependency(GWT_SERVLET, gwtVersion));
 					
 					if ((major == 2 && minor >= 5) || major > 2) {
 						if(extension.isCodeserver()) {
@@ -269,7 +269,7 @@ public class GwtBasePlugin implements Plugin<Project> {
 				conventionMapping.map("classpath", new Callable<FileCollection>() {
 					@Override
 					public FileCollection call() throws Exception {
-						return mainSourceSet.getCompileClasspath().plus(project.files(mainSourceSet.getOutput().getClassesDir()));
+						return mainSourceSet.getCompileClasspath().plus(project.files(mainSourceSet.getOutput().getClassesDirs()));
 					}
 				});
 				conventionMapping.map("minHeapSize", new Callable<String>() {
