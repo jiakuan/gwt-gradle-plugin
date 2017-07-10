@@ -24,3 +24,9 @@ publish:
 	git checkout tags/${LATEST_TAG}
 	./gradlew build install uploadArchives
 	git checkout master
+
+.PHONY: doc
+doc:
+	rm -rf build/site/
+	documentnode -i doc -o build/site/
+	cp -r gwt-gradle-plugin/build/docs/javadoc build/site/

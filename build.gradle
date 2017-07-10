@@ -24,16 +24,3 @@ allprojects {
         }
     }
 }
-
-build.doFirst {
-    delete "$buildDir/site"
-}
-
-build.doLast {
-    exec {
-        commandLine "documentnode", "-i", "$projectDir/doc", "-o", "$buildDir/site/"
-    }
-    exec {
-        commandLine "cp", "-r", "$projectDir/gwt-gradle-plugin/build/docs/javadoc", "$buildDir/site/"
-    }
-}
