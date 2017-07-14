@@ -33,8 +33,7 @@ buildscript {
     [...]
 }
 
-apply plugin: 'war'
-apply plugin: 'gwt'
+apply plugin: 'gwt-compiler'
 
 gwt {
     gwtVersion='2.8.1'
