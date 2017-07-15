@@ -94,3 +94,11 @@ war {
     from project(':compile-only').tasks.compileGwt.outputs
 }
 ```
+
+## Library Project (gwt-base) vs Compile Only (gwt-compiler)
+
+Here is the difference between 'gwt-base' and 'gwt-compiler':
+
+* The **gwt-base** plugin only contains GWT related configurations such as required dependencies, which are normally used by library projects. Library projects normally don't have GWT entry point classes but contain reusable client side code. Guava-gwt is a good example of library projects.
+* The **gwt-compiler** plugin extends **gwt-base** plugin contains the actual `gwtCompile`, `gwtDraftCompile` and `gwtCheck` gradle tasks. When gwt modules (with entry points) are configured, this plugin will actually compile the GWT modules. This plugin is useful when you want to compile the GWT modules but we don't want to use them in a web application. A typical example is when you want to develop JavaScript libraries using GWT.
+* The **gwt** plugin is simply a combination of **gwt-compiler** plugin and **war** plugin.
