@@ -12,7 +12,7 @@ Among other things, the plugin provides these features:
 
 ## Examples
 
-Several example projects can be found in [/examples](examples).
+Several example projects can be found in [/examples](https://github.com/jiakuan/gwt-gradle-plugin/tree/master/examples).
 
 ## Usage
 

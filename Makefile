@@ -27,6 +27,7 @@ publish:
 
 .PHONY: doc
 doc:
-	rm -rf build/site/
+	rm -rf build/site/ && mkdir -p build/site
 	documentnode -i doc -o build/site/
 	cp -r gwt-gradle-plugin/build/docs/javadoc build/site/
+	cd build/site/ && s3cmd --acl-public --no-check-hostname -r --delete-removed sync . s3://gwt-gradle-plugin.documentnode.io/ && cd ../../

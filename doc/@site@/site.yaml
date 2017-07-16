@@ -1,5 +1,6 @@
 name: "GWT Gradle Plugin"
 logo: "images/logo.png"
+public_url: "http://gwt-gradle-plugin.documentnode.io"
 github_url: "https://github.com/jiakuan/gwt-gradle-plugin"
 top_menus:
   - text: "Overview"

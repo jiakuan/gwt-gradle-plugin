@@ -1,6 +1,6 @@
 # Version History
 
-## 1.0.0 (2017-07-09)
+## 1.0.0+ (2017-07-09)
 
 * Compatibility
     * Gradle 4.0+ (tested 4.0.1)
