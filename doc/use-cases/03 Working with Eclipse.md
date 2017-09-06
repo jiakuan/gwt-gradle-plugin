@@ -1,5 +1,9 @@
 # Working with Eclipse
 
+This Eclipse feature has been tested with Eclipse 4.7 and the gwt plugin version 3.0.0.
+
+This will now not work with gwt plugin versions less than 3.0.0.
+
 ## Project Layout
 
 TODO GPE vs Maven/Gradle Standard-Layout
