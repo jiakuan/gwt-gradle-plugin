@@ -36,10 +36,10 @@ import org.wisepersist.gradle.plugins.gwt.eclipse.internal.GdtOptionsImpl;
 // TODO choose different name as this is no real plugin
 public class GwtEclipsePlugin {
 
-	public static final String ECLIPSE_NATURE = "com.google.gwt.eclipse.core.gwtNature";
-	public static final String ECLIPSE_BUILDER_PROJECT_VALIDATOR = "com.google.gwt.eclipse.core.gwtProjectValidator";
-	public static final String ECLIPSE_BUILDER_WEBAPP_VALIDATOR = "com.google.gdt.eclipse.core.webAppProjectValidator";
-	public static final String ECLIPSE_GWT_CONTAINER = "com.google.gwt.eclipse.core.GWT_CONTAINER";
+	public static final String ECLIPSE_NATURE = "com.gwtplugins.gwt.eclipse.core.gwtNature";
+	public static final String ECLIPSE_BUILDER_PROJECT_VALIDATOR = "com.gwtplugins.gwt.eclipse.core.gwtProjectValidator";
+	public static final String ECLIPSE_BUILDER_WEBAPP_VALIDATOR = "com.gwtplugins.gdt.eclipse.core.webAppProjectValidator";
+	public static final String ECLIPSE_GWT_CONTAINER = "com.gwtplugins.gwt.eclipse.core.GWT_CONTAINER";
 	public static final String GENERATE_GDT_TASK = "generateGdt";
 	
 	private static final Logger logger = Logging.getLogger(GwtEclipsePlugin.class);
@@ -73,7 +73,7 @@ public class GwtEclipsePlugin {
 				configureGenerateGdt(gdtExtension);
 				
 				GenerateGdt generateGdt = project.getTasks().create(GENERATE_GDT_TASK, GenerateGdt.class);
-				generateGdt.setSettingsFile(project.file(".settings/com.google.gdt.eclipse.core.prefs"));
+				generateGdt.setSettingsFile(project.file(".settings/com.gwtplugins.gdt.eclipse.core.prefs"));
 				project.getTasks().getByName(EclipsePlugin.ECLIPSE_TASK_NAME).dependsOn(generateGdt);
 				
 				project.afterEvaluate(new Action<Project>() {
