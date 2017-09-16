@@ -17,11 +17,13 @@ package org.wisepersist.gradle.plugins.gwt;
 
 import java.io.File;
 
+import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.OutputDirectory;
 
 /**
  * Task to run the GWT compiler for development quality output.
  */
+@CacheableTask
 public class GwtDraftCompile extends AbstractGwtCompile {
 	public GwtDraftCompile() {
 		setDraftCompile(true);

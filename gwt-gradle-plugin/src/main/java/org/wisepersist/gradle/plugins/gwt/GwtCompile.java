@@ -20,11 +20,13 @@ import java.util.concurrent.Callable;
 
 import org.gradle.api.internal.ConventionMapping;
 import org.gradle.api.internal.IConventionAware;
+import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.OutputDirectory;
 
 /**
  * Task to run the GWT compiler for production quality output.
  */
+@CacheableTask
 public class GwtCompile extends AbstractGwtCompile {
 
 	/** {@inheritDoc} */
