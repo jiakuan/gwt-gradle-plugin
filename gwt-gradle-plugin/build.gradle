@@ -79,17 +79,20 @@ signing {
 	sign configurations.archives
 }
 
+def ossrU = project.hasProperty("ossrhUsername") ? ossrhUsername : ""
+def ossrP = project.hasProperty("ossrhPassword") ? ossrhPassword : ""
+
 uploadArchives {
 	repositories {
 		mavenDeployer {
 			beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
 			repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-				authentication(userName: ossrhUsername, password: ossrhPassword)
+				authentication(userName: ossrU, password: ossrP)
 			}
 
 			snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-				authentication(userName: ossrhUsername, password: ossrhPassword)
+				authentication(userName: ossrU, password: ossrP)
 			}
 
 			pom.project {
