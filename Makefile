@@ -9,10 +9,10 @@ clean:
 
 .PHONY: build
 build:
-	./gradlew build
+	./gradlew build -x signArchives
 
 build-fast:
-	./gradlew build -Pcheck=false
+	./gradlew build -Pcheck=false -x signArchives
 
 release:
 	./gradlew release
