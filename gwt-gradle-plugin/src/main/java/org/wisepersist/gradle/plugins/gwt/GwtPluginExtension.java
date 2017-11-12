@@ -27,6 +27,7 @@ import org.gradle.util.ConfigureUtil;
 
 import org.wisepersist.gradle.plugins.gwt.internal.GwtCompileOptionsImpl;
 import org.wisepersist.gradle.plugins.gwt.internal.GwtDevOptionsImpl;
+import org.wisepersist.gradle.plugins.gwt.internal.GwtJsInteropExportsOptionsImpl;
 import org.wisepersist.gradle.plugins.gwt.internal.GwtSuperDevOptionsImpl;
 
 public class GwtPluginExtension {
@@ -47,12 +48,12 @@ public class GwtPluginExtension {
 
 	private Boolean incremental;
 	private JsInteropMode jsInteropMode;
-	private Boolean generateJsInteropExports;
 	private MethodNameDisplayMode methodNameDisplayMode;
-	
+
 	private String minHeapSize = "256M";
 	private String maxHeapSize = "256M";
-	
+
+	private final GwtJsInteropExportsOptions jsInteropExports = new GwtJsInteropExportsOptionsImpl();
 	private final GwtDevOptions dev = new GwtDevOptionsImpl();
 	private final GwtSuperDevOptions superDev = new GwtSuperDevOptionsImpl();
 	private final GwtCompileOptions compiler = new GwtCompileOptionsImpl();
@@ -66,7 +67,7 @@ public class GwtPluginExtension {
 		this.modules.clear();
 		this.modules.addAll(modules);
 	}
-	
+
 	public void modules(String... modules) {
 		this.modules.addAll(Arrays.asList(modules));
 	}
@@ -78,19 +79,19 @@ public class GwtPluginExtension {
 	public void setGwtVersion(String gwtVersion) {
 		this.gwtVersion = gwtVersion;
 	}
-	
+
 	public boolean isCodeserver() {
 		return codeserver;
 	}
-	
+
 	public void setCodeserver(boolean codeserver) {
 		this.codeserver = codeserver;
 	}
-	
+
 	public boolean isElemental() {
 		return elemental;
 	}
-	
+
 	public void setElemental(boolean elemental) {
 		this.elemental = elemental;
 	}
@@ -103,7 +104,7 @@ public class GwtPluginExtension {
 		this.devModules.clear();
 		this.devModules.addAll(devModules);
 	}
-	
+
 	public void devModules(String... modules) {
 		this.devModules.addAll(Arrays.asList(modules));
 	}
@@ -171,34 +172,43 @@ public class GwtPluginExtension {
 	public void setMaxHeapSize(String maxHeapSize) {
 		this.maxHeapSize = maxHeapSize;
 	}
-	
+
+	public GwtJsInteropExportsOptions getJsInteropExports() {
+		return jsInteropExports;
+	}
+
+	public GwtPluginExtension jsInteropExports(Closure<GwtJsInteropExportsOptions> c) {
+		ConfigureUtil.configure(c, jsInteropExports);
+		return this;
+	}
+
 	public GwtDevOptions getDev() {
 		return dev;
 	}
-	
+
 	public GwtPluginExtension dev(Closure<GwtDevOptions> c) {
 		ConfigureUtil.configure(c, dev);
 		return this;
 	}
-	
+
 	public GwtSuperDevOptions getSuperDev() {
 		return superDev;
 	}
-	
+
 	public GwtPluginExtension superDev(Closure<GwtSuperDevOptions> c) {
 		ConfigureUtil.configure(c, superDev);
 		return this;
 	}
-	
+
 	public GwtCompileOptions getCompiler() {
 		return compiler;
 	}
-	
+
 	public GwtPluginExtension compiler(Closure<GwtCompileOptions> c) {
 		ConfigureUtil.configure(c, compiler);
 		return this;
 	}
-	
+
 	public GwtTestOptions getTest() {
 		return test;
 	}
@@ -215,27 +225,27 @@ public class GwtPluginExtension {
 	public void setSrc(FileCollection src) {
 		this.src = src;
 	}
-	
+
 	public String getSourceLevel() {
 		return sourceLevel;
 	}
-	
+
 	public void setSourceLevel(String sourceLevel) {
 		this.sourceLevel = sourceLevel;
 	}
-	
+
 	public Boolean getIncremental() {
 		return incremental;
 	}
-	
+
 	public void setIncremental(Boolean incremental) {
 		this.incremental = incremental;
 	}
-	
+
 	public JsInteropMode getJsInteropMode() {
 		return jsInteropMode;
 	}
-	
+
 	public void setJsInteropMode(JsInteropMode jsInteropMode) {
 		this.jsInteropMode = jsInteropMode;
 	}
@@ -248,28 +258,13 @@ public class GwtPluginExtension {
 		this.modulePathPrefix = modulePathPrefix;
 	}
 
-	public Boolean getGenerateJsInteropExports() {
-		return generateJsInteropExports;
-	}
-
-	/**
-	 * If set to true, this adds the parameter -generateJsInteropExports.
-	 * If set to false, this adds the parameter -nogenerateJsInteropExports.
-	 * Added in GWT 2.8.
-	 *
-	 * @param generateJsInteropExports Whether it generates JsInteropExports.
-	 */
-	public void setGenerateJsInteropExports(Boolean generateJsInteropExports) {
-		this.generateJsInteropExports = generateJsInteropExports;
-	}
-	
 	public MethodNameDisplayMode getMethodNameDisplayMode() {
 		return methodNameDisplayMode;
 	}
-	
+
 	/**
 	 * If set, this causes the "-XmethodNameDisplayMode" (added in GWT 2.7/2.8) parameter to be added.
-	 * 
+	 *
 	 * @param methodNameDisplayMode The method name display mode.
 	 */
 	public void setMethodNameDisplayMode(MethodNameDisplayMode methodNameDisplayMode) {
