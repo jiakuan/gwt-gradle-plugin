@@ -15,32 +15,31 @@
  */
 package org.wisepersist.gradle.plugins.gwt;
 
-import java.io.File;
-import java.util.concurrent.Callable;
-
 import org.gradle.api.Task;
 import org.gradle.api.internal.ConventionMapping;
 import org.gradle.api.internal.IConventionAware;
 import org.gradle.api.specs.Spec;
-
 import org.wisepersist.gradle.plugins.gwt.internal.GwtDevOptionsImpl;
 
+import java.io.File;
+import java.util.concurrent.Callable;
+
 public class GwtDev extends AbstractGwtTask implements GwtDevOptions {
-	
+
 	private final GwtDevOptions options = new GwtDevOptionsImpl();
-	
+
 	private String modulePathPrefix;
-	
+
 	public GwtDev() {
 		super("com.google.gwt.dev.DevMode");
-		
+
 		getOutputs().upToDateWhen(new Spec<Task>(){
 			@Override
 			public boolean isSatisfiedBy(Task task) {
 				return false;
 			}});
 	}
-	
+
 	@Override
 	protected void addArgs() {
 		super.addArgs();
@@ -58,8 +57,9 @@ public class GwtDev extends AbstractGwtTask implements GwtDevOptions {
 		argOnOff(getStartServer(), "-startServer", "-nostartServer");
 		argIfSet("-XmethodNameDisplayMode", getMethodNameDisplayMode());
 		argIfSet("-modulePathPrefix", getModulePathPrefix());
+		argIfSet("-logLevel", getLogLevel());
 	}
-	
+
 	protected void configure(final GwtPluginExtension gwtPluginExtension) {
 		final GwtDevOptions options = gwtPluginExtension.getDev();
 		ConventionMapping conventionMapping =((IConventionAware)this).getConventionMapping();
@@ -280,25 +280,25 @@ public class GwtDev extends AbstractGwtTask implements GwtDevOptions {
 	public void setAutoCodeServerPort(Boolean autoCodeServerPort) {
 		options.setAutoCodeServerPort(autoCodeServerPort);
 	}
-	
+
 	/** {@inheritDoc} */
 	@Override
 	public Boolean getSuperDevMode() {
 		return options.getSuperDevMode();
 	}
-	
+
 	/** {@inheritDoc} */
 	@Override
 	public void setSuperDevMode(Boolean superDevMode) {
 		options.setSuperDevMode(superDevMode);
 	}
-	
+
 	/** {@inheritDoc} */
 	@Override
 	public Boolean getStartServer() {
 		return options.getStartServer();
 	}
-	
+
 	/** {@inheritDoc} */
 	@Override
 	public void setStartServer(Boolean startServer) {
@@ -311,7 +311,7 @@ public class GwtDev extends AbstractGwtTask implements GwtDevOptions {
 
 	/**
 	 * Sets the "-modulePathPrefix" parameter introduced in GWT 2.7.
-	 * 
+	 *
 	 * @param modulePathPrefix the path prefix where the GWT modules are located relative to the war root.
 	 */
 	public void setModulePathPrefix(String modulePathPrefix) {

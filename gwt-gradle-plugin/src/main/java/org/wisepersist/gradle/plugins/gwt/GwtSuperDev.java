@@ -15,26 +15,25 @@
  */
 package org.wisepersist.gradle.plugins.gwt;
 
-import java.io.File;
-import java.util.concurrent.Callable;
-
 import org.gradle.api.Task;
 import org.gradle.api.internal.ConventionMapping;
 import org.gradle.api.internal.IConventionAware;
 import org.gradle.api.specs.Spec;
-
 import org.wisepersist.gradle.plugins.gwt.internal.GwtSuperDevOptionsImpl;
+
+import java.io.File;
+import java.util.concurrent.Callable;
 
 /**
  * Task to run the GWT Super Dev Mode.
  */
 public class GwtSuperDev extends AbstractGwtActionTask implements GwtSuperDevOptions {
-	
+
 	private final GwtSuperDevOptions options = new GwtSuperDevOptionsImpl();
-	
+
 	public GwtSuperDev() {
 		super("com.google.gwt.dev.codeserver.CodeServer");
-		
+
 		getOutputs().upToDateWhen(new Spec<Task>(){
 			@Override
 			public boolean isSatisfiedBy(Task task) {
@@ -61,9 +60,10 @@ public class GwtSuperDev extends AbstractGwtActionTask implements GwtSuperDevOpt
 		argOnOff(getCompileTest(), "-compileTest", "-nocompileTest");
 		argIfSet("-compileTestRecompiles", getCompileTestRecompiles());
 		argIfSet("-launcherDir", getLauncherDir());
+		argIfSet("-logLevel", getLogLevel());
 		argOnOff(getClosureFormattedOutput(), "-XclosureFormattedOutput", "-XnoclosureFormattedOutput");
 	}
-	
+
 	protected void configure(final GwtSuperDevOptions options) {
 		ConventionMapping conventionMapping =((IConventionAware)this).getConventionMapping();
 		conventionMapping.map("bindAddress", new Callable<String>() {
@@ -122,7 +122,7 @@ public class GwtSuperDev extends AbstractGwtActionTask implements GwtSuperDevOpt
 		});
 		conventionMapping.map("closureFormattedOutput", options::getClosureFormattedOutput);
 	}
-	
+
 	@Override
 	protected boolean prependSrcToClasspath() {
 		return Boolean.TRUE.equals(getUseClasspathForSrc());
