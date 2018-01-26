@@ -15,6 +15,8 @@
  */
 package org.wisepersist.gradle.plugins.gwt;
 
+import static org.wisepersist.gradle.plugins.gwt.internal.GwtVersion.parseOrNull;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,11 +31,14 @@ import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.process.ExecResult;
 import org.gradle.process.JavaExecSpec;
+import org.wisepersist.gradle.plugins.gwt.internal.GwtVersion;
 
 /**
  * Base class for all GWT related tasks.
  */
 public abstract class AbstractGwtActionTask extends DefaultTask {
+
+	private String gwtVersion;
 
 	private List<String> modules;
 
@@ -108,9 +113,13 @@ public abstract class AbstractGwtActionTask extends DefaultTask {
 				}
 
 				argIfSet("-XjsInteropMode", getJsInteropMode());
-				argOnOff(getJsInteropExports().shouldGenerate(), "-generateJsInteropExports", "-nogenerateJsInteropExports");
-				getJsInteropExports().getIncludePatterns().forEach(includePattern -> argIfSet("-includeJsInteropExports", includePattern));
-				getJsInteropExports().getExcludePatterns().forEach(excludePattern -> argIfSet("-excludeJsInteropExports", excludePattern));
+				if (doesSupportJsInteropExports(parseOrNull(getGwtVersion()))) {
+					argOnOff(getJsInteropExports().shouldGenerate(), "-generateJsInteropExports", "-nogenerateJsInteropExports");
+					getJsInteropExports().getIncludePatterns()
+							.forEach(includePattern -> argIfSet("-includeJsInteropExports", includePattern));
+					getJsInteropExports().getExcludePatterns()
+							.forEach(excludePattern -> argIfSet("-excludeJsInteropExports", excludePattern));
+				}
 				argIfSet("-XmethodNameDisplayMode", getMethodNameDisplayMode());
 				argOnOff(getIncremental(), "-incremental", "-noincremental");
 				argIfSet("-sourceLevel", getSourceLevel());
@@ -133,6 +142,26 @@ public abstract class AbstractGwtActionTask extends DefaultTask {
 	 */
 	protected boolean prependSrcToClasspath() {
 		return true;
+	}
+
+	/**
+	 * If {@code true}, this causes the "generateJsInteropExports" / "-nogenerateJsInteropExports" (added in GWT 2.8) parameter to be added.
+	 *
+	 * @return {@code true} if GWT version is >= 2.8, {@code false} otherwise
+	 */
+	private boolean doesSupportJsInteropExports(final GwtVersion parsedGwtVersion) {
+		return (parsedGwtVersion != null) &&
+				(parsedGwtVersion.getMajor() >= 2) &&
+				(parsedGwtVersion.getMinor() >= 8);
+	}
+
+	@Input
+	public String getGwtVersion() {
+		return gwtVersion;
+	}
+
+	public void setGwtVersion(String gwtVersion) {
+		this.gwtVersion = gwtVersion;
 	}
 
 	@Input

@@ -15,6 +15,8 @@
  */
 package org.wisepersist.gradle.plugins.gwt;
 
+import static java.lang.String.format;
+
 import java.io.File;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -35,6 +37,7 @@ import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.testing.Test;
 import org.gradle.plugins.ide.eclipse.EclipsePlugin;
 import org.gradle.plugins.ide.idea.IdeaPlugin;
+import org.wisepersist.gradle.plugins.gwt.internal.GwtVersion;
 
 public class GwtBasePlugin implements Plugin<Project> {
 	public static final String GWT_TASK_GROUP = "GWT";
@@ -108,25 +111,9 @@ public class GwtBasePlugin implements Plugin<Project> {
 				}
 				testSourceSet.setRuntimeClasspath(runtimeClasspath);
 
-				boolean versionSet = false;
-				int major = 2;
-				int minor = 5;
-
-				final String gwtVersion = extension.getGwtVersion();
-				if(gwtVersion != null && !extension.getGwtVersion().isEmpty()) {
-					final String[] token = gwtVersion.split("\\.");
-					if(token.length>=2) {
-						try {
-							major = Integer.parseInt(token[0]);
-							minor = Integer.parseInt(token[1]);
-							versionSet = true;
-						} catch(NumberFormatException e) {
-							logger.warn("GWT version "+extension.getGwtVersion()+" can not be parsed. Valid versions must have the format major.minor.patch where major and minor are positive integer numbers.");
-						}
-					} else {
-						logger.warn("GWT version "+extension.getGwtVersion()+" can not be parsed. Valid versions must have the format major.minor.patch where major and minor are positive integer numbers.");
-					}
-				}
+				final GwtVersion parsedGwtVersion = parseGwtVersion();
+				final int major = (parsedGwtVersion == null) ? 2 : parsedGwtVersion.getMajor();
+				final int minor = (parsedGwtVersion == null) ? 5 : parsedGwtVersion.getMinor();
 
 				if ((major == 2 && minor >= 5) || major > 2) {
 					if(extension.isCodeserver()) {
@@ -134,20 +121,20 @@ public class GwtBasePlugin implements Plugin<Project> {
 					}
 				}
 
-				if(versionSet) {
-					project.getDependencies().add(GWT_SDK_CONFIGURATION, gwtDependency(GWT_DEV, gwtVersion));
-					project.getDependencies().add(GWT_SDK_CONFIGURATION, gwtDependency(GWT_USER, gwtVersion));
-					project.getDependencies().add(JavaPlugin.RUNTIME_ELEMENTS_CONFIGURATION_NAME, gwtDependency(GWT_SERVLET, gwtVersion));
+				if (parsedGwtVersion != null) {
+					project.getDependencies().add(GWT_SDK_CONFIGURATION, gwtDependency(GWT_DEV, parsedGwtVersion));
+					project.getDependencies().add(GWT_SDK_CONFIGURATION, gwtDependency(GWT_USER, parsedGwtVersion));
+					project.getDependencies().add(JavaPlugin.RUNTIME_ELEMENTS_CONFIGURATION_NAME, gwtDependency(GWT_SERVLET, parsedGwtVersion));
 
 					if ((major == 2 && minor >= 5) || major > 2) {
 						if(extension.isCodeserver()) {
-							project.getDependencies().add(GWT_CONFIGURATION, gwtDependency(GWT_CODESERVER, gwtVersion));
+							project.getDependencies().add(GWT_CONFIGURATION, gwtDependency(GWT_CODESERVER, parsedGwtVersion));
 						}
 						if(extension.isElemental()) {
-							project.getDependencies().add(GWT_CONFIGURATION, gwtDependency(GWT_ELEMENTAL, gwtVersion));
+							project.getDependencies().add(GWT_CONFIGURATION, gwtDependency(GWT_ELEMENTAL, parsedGwtVersion));
 						}
 					} else {
-						logger.warn("GWT version is <2.5 -> additional dependencies are not added.");
+						logger.warn("GWT version is < 2.5 -> additional dependencies are not added.");
 					}
 				}
 
@@ -170,12 +157,20 @@ public class GwtBasePlugin implements Plugin<Project> {
 				});
 	}
 
-	private String gwtDependency(final String artifactId, final String gwtVersion) {
-		return GWT_GROUP+":"+artifactId+":"+gwtVersion;
+	private GwtVersion parseGwtVersion() {
+		try {
+			return GwtVersion.parse(extension.getGwtVersion());
+		} catch (final IllegalArgumentException e) {
+			logger.warn(e.getMessage());
+			return null;
+		}
+	}
+
+	private String gwtDependency(final String artifactId, final GwtVersion gwtVersion) {
+		return format("%s:%s:%s", GWT_GROUP, artifactId, gwtVersion.toString());
 	}
 
 	private GwtPluginExtension configureGwtExtension(final File buildDir) {
-
 		final GwtPluginExtension extension = project.getExtensions().create(EXTENSION_NAME, GwtPluginExtension.class);
 		extension.setDevWar(project.file(DEV_WAR));
 		extension.setExtraDir(new File(buildDir, EXTRA_DIR));
@@ -250,6 +245,12 @@ public class GwtBasePlugin implements Plugin<Project> {
 				task.setGroup(GwtBasePlugin.GWT_TASK_GROUP);
 
 				ConventionMapping conventionMapping = ((IConventionAware)task).getConventionMapping();
+				conventionMapping.map("gwtVersion", new Callable<String>() {
+					@Override
+					public String call() throws Exception {
+						return extension.getGwtVersion();
+					}
+				});
 				conventionMapping.map("modules", new Callable<List<String>>() {
 					@Override
 					public List<String> call() throws Exception {
