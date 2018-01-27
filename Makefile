@@ -2,7 +2,6 @@ LATEST_TAG?=`git tag|sort -t. -k 1,1n -k 2,2n -k 3,3n -k 4,4n | tail -1`
 
 help:
 	cat Makefile.txt
-	cat Makefile
 
 clean:
 	./gradlew clean
