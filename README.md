@@ -8,4 +8,4 @@ It was originally created by Steffen Schaefer. Really appreciate his effort on m
 
 In last two years, there were no updates in the original git repo, so I plan to continue the maintenance in this fork.
 
-For more information, please see the a new documentation site: [http://gwt-gradle-plugin.documentnode.io](http://gwt-gradle-plugin.documentnode.io)
+For more information, please see the new documentation site I created: [http://gwt-gradle-plugin.documentnode.io](http://gwt-gradle-plugin.documentnode.io)
