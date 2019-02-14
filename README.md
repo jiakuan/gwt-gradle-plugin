@@ -23,3 +23,7 @@ If you are on Windows, you can use gradle wrapper to build.
 ```
 gradlew.bat clean build
 ```
+
+## Gradle 5.2+
+
+If you are using Gradle 5.2+, please use `gwt-gradle-plugin:1.0.8`, otherwise, please `gwt-gradle-plugin:1.0.6` for Gradle 4.+.
