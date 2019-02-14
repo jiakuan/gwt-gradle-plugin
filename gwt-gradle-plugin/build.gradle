@@ -6,7 +6,6 @@ buildscript {
 	}
 
 	dependencies {
-		classpath 'me.tatarka:gradle-retrolambda:3.6.1'
 	}
 }
 
@@ -70,9 +69,12 @@ artifacts {
 	archives javadocJar
 }
 
-signing {
-	sign configurations.archives
-}
+/*
+ * With Gradle 5.2.1, it seems archives can be signed automatically
+ */
+//signing {
+//	sign configurations.archives
+//}
 
 def ossrU = project.hasProperty("ossrhUsername") ? ossrhUsername : ""
 def ossrP = project.hasProperty("ossrhPassword") ? ossrhPassword : ""
