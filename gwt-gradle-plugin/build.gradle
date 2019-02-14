@@ -13,7 +13,6 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'maven'
 apply plugin: 'signing'
-apply plugin: 'me.tatarka.retrolambda'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -26,8 +25,8 @@ dependencies {
 }
 
 // Change the output directory for the main source set back to the old path
-sourceSets.main.output.classesDir = new File(buildDir, "classes/main")
-sourceSets.test.output.classesDir = new File(buildDir, "classes/test")
+sourceSets.main.java.outputDir = new File(buildDir, "classes/main")
+sourceSets.test.java.outputDir = new File(buildDir, "classes/test")
 
 rootProject.tasks.build.dependsOn project.tasks.build
 rootProject.tasks.uploadArchives.dependsOn project.tasks.uploadArchives
@@ -49,10 +48,6 @@ eclipse {
 }
 
 ext.userHome = System.getProperty("user.home")
-
-tasks.withType(JavaCompile) {
-	options.compilerArgs += ["-sourcepath", ""]
-}
 
 javadoc {
 	// Avoid error: cannot access external classes
