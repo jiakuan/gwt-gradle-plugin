@@ -26,4 +26,6 @@ gradlew.bat clean build
 
 ## Gradle 5.2+
 
-If you are using Gradle 5.2+, please use `gwt-gradle-plugin:1.0.8`, otherwise, please `gwt-gradle-plugin:1.0.6` for Gradle 4.+.
+If you are using Gradle 5.2+, please use `gwt-gradle-plugin:1.0.8`, which is compatible with Gradle 4.6+.
+
+For Gradle <=4.5, please use `gwt-gradle-plugin:1.0.6`.
