@@ -21,7 +21,7 @@ The following example shows the code to set up gwt-gradle-plugin for a GWT web a
             mavenCentral()
         }
         dependencies {
-            classpath 'org.wisepersist:gwt-gradle-plugin:1.0.6'
+            classpath 'org.wisepersist:gwt-gradle-plugin:1.0.9'
         }
     }
 
@@ -56,6 +56,6 @@ gradlew.bat clean build
 
 ## Gradle 5.2+
 
-If you are using Gradle 5.2+, please use `gwt-gradle-plugin:1.0.8`, which is compatible with Gradle 4.6+.
+If you are using Gradle 5.2+, please use `gwt-gradle-plugin:1.0.8+`, which is compatible with Gradle 4.6+.
 
 For Gradle <=4.5, please use `gwt-gradle-plugin:1.0.6`.
