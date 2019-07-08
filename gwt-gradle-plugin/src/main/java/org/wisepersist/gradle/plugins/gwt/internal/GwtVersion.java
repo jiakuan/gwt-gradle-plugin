@@ -13,9 +13,9 @@ public final class GwtVersion {
 
 	private final int minor;
 
-	private final int patch;
+	private final String patch;
 
-	private GwtVersion(final int major, final int minor, final int patch) {
+	private GwtVersion(final int major, final int minor, final String patch) {
 		this.major = major;
 		this.minor = minor;
 		this.patch = patch;
@@ -41,15 +41,15 @@ public final class GwtVersion {
 	public static GwtVersion parse(final String gwtVersion) {
 		if ((gwtVersion != null) && !gwtVersion.isEmpty()) {
 			try {
-				final String[] versionParts = gwtVersion.split("\\.");
+				final String[] versionParts = gwtVersion.split("\\.", 3);
 				if (versionParts.length >= 3) {
- 					return new GwtVersion(Integer.parseUnsignedInt(versionParts[0]),
+					return new GwtVersion(Integer.parseUnsignedInt(versionParts[0]),
 							Integer.parseUnsignedInt(versionParts[1]),
-							Integer.parseUnsignedInt(versionParts[2]));
+							versionParts[2]);
 				} else if (versionParts.length >= 2) {
 					return new GwtVersion(Integer.parseUnsignedInt(versionParts[0]),
 							Integer.parseUnsignedInt(versionParts[1]),
-							0);
+							"0");
 				}
 			} catch (final NumberFormatException e) {
 				throw new IllegalArgumentException(format(PARSING_ERROR_MESSAGE_FORMAT, gwtVersion), e);
@@ -67,7 +67,7 @@ public final class GwtVersion {
 		return minor;
 	}
 
-	public int getPatch() {
+	public String getPatch() {
 		return patch;
 	}
 
@@ -76,6 +76,6 @@ public final class GwtVersion {
 	 */
 	@Override
 	public String toString() {
-		return format("%d.%d.%d", major, minor, patch);
+		return format("%d.%d.%s", major, minor, patch);
 	}
 }
