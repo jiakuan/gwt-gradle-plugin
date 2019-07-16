@@ -11,7 +11,7 @@ As it is not a core Gradle plugin, you have to ensure, that Gradle knows how to 
             mavenCentral()
         }
         dependencies {
-            classpath 'org.wisepersist:gwt-gradle-plugin:1.0.9'
+            classpath 'org.wisepersist:gwt-gradle-plugin:1.0.10'
         }
     }
 
