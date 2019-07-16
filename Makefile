@@ -24,6 +24,11 @@ publish:
 	./gradlew build install uploadArchives
 	git checkout master
 
+publish-plugins:
+	git checkout tags/${LATEST_TAG}
+	./gradlew publishPlugins
+	git checkout master
+
 .PHONY: doc
 doc:
 	rm -rf build/site/ && mkdir -p build/site
