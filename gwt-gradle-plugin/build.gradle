@@ -45,7 +45,7 @@ pluginBundle {
 gradlePlugin {
     plugins {
         gwtGradlePlugin {
-            id = 'org.wisepersist.gwt-gradle-plugin'
+            id = 'org.wisepersist.gwt'
             displayName = 'GWT Gradle Plugin'
             description = 'Gradle plugin to support GWT related tasks.'
             implementationClass = 'org.wisepersist.gradle.plugins.gwt.GwtPlugin'
