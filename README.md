@@ -12,7 +12,34 @@ For more information, please see the new documentation site I created: [http://g
 
 ## Usage
 
-GWT Gradle Plugin is available in [Maven central repository](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.wisepersist%22AND%20a%3A%22gwt-gradle-plugin%22).
+GWT Gradle Plugin is available in the [Gradle Plugin Portal](https://plugins.gradle.org/plugin/org.wisepersist.gwt).
+
+Using the plugins DSL:
+
+```
+plugins {
+  id "org.wisepersist.gwt" version "1.0.13"
+}
+```
+
+Using legacy plugin application:
+
+```
+buildscript {
+  repositories {
+    maven {
+      url "https://plugins.gradle.org/m2/"
+    }
+  }
+  dependencies {
+    classpath "gradle.plugin.org.wisepersist:gwt-gradle-plugin:1.0.13"
+  }
+}
+
+apply plugin: "org.wisepersist.gwt"
+```
+
+GWT Gradle Plugin is also available in [Maven central repository](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.wisepersist%22AND%20a%3A%22gwt-gradle-plugin%22).
 
 The following example shows the code to set up gwt-gradle-plugin for a GWT web application project using Maven/Gradle standard layout.
 
