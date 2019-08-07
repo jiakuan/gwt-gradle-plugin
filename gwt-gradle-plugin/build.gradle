@@ -1,12 +1,14 @@
-import org.gradle.plugins.ide.eclipse.model.*
+import org.gradle.plugins.ide.eclipse.model.AbstractLibrary
+import org.gradle.plugins.ide.eclipse.model.Classpath
+import org.gradle.plugins.ide.eclipse.model.ClasspathEntry
 
 buildscript {
-    repositories {
-        jcenter()
-    }
+  repositories {
+    jcenter()
+  }
 
-    dependencies {
-    }
+  dependencies {
+  }
 }
 
 apply plugin: 'java'
@@ -19,8 +21,8 @@ targetCompatibility = 1.8
 repositories { mavenCentral() }
 
 dependencies {
-    compile gradleApi()
-    testCompile group: 'junit', name: 'junit', version: '4.11'
+  compile gradleApi()
+  testCompile group: 'junit', name: 'junit', version: '4.11'
 }
 
 // Change the output directory for the main source set back to the old path
@@ -31,122 +33,122 @@ rootProject.tasks.build.dependsOn project.tasks.build
 rootProject.tasks.uploadArchives.dependsOn project.tasks.uploadArchives
 
 eclipse {
-    classpath {
-        file {
-            whenMerged { Classpath cp ->
-                String gradleHome = gradle.getGradleHomeDir().absolutePath.replace(File.separator, '/')
-                String gradleSrc = "${gradleHome}/src"
-                cp.entries.each { ClasspathEntry entry ->
-                    if ((entry in AbstractLibrary) && (entry.library.file.name.startsWith('gradle-'))) {
-                        entry.sourcePath = new org.gradle.plugins.ide.eclipse.model.internal.FileReferenceFactory().fromPath(gradleSrc)
-                    }
-                }
-            }
+  classpath {
+    file {
+      whenMerged { Classpath cp ->
+        String gradleHome = gradle.getGradleHomeDir().absolutePath.replace(File.separator, '/')
+        String gradleSrc = "${gradleHome}/src"
+        cp.entries.each { ClasspathEntry entry ->
+          if ((entry in AbstractLibrary) && (entry.library.file.name.startsWith('gradle-'))) {
+            entry.sourcePath = new org.gradle.plugins.ide.eclipse.model.internal.FileReferenceFactory().fromPath(gradleSrc)
+          }
         }
+      }
     }
+  }
 }
 
 ext.userHome = System.getProperty("user.home")
 
 javadoc {
-    // Avoid error: cannot access external classes
-    options.addStringOption("sourcepath", "")
+  // Avoid error: cannot access external classes
+  options.addStringOption("sourcepath", "")
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
+  classifier = 'sources'
+  from sourceSets.main.allSource
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from 'build/docs/javadoc'
+  classifier = 'javadoc'
+  from 'build/docs/javadoc'
 }
 
 artifacts {
-    archives sourcesJar
-    archives javadocJar
+  archives sourcesJar
+  archives javadocJar
 }
 
 signing {
-    sign configurations.archives
+  sign configurations.archives
 }
 
 def ossrU = project.hasProperty("ossrhUsername") ? ossrhUsername : ""
 def ossrP = project.hasProperty("ossrhPassword") ? ossrhPassword : ""
 
 uploadArchives {
-    repositories {
-        mavenDeployer {
-            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+  repositories {
+    mavenDeployer {
+      beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
-            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-                authentication(userName: ossrU, password: ossrP)
-            }
+      repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+        authentication(userName: ossrU, password: ossrP)
+      }
 
-            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-                authentication(userName: ossrU, password: ossrP)
-            }
+      snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+        authentication(userName: ossrU, password: ossrP)
+      }
 
-            pom.project {
-                name 'GWT Gradle Plugin'
-                packaging 'jar'
-                description 'Gradle plugin to support GWT (http://www.gwtproject.org/) related tasks.'
-                url 'https://github.com/jiakuan/gwt-gradle-plugin/'
+      pom.project {
+        name 'GWT Gradle Plugin'
+        packaging 'jar'
+        description 'Gradle plugin to support GWT (http://www.gwtproject.org/) related tasks.'
+        url 'https://github.com/jiakuan/gwt-gradle-plugin/'
 
-                scm {
-                    connection 'scm:git:git@github.com:jiakuan/gwt-gradle-plugin.git'
-                    developerConnection 'scm:git:git@github.com:jiakuan/gwt-gradle-plugin.git'
-                    url 'git@github.com:jiakuan/gwt-gradle-plugin.git'
-                }
-
-                licenses {
-                    license {
-                        name 'The Apache Software License, Version 2.0'
-                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                        distribution 'repo'
-                    }
-                }
-
-                developers {
-                    developer {
-                        id 'jiakuan'
-                        name 'Jiakuan Wang'
-                        email 'delight.wjk@gmail.com'
-                        organization 'WisePersist.org'
-                        organizationUrl 'https://github.com/jiakuan/gwt-gradle-plugin'
-                        roles {
-                            role 'architect'
-                            role 'developer'
-                        }
-                        timezone '+8'
-                    }
-                }
-            }
+        scm {
+          connection 'scm:git:git@github.com:jiakuan/gwt-gradle-plugin.git'
+          developerConnection 'scm:git:git@github.com:jiakuan/gwt-gradle-plugin.git'
+          url 'git@github.com:jiakuan/gwt-gradle-plugin.git'
         }
+
+        licenses {
+          license {
+            name 'The Apache Software License, Version 2.0'
+            url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+            distribution 'repo'
+          }
+        }
+
+        developers {
+          developer {
+            id 'jiakuan'
+            name 'Jiakuan Wang'
+            email 'delight.wjk@gmail.com'
+            organization 'WisePersist.org'
+            organizationUrl 'https://github.com/jiakuan/gwt-gradle-plugin'
+            roles {
+              role 'architect'
+              role 'developer'
+            }
+            timezone '+8'
+          }
+        }
+      }
     }
+  }
 }
 
 task writeNewPom {
-    doLast {
-        pom {
-            project {
-                packaging 'jar'
-                build {
-                    plugins {
-                        plugin {
-                            groupId 'org.apache.maven.plugins'
-                            artifactId 'maven-compiler-plugin'
-                            version '3.8.0'
-                            configuration {
-                                source '1.8'
-                                target '1.8'
-                                encoding 'UTF-8'
-                            }
-                        }
-                    }
-                }
+  doLast {
+    pom {
+      project {
+        packaging 'jar'
+        build {
+          plugins {
+            plugin {
+              groupId 'org.apache.maven.plugins'
+              artifactId 'maven-compiler-plugin'
+              version '3.8.0'
+              configuration {
+                source '1.8'
+                target '1.8'
+                encoding 'UTF-8'
+              }
             }
-        }.writeTo("$projectDir/pom.xml")
-    }
+          }
+        }
+      }
+    }.writeTo("$projectDir/pom.xml")
+  }
 }

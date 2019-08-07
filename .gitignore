@@ -10,3 +10,5 @@ build/
 war/
 gwt-unitCache/
 *.md.html
+/doc/javadoc/
+/doc/__output__/
