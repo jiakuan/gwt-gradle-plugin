@@ -35,4 +35,9 @@ public class GwtDraftCompile extends AbstractGwtCompile {
 	public File getWar() {
 		return super.getWar();
 	}
+
+	@Override
+	public void jvmArgs(Object... args) {
+		super.jvmArgs(args);
+	}
 }

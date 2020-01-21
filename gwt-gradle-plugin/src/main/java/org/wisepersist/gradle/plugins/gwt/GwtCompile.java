@@ -186,4 +186,9 @@ public class GwtCompile extends AbstractGwtCompile {
 		});
 		conventionMapping.map("closureFormattedOutput", options::getClosureFormattedOutput);
 	}
+
+	@Override
+	public void jvmArgs(Object... args) {
+		super.jvmArgs(args);
+	}
 }
