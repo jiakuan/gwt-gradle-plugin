@@ -15,7 +15,7 @@ subprojects {
 			mavenCentral()
 		}
 		dependencies {
-			classpath 'org.wisepersist:gwt-gradle-plugin:1.0.14-SNAPSHOT'
+			classpath 'org.wisepersist:gwt-gradle-plugin:1.1.1-SNAPSHOT'
 		}
 	}
 

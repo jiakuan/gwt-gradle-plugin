@@ -18,7 +18,7 @@ Using the plugins DSL:
 
 ```
 plugins {
-  id "org.wisepersist.gwt" version "1.0.13"
+  id "org.wisepersist.gwt" version "1.1.0"
 }
 ```
 
@@ -32,7 +32,7 @@ buildscript {
     }
   }
   dependencies {
-    classpath "gradle.plugin.org.wisepersist:gwt-gradle-plugin:1.0.13"
+    classpath "gradle.plugin.org.wisepersist:gwt-gradle-plugin:1.1.0"
   }
 }
 
