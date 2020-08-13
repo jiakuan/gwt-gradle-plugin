@@ -5,7 +5,7 @@ apply plugin: 'maven-publish'
 repositories { mavenCentral() }
 
 gwt {
-	gwtVersion='2.8.1'
+	gwtVersion='2.9.0'
 	minHeapSize = "512M"
 	maxHeapSize = "1024M"
 	modules 'org.wisepersist.gradle.plugins.gwt.example.Example'

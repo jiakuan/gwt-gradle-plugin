@@ -52,7 +52,7 @@ If you want to use automatically configured GWT dependencies (gwt-dev, gwt-user,
 
 ```
 gwt {
-    gwtVersion='2.8.1'
+    gwtVersion='2.9.0'
     modules '<YOUR-GWT-MODULE>'
 }
 ```

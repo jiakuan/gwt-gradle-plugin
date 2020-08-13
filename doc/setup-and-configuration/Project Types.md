@@ -20,7 +20,7 @@ buildscript {
 apply plugin: 'gwt-base'
 
 gwt {
-    gwtVersion='2.8.1'
+    gwtVersion='2.9.0'
 }
 ```
 
@@ -36,7 +36,7 @@ buildscript {
 apply plugin: 'gwt-compiler'
 
 gwt {
-    gwtVersion='2.8.1'
+    gwtVersion='2.9.0'
     modules '<YOUR-GWT-MODULE>'
 }
 ```
@@ -58,7 +58,7 @@ apply plugin: 'gwt-compiler'
 apply plugin: 'maven-publish'
 
 gwt {
-    gwtVersion='2.8.1'
+    gwtVersion='2.9.0'
     modules '<YOUR-GWT-MODULE>'
 }
 

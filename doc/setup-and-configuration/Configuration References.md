@@ -8,7 +8,7 @@ An example of both kinds of properties looks this way:
 
 ```
 gwt {
-    gwtVersion='2.8.1'
+    gwtVersion='2.9.0'
 
     modules 'org.wisepersist.gradle.plugins.gwt.example.Example'
     

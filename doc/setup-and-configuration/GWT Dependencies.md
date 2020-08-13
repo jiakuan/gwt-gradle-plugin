@@ -14,7 +14,7 @@ As "gwt-servlet" is used on the server-side, you typically add it to Gradles's "
 The plugin can automatically add the needed GWT dependencies (gwt-dev, gwt-servlet, ...) for you. Everything you have to do is:
 
 * Provide a repository where the GWT artifacts are hosted. If you haven’t already configured a repository and you want to use the Maven central repository, add the following to your build.gradle file: `repositories { mavenCentral() }`
-* Define the GWT version in the format "major.minor.patch" or "major.minor.patch-xxx" (e.g. "2.8.1" or "2.8.2-rc3". To do that, insert the following configuration to your “build.gradle” file: `gwt { gwtVersion='2.8.1' }`
+* Define the GWT version in the format "major.minor.patch" or "major.minor.patch-xxx" (e.g. "2.8.1" or "2.8.2-rc3". To do that, insert the following configuration to your “build.gradle” file: `gwt { gwtVersion='2.9.0' }`
 
 If you do not specify the "gwtVersion" property, it is assumed that you are adding the dependencies to the correct configurations by yourselves.
 

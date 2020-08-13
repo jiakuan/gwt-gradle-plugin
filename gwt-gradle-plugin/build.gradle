@@ -12,14 +12,14 @@ buildscript {
 }
 
 plugins {
-    // For publishing the plugin to the Gradle Plugin Portal
-    id 'java-gradle-plugin'
-    id 'com.gradle.plugin-publish' version '0.10.0'
-}
+  id 'java'
+  id 'maven'
+  id 'signing'
 
-apply plugin: 'java'
-apply plugin: 'maven'
-apply plugin: 'signing'
+  // For publishing the plugin to the Gradle Plugin Portal
+  id 'java-gradle-plugin'
+  id "com.gradle.plugin-publish" version "0.12.0"
+}
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -39,20 +39,20 @@ rootProject.tasks.build.dependsOn project.tasks.build
 rootProject.tasks.uploadArchives.dependsOn project.tasks.uploadArchives
 
 pluginBundle {
-    website = 'http://gwt-gradle-plugin.documentnode.io'
-    vcsUrl = 'https://github.com/jiakuan/gwt-gradle-plugin'
-    tags = ['gwt', 'gradle', 'gwt-gradle']
+  website = 'http://gwt-gradle-plugin.documentnode.io'
+  vcsUrl = 'https://github.com/jiakuan/gwt-gradle-plugin'
+  tags = ['gwt', 'gradle', 'gwt-gradle']
 }
 
 gradlePlugin {
-    plugins {
-        gwtGradlePlugin {
-            id = 'org.wisepersist.gwt'
-            displayName = 'GWT Gradle Plugin'
-            description = 'Gradle plugin to support GWT related tasks.'
-            implementationClass = 'org.wisepersist.gradle.plugins.gwt.GwtPlugin'
-        }
+  plugins {
+    gwtGradlePlugin {
+      id = 'org.wisepersist.gwt'
+      displayName = 'GWT Gradle Plugin'
+      description = 'Gradle plugin to support GWT related tasks.'
+      implementationClass = 'org.wisepersist.gradle.plugins.gwt.GwtPlugin'
     }
+  }
 }
 
 eclipse {
