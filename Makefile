@@ -18,23 +18,17 @@ release:
 	./gradlew release
 
 publish-snapshot:
-	./gradlew build publishToMavenLocal publish
+	./gradlew build publishMavenJavaPublicationToMavenLocal publishMavenJavaPublicationToMavenRepository
 
 publish:
 	git checkout tags/${LATEST_TAG}
-	./gradlew build publishToMavenLocal publish
+	./gradlew build publishMavenJavaPublicationToMavenLocal publishMavenJavaPublicationToMavenRepository
 	git checkout master
 
 publish-plugins:
 	git checkout tags/${LATEST_TAG}
 	./gradlew publishPlugins
 	git checkout master
-
-mvn-close:
-	./gradlew closeRepository
-
-mvn-release:
-	./gradlew releaseRepository
 
 .PHONY: doc
 doc: build

@@ -139,35 +139,6 @@ publishing {
         }
       }
     }
-    pluginMaven(MavenPublication) {
-      pom {
-        name = 'GWT Gradle Plugin'
-        description = 'Gradle plugin to support GWT (http://www.gwtproject.org/) related tasks.'
-        url = 'https://github.com/jiakuan/gwt-gradle-plugin/'
-        licenses {
-          license {
-            name = 'The Apache License, Version 2.0'
-            url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-            distribution = 'repo'
-          }
-        }
-        developers {
-          developer {
-            id = 'jiakuan'
-            name = 'Jiakuan Wang'
-            email = 'jake@documentnode.io'
-            organization = 'Document Node'
-            organizationUrl = 'https://documentnode.io'
-          }
-        }
-
-        scm {
-          connection = 'scm:git:git@github.com:jiakuan/gwt-gradle-plugin.git'
-          developerConnection = 'scm:git:git@github.com:jiakuan/gwt-gradle-plugin.git'
-          url = 'git@github.com:jiakuan/gwt-gradle-plugin.git'
-        }
-      }
-    }
   }
   repositories {
     maven {
