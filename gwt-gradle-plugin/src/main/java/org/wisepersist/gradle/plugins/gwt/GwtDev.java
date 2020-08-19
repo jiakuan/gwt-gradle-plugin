@@ -15,14 +15,15 @@
  */
 package org.wisepersist.gradle.plugins.gwt;
 
+import java.io.File;
+import java.util.concurrent.Callable;
 import org.gradle.api.Task;
 import org.gradle.api.internal.ConventionMapping;
 import org.gradle.api.internal.IConventionAware;
 import org.gradle.api.specs.Spec;
+import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.OutputDirectory;
 import org.wisepersist.gradle.plugins.gwt.internal.GwtDevOptionsImpl;
-
-import java.io.File;
-import java.util.concurrent.Callable;
 
 public class GwtDev extends AbstractGwtTask implements GwtDevOptions {
 
@@ -150,6 +151,7 @@ public class GwtDev extends AbstractGwtTask implements GwtDevOptions {
 	}
 
 	/** {@inheritDoc} */
+	@Input
 	@Override
 	public Boolean getNoserver() {
 		return options.getNoserver();
@@ -162,6 +164,7 @@ public class GwtDev extends AbstractGwtTask implements GwtDevOptions {
 	}
 
 	/** {@inheritDoc} */
+	@Input
 	@Override
 	public Integer getPort() {
 		return options.getPort();
@@ -174,6 +177,7 @@ public class GwtDev extends AbstractGwtTask implements GwtDevOptions {
 	}
 
 	/** {@inheritDoc} */
+	@Input
 	@Override
 	public String getWhitelist() {
 		return options.getWhitelist();
@@ -186,6 +190,7 @@ public class GwtDev extends AbstractGwtTask implements GwtDevOptions {
 	}
 
 	/** {@inheritDoc} */
+	@Input
 	@Override
 	public String getBlacklist() {
 		return options.getBlacklist();
@@ -198,6 +203,7 @@ public class GwtDev extends AbstractGwtTask implements GwtDevOptions {
 	}
 
 	/** {@inheritDoc} */
+	@OutputDirectory
 	@Override
 	public File getLogDir() {
 		return options.getLogDir();
@@ -210,6 +216,7 @@ public class GwtDev extends AbstractGwtTask implements GwtDevOptions {
 	}
 
 	/** {@inheritDoc} */
+	@Input
 	@Override
 	public String getBindAddress() {
 		return options.getBindAddress();
@@ -222,6 +229,7 @@ public class GwtDev extends AbstractGwtTask implements GwtDevOptions {
 	}
 
 	/** {@inheritDoc} */
+	@Input
 	@Override
 	public Integer getCodeServerPort() {
 		return options.getCodeServerPort();
@@ -234,6 +242,7 @@ public class GwtDev extends AbstractGwtTask implements GwtDevOptions {
 	}
 
 	/** {@inheritDoc} */
+	@Input
 	@Override
 	public String getServer() {
 		return options.getServer();
@@ -246,6 +255,7 @@ public class GwtDev extends AbstractGwtTask implements GwtDevOptions {
 	}
 
 	/** {@inheritDoc} */
+	@Input
 	@Override
 	public String getStartupUrl() {
 		return options.getStartupUrl();
@@ -258,6 +268,7 @@ public class GwtDev extends AbstractGwtTask implements GwtDevOptions {
 	}
 
 	/** {@inheritDoc} */
+	@Input
 	@Override
 	public Boolean getAutoPort() {
 		return options.getAutoPort();
@@ -270,6 +281,7 @@ public class GwtDev extends AbstractGwtTask implements GwtDevOptions {
 	}
 
 	/** {@inheritDoc} */
+	@Input
 	@Override
 	public Boolean getAutoCodeServerPort() {
 		return options.getAutoCodeServerPort();
@@ -282,6 +294,7 @@ public class GwtDev extends AbstractGwtTask implements GwtDevOptions {
 	}
 
 	/** {@inheritDoc} */
+	@Input
 	@Override
 	public Boolean getSuperDevMode() {
 		return options.getSuperDevMode();
@@ -294,6 +307,7 @@ public class GwtDev extends AbstractGwtTask implements GwtDevOptions {
 	}
 
 	/** {@inheritDoc} */
+	@Input
 	@Override
 	public Boolean getStartServer() {
 		return options.getStartServer();
@@ -305,6 +319,7 @@ public class GwtDev extends AbstractGwtTask implements GwtDevOptions {
 		options.setStartServer(startServer);
 	}
 
+	@Input
 	public String getModulePathPrefix() {
 		return modulePathPrefix;
 	}

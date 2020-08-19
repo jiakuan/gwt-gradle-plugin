@@ -27,8 +27,8 @@ targetCompatibility = 1.8
 repositories { mavenCentral() }
 
 dependencies {
-  compile gradleApi()
-  testCompile group: 'junit', name: 'junit', version: '4.11'
+  implementation gradleApi()
+  testImplementation group: 'junit', name: 'junit', version: '4.11'
 }
 
 // Change the output directory for the main source set back to the old path

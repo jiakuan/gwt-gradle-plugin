@@ -21,7 +21,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import org.gradle.api.Action;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.InvalidUserDataException;
@@ -29,6 +28,8 @@ import org.gradle.api.file.FileCollection;
 import org.gradle.api.tasks.Classpath;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFiles;
+import org.gradle.api.tasks.PathSensitive;
+import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.process.ExecResult;
 import org.gradle.process.JavaExecSpec;
@@ -222,15 +223,18 @@ public abstract class AbstractGwtActionTask extends DefaultTask {
 	protected abstract void addArgs();
 
 	/**
-	 * If true the task instance is treated as being a development related task. Development related tasks will have the devModules set by default.
+	 * If true the task instance is treated as being a development related
+	 * task. Development related tasks will have the devModules set by default.
 	 *
 	 * @return true if the task is development related, false otherwise.
 	 */
+	@Input
 	protected boolean isDevTask() {
 		return true;
 	}
 
 	@InputFiles
+	@PathSensitive(PathSensitivity.ABSOLUTE)
 	public FileCollection getSrc() {
 		return src;
 	}
@@ -260,6 +264,7 @@ public abstract class AbstractGwtActionTask extends DefaultTask {
 		this.classpath = classpath;
 	}
 
+	@Input
 	public String getMinHeapSize() {
 		return minHeapSize;
 	}
@@ -273,6 +278,7 @@ public abstract class AbstractGwtActionTask extends DefaultTask {
 		this.minHeapSize = minHeapSize;
 	}
 
+	@Input
 	public String getMaxHeapSize() {
 		return maxHeapSize;
 	}
@@ -286,6 +292,7 @@ public abstract class AbstractGwtActionTask extends DefaultTask {
 		this.maxHeapSize = maxHeapSize;
 	}
 
+	@Input
 	public boolean isDebug() {
 		return debug;
 	}
@@ -299,6 +306,7 @@ public abstract class AbstractGwtActionTask extends DefaultTask {
 		this.debug = debug;
 	}
 
+	@Input
 	public LogLevel getLogLevel() {
 		return logLevel;
 	}
@@ -312,6 +320,7 @@ public abstract class AbstractGwtActionTask extends DefaultTask {
 		this.logLevel = logLevel;
 	}
 
+	@Input
 	public String getSourceLevel() {
 		return sourceLevel;
 	}
@@ -320,6 +329,7 @@ public abstract class AbstractGwtActionTask extends DefaultTask {
 		this.sourceLevel = sourceLevel;
 	}
 
+	@Input
 	public Boolean getIncremental() {
 		return incremental;
 	}
@@ -328,6 +338,7 @@ public abstract class AbstractGwtActionTask extends DefaultTask {
 		this.incremental = incremental;
 	}
 
+	@Input
 	public JsInteropMode getJsInteropMode() {
 		return jsInteropMode;
 	}
@@ -336,6 +347,7 @@ public abstract class AbstractGwtActionTask extends DefaultTask {
 		this.jsInteropMode = jsInteropMode;
 	}
 
+	@Input
 	public GwtJsInteropExportsOptions getJsInteropExports() {
 		return jsInteropExports;
 	}
@@ -344,6 +356,7 @@ public abstract class AbstractGwtActionTask extends DefaultTask {
 		this.jsInteropExports = jsInteropExports;
 	}
 
+	@Input
 	public MethodNameDisplayMode getMethodNameDisplayMode() {
 		return methodNameDisplayMode;
 	}

@@ -15,14 +15,18 @@
  */
 package org.wisepersist.gradle.plugins.gwt;
 
+import java.io.File;
+import java.util.concurrent.Callable;
 import org.gradle.api.Task;
 import org.gradle.api.internal.ConventionMapping;
 import org.gradle.api.internal.IConventionAware;
 import org.gradle.api.specs.Spec;
+import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.InputDirectory;
+import org.gradle.api.tasks.OutputDirectory;
+import org.gradle.api.tasks.PathSensitive;
+import org.gradle.api.tasks.PathSensitivity;
 import org.wisepersist.gradle.plugins.gwt.internal.GwtSuperDevOptionsImpl;
-
-import java.io.File;
-import java.util.concurrent.Callable;
 
 /**
  * Task to run the GWT Super Dev Mode.
@@ -129,6 +133,7 @@ public class GwtSuperDev extends AbstractGwtActionTask implements GwtSuperDevOpt
 	}
 
 	/** {@inheritDoc} */
+	@OutputDirectory
 	@Override
 	public File getWorkDir() {
 		return options.getWorkDir();
@@ -141,6 +146,7 @@ public class GwtSuperDev extends AbstractGwtActionTask implements GwtSuperDevOpt
 	}
 
 	/** {@inheritDoc} */
+	@Input
 	@Override
 	public String getBindAddress() {
 		return options.getBindAddress();
@@ -153,6 +159,7 @@ public class GwtSuperDev extends AbstractGwtActionTask implements GwtSuperDevOpt
 	}
 
 	/** {@inheritDoc} */
+	@Input
 	@Override
 	public Integer getPort() {
 		return options.getPort();
@@ -165,6 +172,7 @@ public class GwtSuperDev extends AbstractGwtActionTask implements GwtSuperDevOpt
 	}
 
 	/** {@inheritDoc} */
+	@Input
 	@Override
 	public Boolean getNoPrecompile() {
 		return options.getNoPrecompile();
@@ -183,6 +191,7 @@ public class GwtSuperDev extends AbstractGwtActionTask implements GwtSuperDevOpt
 	}
 
 	/** {@inheritDoc} */
+	@Input
 	@Override
 	public Boolean getUseClasspathForSrc() {
 		return options.getUseClasspathForSrc();
@@ -195,6 +204,8 @@ public class GwtSuperDev extends AbstractGwtActionTask implements GwtSuperDevOpt
 	}
 
 	/** {@inheritDoc} */
+	@InputDirectory
+	@PathSensitive(PathSensitivity.ABSOLUTE)
 	@Override
 	public File getLauncherDir() {
 		return options.getLauncherDir();
@@ -207,6 +218,7 @@ public class GwtSuperDev extends AbstractGwtActionTask implements GwtSuperDevOpt
 	}
 
 	/** {@inheritDoc} */
+	@Input
 	@Override
 	public Integer getCompileTestRecompiles() {
 		return options.getCompileTestRecompiles();
@@ -219,6 +231,7 @@ public class GwtSuperDev extends AbstractGwtActionTask implements GwtSuperDevOpt
 	}
 
 	/** {@inheritDoc} */
+	@Input
 	@Override
 	public Boolean getCompileTest() {
 		return options.getCompileTest();
@@ -231,6 +244,7 @@ public class GwtSuperDev extends AbstractGwtActionTask implements GwtSuperDevOpt
 	}
 
 	/** {@inheritDoc} */
+	@Input
 	@Override
 	public Boolean getFailOnError() {
 		return options.getFailOnError();
@@ -243,12 +257,14 @@ public class GwtSuperDev extends AbstractGwtActionTask implements GwtSuperDevOpt
 	}
 
 	/** {@inheritDoc} */
+	@Input
 	@Override
 	public Boolean getAllowMissingSrc() {
 		return options.getAllowMissingSrc();
 	}
 
 	/** {@inheritDoc} */
+	@Input
 	@Override
 	public Boolean getClosureFormattedOutput() {
 		return options.getClosureFormattedOutput();

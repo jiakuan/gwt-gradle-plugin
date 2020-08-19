@@ -22,13 +22,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Properties;
-
 import org.gradle.api.DefaultTask;
 import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.TaskAction;
-
 import org.wisepersist.gradle.plugins.gwt.eclipse.internal.GdtOptionsImpl;
 
 /**
@@ -126,7 +125,7 @@ public class GenerateGdt extends DefaultTask implements GdtOptions {
 
 	/** {@inheritDoc} */
 	@Override
-	@Input
+	@InputDirectory
 	public File getWarSrcDir() {
 		return options.getWarSrcDir();
 	}
@@ -139,7 +138,7 @@ public class GenerateGdt extends DefaultTask implements GdtOptions {
 
 	/** {@inheritDoc} */
 	@Override
-	@Input
+	@InputDirectory
 	@Optional
 	public File getLastWarOutDir() {
 		return options.getLastWarOutDir();

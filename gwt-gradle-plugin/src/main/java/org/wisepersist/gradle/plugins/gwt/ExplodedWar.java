@@ -16,21 +16,20 @@
 package org.wisepersist.gradle.plugins.gwt;
 
 import groovy.lang.Closure;
-
 import java.io.File;
 import java.util.Collections;
 import java.util.concurrent.Callable;
-
 import org.gradle.api.Action;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.specs.Spec;
+import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.Optional;
+import org.gradle.api.tasks.OutputDirectory;
 import org.gradle.api.tasks.TaskAction;
-
 import org.wisepersist.gradle.plugins.gwt.internal.ActionClosure;
 
 public class ExplodedWar extends DefaultTask {
@@ -115,7 +114,8 @@ public class ExplodedWar extends DefaultTask {
 				spec.with(root);
 			}}));
 	}
-	
+
+	@Input
 	public CopySpec getWebInf() {
         return webInf.into("", new ActionClosure<CopySpec>(this, new Action<CopySpec>(){
 			@Override
@@ -152,6 +152,7 @@ public class ExplodedWar extends DefaultTask {
 		this.webXml = webXml;
 	}
 
+	@OutputDirectory
 	public File getDestinationDir() {
 		return destinationDir;
 	}

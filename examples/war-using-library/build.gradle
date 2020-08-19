@@ -5,7 +5,7 @@ apply plugin: 'eclipse'
 repositories { mavenCentral() }
 
 dependencies {
-	compile project(':example-library')
+	implementation project(':example-library')
 }
 
 gwt {

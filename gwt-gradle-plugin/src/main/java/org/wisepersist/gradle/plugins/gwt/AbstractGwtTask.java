@@ -16,6 +16,7 @@
 package org.wisepersist.gradle.plugins.gwt;
 
 import java.io.File;
+import org.gradle.api.tasks.OutputDirectory;
 
 /**
  * Base class for several GWT related tasks that share specific parameters.
@@ -47,7 +48,8 @@ public abstract class AbstractGwtTask extends AbstractGwtActionTask {
 			jvmArgs("-Dgwt.persistentunitcachedir="+cacheDir.toString());
 		}
 	}
-	
+
+	@OutputDirectory
 	public File getWar() {
 		return war;
 	}
@@ -61,6 +63,7 @@ public abstract class AbstractGwtTask extends AbstractGwtActionTask {
 		this.war = war;
 	}
 
+	@OutputDirectory
 	public File getDeploy() {
 		return deploy;
 	}
@@ -74,6 +77,7 @@ public abstract class AbstractGwtTask extends AbstractGwtActionTask {
 		this.deploy = deploy;
 	}
 
+	@OutputDirectory
 	public File getExtra() {
 		return extra;
 	}
@@ -87,6 +91,7 @@ public abstract class AbstractGwtTask extends AbstractGwtActionTask {
 		this.extra = extra;
 	}
 
+	@OutputDirectory
 	public File getWorkDir() {
 		return workDir;
 	}
@@ -99,7 +104,8 @@ public abstract class AbstractGwtTask extends AbstractGwtActionTask {
 	public void setWorkDir(File workDir) {
 		this.workDir = workDir;
 	}
-	
+
+	@OutputDirectory
 	public File getGen() {
 		return gen;
 	}
@@ -113,6 +119,7 @@ public abstract class AbstractGwtTask extends AbstractGwtActionTask {
 		this.gen = gen;
 	}
 
+	@OutputDirectory
 	public File getCacheDir() {
 		return cacheDir;
 	}

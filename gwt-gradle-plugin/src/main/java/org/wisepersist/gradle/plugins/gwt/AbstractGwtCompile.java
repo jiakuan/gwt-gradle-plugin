@@ -19,24 +19,28 @@ import java.io.File;
 import java.util.concurrent.Callable;
 import org.gradle.api.internal.IConventionAware;
 import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.Optional;
+import org.gradle.api.tasks.OutputDirectory;
+import org.gradle.api.tasks.PathSensitive;
+import org.gradle.api.tasks.PathSensitivity;
 import org.wisepersist.gradle.plugins.gwt.internal.GwtCompileOptionsImpl;
 
 /**
  * Common implementation of tasks used for GWT compilation.
  */
 public class AbstractGwtCompile extends AbstractGwtTask implements GwtCompileOptions {
-	
+
 	private final GwtCompileOptions options = new GwtCompileOptionsImpl();
 
 	public AbstractGwtCompile() {
 		super("com.google.gwt.dev.Compiler");
 	}
-	
+
 	@Override
 	protected void addArgs() {
 		super.addArgs();
-		
+
 		argIfSet("-localWorkers", getLocalWorkers());
 		argIfEnabled(getDraftCompile(), "-draftCompile");
 		argIfEnabled(getCompileReport(), "-compileReport");
@@ -44,7 +48,7 @@ public class AbstractGwtCompile extends AbstractGwtTask implements GwtCompileOpt
 
 		argIfEnabled(getValidateOnly(), "-validateOnly");
 		argIfEnabled(getDisableGeneratingOnShards(), "-XdisableGeneratingOnShards");
-		
+
 		argIfSet("-optimize", getOptimize());
 		argIfEnabled(getDisableAggressiveOptimization(), "-XdisableAggressiveOptimization");
 		argIfEnabled(getDisableClassMetadata(), "-XdisableClassMetadata");
@@ -65,7 +69,7 @@ public class AbstractGwtCompile extends AbstractGwtTask implements GwtCompileOpt
 		argIfSet("-saveSourceOutput", getSaveSourceOutput());
 		argOnOff(getClosureFormattedOutput(), "-XclosureFormattedOutput", "-XnoclosureFormattedOutput");
 	}
-	
+
 	protected void configure(final GwtCompileOptions options) {
 		((IConventionAware)this).getConventionMapping().map("localWorkers", new Callable<Integer>() {
 			@Override
@@ -76,6 +80,7 @@ public class AbstractGwtCompile extends AbstractGwtTask implements GwtCompileOpt
 	}
 
 	/** {@inheritDoc} */
+	@Input
 	@Override
 	public Integer getLocalWorkers() {
 		return options.getLocalWorkers();
@@ -313,6 +318,8 @@ public class AbstractGwtCompile extends AbstractGwtTask implements GwtCompileOpt
 	}
 
 	/** {@inheritDoc} */
+	@InputFile
+	@PathSensitive(PathSensitivity.ABSOLUTE)
 	@Override
 	public File getMissingDepsFile() {
 		return options.getMissingDepsFile();
@@ -325,6 +332,7 @@ public class AbstractGwtCompile extends AbstractGwtTask implements GwtCompileOpt
 	}
 
 	/** {@inheritDoc} */
+	@Input
 	@Override
 	public Namespace getNamespace() {
 		return options.getNamespace();
@@ -337,6 +345,7 @@ public class AbstractGwtCompile extends AbstractGwtTask implements GwtCompileOpt
 	}
 
 	/** {@inheritDoc} */
+	@Input
 	@Override
 	public Boolean getEnforceStrictResources() {
 		return options.getEnforceStrictResources();
@@ -350,6 +359,7 @@ public class AbstractGwtCompile extends AbstractGwtTask implements GwtCompileOpt
 
 	/** {@inheritDoc} */
 	@Override
+	@Input
 	public Boolean getIncrementalCompileWarnings() {
 		return options.getIncrementalCompileWarnings();
 	}
@@ -361,6 +371,7 @@ public class AbstractGwtCompile extends AbstractGwtTask implements GwtCompileOpt
 	}
 
 	/** {@inheritDoc} */
+	@Input
 	@Override
 	public Boolean getOverlappingSourceWarnings() {
 		return options.getOverlappingSourceWarnings();
@@ -373,6 +384,7 @@ public class AbstractGwtCompile extends AbstractGwtTask implements GwtCompileOpt
 	}
 
 	/** {@inheritDoc} */
+	@Input
 	@Override
 	public Boolean getSaveSource() {
 		return options.getSaveSource();
@@ -385,6 +397,7 @@ public class AbstractGwtCompile extends AbstractGwtTask implements GwtCompileOpt
 	}
 
 	/** {@inheritDoc} */
+	@OutputDirectory
 	@Override
 	public File getSaveSourceOutput() {
 		return options.getSaveSourceOutput();
@@ -397,6 +410,7 @@ public class AbstractGwtCompile extends AbstractGwtTask implements GwtCompileOpt
 	}
 
 	/** {@inheritDoc} */
+	@Input
 	@Override
 	public Boolean getClosureFormattedOutput() {
 		return options.getClosureFormattedOutput();
