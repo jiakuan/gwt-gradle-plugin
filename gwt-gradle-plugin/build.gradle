@@ -87,6 +87,10 @@ java {
   withSourcesJar()
 }
 
+processResources {
+  duplicatesStrategy = DuplicatesStrategy.INCLUDE
+}
+
 def ossrU = project.hasProperty("ossrhUsername") ? ossrhUsername : ""
 def ossrP = project.hasProperty("ossrhPassword") ? ossrhPassword : ""
 
