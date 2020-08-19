@@ -12,3 +12,4 @@ gwt-unitCache/
 *.md.html
 /doc/javadoc/
 /doc/__output__/
+/.dnconfig

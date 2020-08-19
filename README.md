@@ -1,4 +1,4 @@
-# GWT Gradle Plugin
+﻿# GWT Gradle Plugin
 
 [![Build Status](https://travis-ci.org/jiakuan/gwt-gradle-plugin.svg?branch=master)](https://travis-ci.org/jiakuan/gwt-gradle-plugin)
 
@@ -80,6 +80,9 @@ If you are on Windows, you can use gradle wrapper to build.
 ```
 gradlew.bat clean build
 ```
+## Gracle 6.6+
+
+Starting from `gwt-gradle-plugin:1.1.0+`, you can use GWT `2.9.0` with Gradle `6.6+`.
 
 ## Gradle 5.2+
 
