@@ -99,7 +99,7 @@ artifacts {
 }
 
 signing {
-  sign configurations.archives
+  sign publishing.publications
 }
 
 processResources {
@@ -125,6 +125,7 @@ publishing {
         name = 'GWT Gradle Plugin'
         description = 'Gradle plugin to support GWT (http://www.gwtproject.org/) related tasks.'
         url = 'https://github.com/jiakuan/gwt-gradle-plugin/'
+        packaging = 'jar'
         licenses {
           license {
             name = 'The Apache License, Version 2.0'
