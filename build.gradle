@@ -1,29 +1,190 @@
+import org.gradle.plugins.ide.eclipse.model.AbstractLibrary
+import org.gradle.plugins.ide.eclipse.model.ClasspathEntry
+
+buildscript {
+  repositories {
+    jcenter()
+  }
+
+  dependencies {
+  }
+}
+
 plugins {
+  id 'java'
+  id 'maven-publish'
+  id 'signing'
+  id 'eclipse'
+
   id 'net.researchgate.release' version '2.8.1'
 
   // https://github.com/Codearte/gradle-nexus-staging-plugin
   id 'io.codearte.nexus-staging' version '0.22.0'
+
+  // For publishing the plugin to the Gradle Plugin Portal
+  id 'java-gradle-plugin'
+  id "com.gradle.plugin-publish" version "0.12.0"
 }
 
-allprojects {
-  group = 'org.wisepersist'
-  version = "$version"
-}
+group = 'org.wisepersist'
+version = "$version"
 
-task build
-task publish
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories { mavenCentral() }
+
+dependencies {
+  implementation gradleApi()
+  testImplementation group: 'junit', name: 'junit', version: '4.11'
+}
 
 ext {
   encoding = 'UTF-8'
 }
 
-allprojects {
-  apply plugin: 'eclipse'
-  tasks.eclipse.doLast {
-    File prefs = project.file('.settings/org.eclipse.core.resources.prefs');
-    if (!prefs.exists()) {
-      prefs.parentFile.mkdirs()
-      project.file('.settings/org.eclipse.core.resources.prefs') << "eclipse.preferences.version=1\nencoding/<project>=$encoding\n";
+// Change the output directory for the main source set back to the old path
+sourceSets.main.java.outputDir = new File(buildDir, "classes/main")
+sourceSets.test.java.outputDir = new File(buildDir, "classes/test")
+
+pluginBundle {
+  website = 'http://gwt-gradle-plugin.documentnode.io'
+  vcsUrl = 'https://github.com/jiakuan/gwt-gradle-plugin'
+  tags = ['gwt', 'gradle', 'gwt-gradle']
+}
+
+gradlePlugin {
+  plugins {
+    gwtGradlePlugin {
+      id = 'org.wisepersist.gwt'
+      displayName = 'GWT Gradle Plugin'
+      description = 'Gradle plugin to support GWT related tasks.'
+      implementationClass = 'org.wisepersist.gradle.plugins.gwt.GwtPlugin'
     }
+  }
+}
+
+eclipse {
+  classpath {
+    file {
+      whenMerged { org.gradle.plugins.ide.eclipse.model.Classpath cp ->
+        String gradleHome = gradle.getGradleHomeDir().absolutePath.replace(File.separator, '/')
+        String gradleSrc = "${gradleHome}/src"
+        cp.entries.each { ClasspathEntry entry ->
+          if ((entry in AbstractLibrary) && (entry.library.file.name.startsWith('gradle-'))) {
+            entry.sourcePath = new org.gradle.plugins.ide.eclipse.model.internal.FileReferenceFactory().fromPath(gradleSrc)
+          }
+        }
+      }
+    }
+  }
+}
+
+ext.userHome = System.getProperty("user.home")
+
+javadoc {
+  // Avoid error: cannot access external classes
+  options.addStringOption("sourcepath", "")
+
+  if (JavaVersion.current().isJava9Compatible()) {
+    options.addBooleanOption('html5', true)
+  }
+}
+
+java {
+  withJavadocJar()
+  withSourcesJar()
+}
+
+processResources {
+  duplicatesStrategy = DuplicatesStrategy.INCLUDE
+}
+
+def ossrU = project.hasProperty("ossrhUsername") ? ossrhUsername : ""
+def ossrP = project.hasProperty("ossrhPassword") ? ossrhPassword : ""
+
+publishing {
+  publications {
+    mavenJava(MavenPublication) {
+      from components.java
+      pom {
+        name = 'GWT Gradle Plugin'
+        description = 'Gradle plugin to support GWT (http://www.gwtproject.org/) related tasks.'
+        url = 'https://github.com/jiakuan/gwt-gradle-plugin/'
+        licenses {
+          license {
+            name = 'The Apache License, Version 2.0'
+            url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+          }
+        }
+        developers {
+          developer {
+            id = 'jiakuan'
+            name = 'Jiakuan Wang'
+            email = 'jake@documentnode.io'
+            organization = 'Document Node'
+            organizationUrl = 'https://documentnode.io'
+          }
+        }
+
+        scm {
+          connection = 'scm:git:git@github.com:jiakuan/gwt-gradle-plugin.git'
+          developerConnection = 'scm:git:git@github.com:jiakuan/gwt-gradle-plugin.git'
+          url = 'git@github.com:jiakuan/gwt-gradle-plugin.git'
+        }
+      }
+    }
+  }
+  repositories {
+    maven {
+      def releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+      def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
+      url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+      credentials {
+        username = ossrU
+        password = ossrP
+      }
+    }
+  }
+}
+
+signing {
+  sign publishing.publications.mavenJava
+}
+
+nexusStaging {
+  username = ossrU
+  password = ossrP
+}
+
+task writeNewPom {
+  doLast {
+    pom {
+      project {
+        packaging 'jar'
+        build {
+          plugins {
+            plugin {
+              groupId 'org.apache.maven.plugins'
+              artifactId 'maven-compiler-plugin'
+              version '3.8.0'
+              configuration {
+                source '1.8'
+                target '1.8'
+                encoding 'UTF-8'
+              }
+            }
+          }
+        }
+      }
+    }.writeTo("$projectDir/pom.xml")
+  }
+}
+
+tasks.eclipse.doLast {
+  File prefs = project.file('.settings/org.eclipse.core.resources.prefs');
+  if (!prefs.exists()) {
+    prefs.parentFile.mkdirs()
+    project.file('.settings/org.eclipse.core.resources.prefs') << "eclipse.preferences.version=1\nencoding/<project>=$encoding\n";
   }
 }

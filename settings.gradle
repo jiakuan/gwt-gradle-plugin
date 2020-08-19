@@ -1,3 +1,0 @@
-include 'gwt-gradle-plugin'
-
-rootProject.name = "gwt-gradle"
