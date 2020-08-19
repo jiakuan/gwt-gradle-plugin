@@ -93,6 +93,15 @@ java {
   withSourcesJar()
 }
 
+artifacts {
+  archives sourcesJar
+  archives javadocJar
+}
+
+signing {
+  sign configurations.archives
+}
+
 processResources {
   duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }
@@ -151,10 +160,6 @@ publishing {
       }
     }
   }
-}
-
-signing {
-  sign publishing.publications.mavenJava
 }
 
 tasks.eclipse.doLast {
