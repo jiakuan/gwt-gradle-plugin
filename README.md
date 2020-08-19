@@ -48,7 +48,7 @@ The following example shows the code to set up gwt-gradle-plugin for a GWT web a
             mavenCentral()
         }
         dependencies {
-            classpath 'org.wisepersist:gwt-gradle-plugin:1.0.10'
+            classpath 'org.wisepersist:gwt-gradle-plugin:1.1.0'
         }
     }
 
@@ -80,9 +80,10 @@ If you are on Windows, you can use gradle wrapper to build.
 ```
 gradlew.bat clean build
 ```
-## Gracle 6.6+
 
-Starting from `gwt-gradle-plugin:1.1.0+`, you can use GWT `2.9.0` with Gradle `6.6+`.
+## Gradle 6.6+
+
+Starting from `gwt-gradle-plugin:1.1.4+`, you can use GWT `2.9.0` with Gradle `6.6+`.
 
 ## Gradle 5.2+
 
