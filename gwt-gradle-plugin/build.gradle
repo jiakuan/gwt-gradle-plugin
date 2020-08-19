@@ -13,7 +13,7 @@ buildscript {
 
 plugins {
   id 'java'
-  id 'maven'
+  id 'maven-publish'
   id 'signing'
 
   // For publishing the plugin to the Gradle Plugin Portal
@@ -36,7 +36,7 @@ sourceSets.main.java.outputDir = new File(buildDir, "classes/main")
 sourceSets.test.java.outputDir = new File(buildDir, "classes/test")
 
 rootProject.tasks.build.dependsOn project.tasks.build
-rootProject.tasks.uploadArchives.dependsOn project.tasks.uploadArchives
+rootProject.tasks.publish.dependsOn project.tasks.publish
 
 pluginBundle {
   website = 'http://gwt-gradle-plugin.documentnode.io'
@@ -76,80 +76,67 @@ ext.userHome = System.getProperty("user.home")
 javadoc {
   // Avoid error: cannot access external classes
   options.addStringOption("sourcepath", "")
+
+  if (JavaVersion.current().isJava9Compatible()) {
+    options.addBooleanOption('html5', true)
+  }
 }
 
-task sourcesJar(type: Jar, dependsOn: classes) {
-  classifier = 'sources'
-  from sourceSets.main.allSource
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-  classifier = 'javadoc'
-  from 'build/docs/javadoc'
-}
-
-artifacts {
-  archives sourcesJar
-  archives javadocJar
-}
-
-signing {
-  sign configurations.archives
+java {
+  withJavadocJar()
+  withSourcesJar()
 }
 
 def ossrU = project.hasProperty("ossrhUsername") ? ossrhUsername : ""
 def ossrP = project.hasProperty("ossrhPassword") ? ossrhPassword : ""
 
-uploadArchives {
-  repositories {
-    mavenDeployer {
-      beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-
-      repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-        authentication(userName: ossrU, password: ossrP)
-      }
-
-      snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-        authentication(userName: ossrU, password: ossrP)
-      }
-
-      pom.project {
-        name 'GWT Gradle Plugin'
-        packaging 'jar'
-        description 'Gradle plugin to support GWT (http://www.gwtproject.org/) related tasks.'
-        url 'https://github.com/jiakuan/gwt-gradle-plugin/'
-
-        scm {
-          connection 'scm:git:git@github.com:jiakuan/gwt-gradle-plugin.git'
-          developerConnection 'scm:git:git@github.com:jiakuan/gwt-gradle-plugin.git'
-          url 'git@github.com:jiakuan/gwt-gradle-plugin.git'
-        }
-
+publishing {
+  publications {
+    mavenJava(MavenPublication) {
+      from components.java
+      pom {
+        name = 'GWT Gradle Plugin'
+        description = 'Gradle plugin to support GWT (http://www.gwtproject.org/) related tasks.'
+        url = 'https://github.com/jiakuan/gwt-gradle-plugin/'
         licenses {
           license {
-            name 'The Apache Software License, Version 2.0'
-            url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-            distribution 'repo'
+            name = 'The Apache License, Version 2.0'
+            url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+          }
+        }
+        developers {
+          developer {
+            id = 'jiakuan'
+            name = 'Jiakuan Wang'
+            email = 'jake@documentnode.io'
+            organization = 'Document Node'
+            organizationUrl = 'https://documentnode.io'
           }
         }
 
-        developers {
-          developer {
-            id 'jiakuan'
-            name 'Jiakuan Wang'
-            email 'delight.wjk@gmail.com'
-            organization 'WisePersist.org'
-            organizationUrl 'https://github.com/jiakuan/gwt-gradle-plugin'
-            roles {
-              role 'architect'
-              role 'developer'
-            }
-            timezone '+8'
-          }
+        scm {
+          connection = 'scm:git:git@github.com:jiakuan/gwt-gradle-plugin.git'
+          developerConnection = 'scm:git:git@github.com:jiakuan/gwt-gradle-plugin.git'
+          url = 'git@github.com:jiakuan/gwt-gradle-plugin.git'
         }
       }
     }
   }
+  repositories {
+    maven {
+      def releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+      def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
+      url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+      credentials {
+        username = ossrU
+        password = ossrP
+      }
+    }
+  }
+}
+
+signing {
+  sign publishing.publications.mavenJava
 }
 
 task writeNewPom {
