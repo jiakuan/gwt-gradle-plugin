@@ -18,9 +18,6 @@ plugins {
 
   id 'net.researchgate.release' version '2.8.1'
 
-  // https://github.com/Codearte/gradle-nexus-staging-plugin
-  id 'io.codearte.nexus-staging' version '0.22.0'
-
   // For publishing the plugin to the Gradle Plugin Portal
   id 'java-gradle-plugin'
   id "com.gradle.plugin-publish" version "0.12.0"
@@ -107,6 +104,42 @@ publishing {
   publications {
     mavenJava(MavenPublication) {
       from components.java
+      versionMapping {
+        usage('java-api') {
+          fromResolutionOf('runtimeClasspath')
+        }
+        usage('java-runtime') {
+          fromResolutionResult()
+        }
+      }
+      pom {
+        name = 'GWT Gradle Plugin'
+        description = 'Gradle plugin to support GWT (http://www.gwtproject.org/) related tasks.'
+        url = 'https://github.com/jiakuan/gwt-gradle-plugin/'
+        licenses {
+          license {
+            name = 'The Apache License, Version 2.0'
+            url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+          }
+        }
+        developers {
+          developer {
+            id = 'jiakuan'
+            name = 'Jiakuan Wang'
+            email = 'jake@documentnode.io'
+            organization = 'Document Node'
+            organizationUrl = 'https://documentnode.io'
+          }
+        }
+
+        scm {
+          connection = 'scm:git:git@github.com:jiakuan/gwt-gradle-plugin.git'
+          developerConnection = 'scm:git:git@github.com:jiakuan/gwt-gradle-plugin.git'
+          url = 'git@github.com:jiakuan/gwt-gradle-plugin.git'
+        }
+      }
+    }
+    pluginMaven(MavenPublication) {
       pom {
         name = 'GWT Gradle Plugin'
         description = 'Gradle plugin to support GWT (http://www.gwtproject.org/) related tasks.'
@@ -150,35 +183,6 @@ publishing {
 
 signing {
   sign publishing.publications.mavenJava
-}
-
-nexusStaging {
-  username = ossrU
-  password = ossrP
-}
-
-task writeNewPom {
-  doLast {
-    pom {
-      project {
-        packaging 'jar'
-        build {
-          plugins {
-            plugin {
-              groupId 'org.apache.maven.plugins'
-              artifactId 'maven-compiler-plugin'
-              version '3.8.0'
-              configuration {
-                source '1.8'
-                target '1.8'
-                encoding 'UTF-8'
-              }
-            }
-          }
-        }
-      }
-    }.writeTo("$projectDir/pom.xml")
-  }
 }
 
 tasks.eclipse.doLast {
