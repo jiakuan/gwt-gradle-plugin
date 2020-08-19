@@ -139,6 +139,11 @@ signing {
   sign publishing.publications.mavenJava
 }
 
+nexusStaging {
+  username = ossrU
+  password = ossrP
+}
+
 task writeNewPom {
   doLast {
     pom {

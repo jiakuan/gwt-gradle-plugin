@@ -9,26 +9,32 @@ clean:
 
 .PHONY: build
 build:
-	./gradlew build -x signArchives
+	./gradlew build
 
 build-fast:
-	./gradlew build -Pcheck=false -x signArchives
+	./gradlew build -Pcheck=false
 
 release:
 	./gradlew release
 
 publish-snapshot:
-	./gradlew build install uploadArchives
+	./gradlew build publishToMavenLocal publish
 
 publish:
 	git checkout tags/${LATEST_TAG}
-	./gradlew build install uploadArchives
+	./gradlew build publishToMavenLocal publish
 	git checkout master
 
 publish-plugins:
 	git checkout tags/${LATEST_TAG}
 	./gradlew publishPlugins
 	git checkout master
+
+mvn-close:
+	./gradlew closeRepository
+
+mvn-release:
+	./gradlew releaseRepository
 
 .PHONY: doc
 doc: build
