@@ -19,19 +19,22 @@ package org.wisepersist.gradle.plugins.gwt;
  * Eclipse related options used by the {@link GwtEclipsePlugin}.
  */
 public class GwtEclipseOptions {
-	
-	private boolean addGwtContainer = true;
 
-	public boolean isAddGwtContainer() {
-		return addGwtContainer;
-	}
+  private boolean addGwtContainer = true;
 
-	/**
-	 * Sets if the {@code com.google.gwt.eclipse.core.GWT_CONTAINER} should be added to the eclipse classpath instead of using the Gradle dependencies.
-	 * 
-	 * @param addGwtContainer true to use the GWT_CONTAINER, false to use the dependencies defined by Gradle
-	 */
-	public void setAddGwtContainer(boolean addGwtContainer) {
-		this.addGwtContainer = addGwtContainer;
-	}
+  public boolean isAddGwtContainer() {
+    return addGwtContainer;
+  }
+
+  /**
+   * Sets if the {@code com.google.gwt.eclipse.core.GWT_CONTAINER}
+   * should be added to the eclipse classpath instead of using the
+   * Gradle dependencies.
+   *
+   * @param addGwtContainer true to use the GWT_CONTAINER, false to
+   * use the dependencies defined by Gradle
+   */
+  public void setAddGwtContainer(boolean addGwtContainer) {
+    this.addGwtContainer = addGwtContainer;
+  }
 }

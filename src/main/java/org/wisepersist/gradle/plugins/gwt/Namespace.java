@@ -16,5 +16,5 @@
 package org.wisepersist.gradle.plugins.gwt;
 
 public enum Namespace {
-	PACKAGE, NONE
+  PACKAGE, NONE
 }

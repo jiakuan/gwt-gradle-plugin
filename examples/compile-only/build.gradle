@@ -1,18 +1,20 @@
 apply plugin: 'gwt-compiler'
 apply plugin: 'eclipse'
 
-repositories { mavenCentral() }
+repositories {
+  mavenCentral()
+}
 
 gwt {
-	gwtVersion='2.9.0'
-	minHeapSize = "512M"
-	maxHeapSize = "1024M"
+  gwtVersion = '2.9.0'
+  minHeapSize = "512M"
+  maxHeapSize = "1024M"
 
-	modules 'org.wisepersist.gradle.plugins.gwt.example.Example'
+  modules 'org.wisepersist.gradle.plugins.gwt.example.Example'
 
-	compiler {
-		strict = true
-		disableClassMetadata = true
-		disableCastChecking = true
-	}
+  compiler {
+    strict = true
+    disableClassMetadata = true
+    disableCastChecking = true
+  }
 }

@@ -15,26 +15,20 @@
  */
 package org.wisepersist.gradle.plugins.gwt;
 
-import org.gradle.api.Task;
-import org.gradle.api.specs.Spec;
-
 /**
  * Task to run the GWT compiler for validation only so that no JavaScript output is produced.
  */
 public class GwtCheck extends AbstractGwtCompile {
-	public GwtCheck() {
-		setValidateOnly(true);
-		
-		getOutputs().upToDateWhen(new Spec<Task>(){
-			@Override
-			public boolean isSatisfiedBy(Task task) {
-				return false;
-			}});
-	}
-	
-	/** {@inheritDoc} */
-	@Override
-	protected boolean isDevTask() {
-		return false;
-	}
+
+  public GwtCheck() {
+    setValidateOnly(true);
+
+    getOutputs().upToDateWhen(task -> false);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected boolean isDevTask() {
+    return false;
+  }
 }

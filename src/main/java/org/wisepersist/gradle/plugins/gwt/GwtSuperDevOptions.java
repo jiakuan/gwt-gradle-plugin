@@ -22,95 +22,101 @@ import java.io.File;
  */
 public interface GwtSuperDevOptions {
 
-	/**
-	 * @see #setWorkDir(File)
-	 * 
-	 * @return the workDir
-	 */
-	File getWorkDir();
+  /**
+   * @see #setWorkDir(File)
+   *
+   * @return the workDir
+   */
+  File getWorkDir();
 
-	/**
-	 * Sets the "-workDir" option that specifies the directory where the Super Dev Mode outputs its
-	 * generated files.
-	 * 
-	 * @param workDir
-	 *            the workDir to set
-	 */
-	void setWorkDir(File workDir);
+  /**
+   * Sets the "-workDir" option that specifies the directory where the
+   * Super Dev Mode outputs its
+   * generated files.
+   *
+   * @param workDir
+   *            the workDir to set
+   */
+  void setWorkDir(File workDir);
 
-	String getBindAddress();
+  String getBindAddress();
 
-	/**
-	 * Sets the "-bindAddress" option that defines to which network ip the socket should be bound.
-	 * This is relevant if the Super Dev Mode should be reachable from a remote
-	 * host.
-	 * 
-	 * @param bindAddress
-	 *            the bindAddress to set
-	 */
-	void setBindAddress(String bindAddress);
+  /**
+   * Sets the "-bindAddress" option that defines to which network ip the
+   * socket should be bound.
+   *
+   * This is relevant if the Super Dev Mode should be reachable from a
+   * remote host.
+   *
+   * @param bindAddress
+   *            the bindAddress to set
+   */
+  void setBindAddress(String bindAddress);
 
-	Integer getPort();
+  Integer getPort();
 
-	/**
-	 * Sets the "-port" option that defines to which port the socket should be bound.
-	 * 
-	 * @param port
-	 *            the port to set. Valid range is [1; 65535].
-	 */
-	void setPort(Integer port);
+  /**
+   * Sets the "-port" option that defines to which port the socket
+   * should be bound.
+   *
+   * @param port the port to set. Valid range is [1; 65535].
+   */
+  void setPort(Integer port);
 
-	Boolean getNoPrecompile();
+  Boolean getNoPrecompile();
 
-	/**
-	 * Sets the "-noprecompile" flag that causes the Super Dev Mode to not compile the
-	 * modules on startup but only at access.
-	 * 
-	 * @param noPrecompile true if the noPrecompile flag should be set, false otherwise
-	 */
-	void setNoPrecompile(Boolean noPrecompile);
+  /**
+   * Sets the "-noprecompile" flag that causes the Super Dev Mode to
+   * not compile the modules on startup but only at access.
+   *
+   * @param noPrecompile true if the noPrecompile flag should be set,
+   * false otherwise
+   */
+  void setNoPrecompile(Boolean noPrecompile);
 
-	/**
-	 * If set to true, this causes the src to be prepended to the classpath instead of using -src parameters.
-	 * This is necessary due to a bug in GWT 2.5/2.6.
-	 * 
-	 * @see <a href="https://code.google.com/p/google-web-toolkit/issues/detail?id=7750">https://code.google.com/p/google-web-toolkit/issues/detail?id=7750</a>
-	 * 
-	 * @param useClasspathForSrc true to add the src to the classpath, false to use -src parameters
-	 */
-	void setUseClasspathForSrc(Boolean useClasspathForSrc);
+  /**
+   * If set to true, this causes the src to be prepended to the
+   * classpath instead of using -src parameters.
+   *
+   * This is necessary due to a bug in GWT 2.5/2.6.
+   *
+   * @see <a href="https://code.google.com/p/google-web-toolkit/issues/detail?id=7750">https://code.google.com/p/google-web-toolkit/issues/detail?id=7750</a>
+   *
+   * @param useClasspathForSrc true to add the src to the classpath,
+   * false to use -src parameters
+   */
+  void setUseClasspathForSrc(Boolean useClasspathForSrc);
 
-	Boolean getUseClasspathForSrc();
+  Boolean getUseClasspathForSrc();
 
-	public abstract void setLauncherDir(File launcherDir);
+  void setLauncherDir(File launcherDir);
 
-	public abstract File getLauncherDir();
+  File getLauncherDir();
 
-	public abstract void setCompileTestRecompiles(Integer compileTestRecompiles);
+  void setCompileTestRecompiles(Integer compileTestRecompiles);
 
-	public abstract Integer getCompileTestRecompiles();
+  Integer getCompileTestRecompiles();
 
-	public abstract void setCompileTest(Boolean compileTest);
+  void setCompileTest(Boolean compileTest);
 
-	public abstract Boolean getCompileTest();
+  Boolean getCompileTest();
 
-	public abstract void setFailOnError(Boolean failOnError);
+  void setFailOnError(Boolean failOnError);
 
-	public abstract Boolean getFailOnError();
+  Boolean getFailOnError();
 
-	public abstract void setAllowMissingSrc(Boolean allowMissingSrc);
+  void setAllowMissingSrc(Boolean allowMissingSrc);
 
-	public abstract Boolean getAllowMissingSrc();
+  Boolean getAllowMissingSrc();
 
-	Boolean getClosureFormattedOutput();
+  Boolean getClosureFormattedOutput();
 
-	/**
-	 * If set to true, this adds the parameter -XclosureFormattedOutput.
-	 * If set to false, this adds the parameter -XnoclosureFormattedOutput.
-	 * Added in GWT 2.8.
-	 *
-	 * @param closureFormattedOutput The closure formatted output.
-	 */
-	void setClosureFormattedOutput(Boolean closureFormattedOutput);
-
+  /**
+   * If set to true, this adds the parameter -XclosureFormattedOutput.
+   * If set to false, this adds the parameter -XnoclosureFormattedOutput.
+   * Added in GWT 2.8.
+   *
+   * @param closureFormattedOutput The closure formatted output.
+   */
+  void setClosureFormattedOutput(Boolean closureFormattedOutput);
 }

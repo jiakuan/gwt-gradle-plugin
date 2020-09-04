@@ -17,7 +17,6 @@ package org.wisepersist.gradle.plugins.gwt;
 
 import java.io.File;
 import java.util.concurrent.Callable;
-
 import org.gradle.api.internal.ConventionMapping;
 import org.gradle.api.internal.IConventionAware;
 import org.gradle.api.tasks.CacheableTask;
@@ -29,161 +28,69 @@ import org.gradle.api.tasks.OutputDirectory;
 @CacheableTask
 public class GwtCompile extends AbstractGwtCompile {
 
-	/** {@inheritDoc} */
-	@Override
-	@OutputDirectory
-	public File getWar() {
-		return super.getWar();
-	}
-	
-	/** {@inheritDoc} */
-	@Override
-	protected boolean isDevTask() {
-		return false;
-	}
-	
-	protected void configure(final GwtCompileOptions options) {
-		super.configure(options);
-		
-		ConventionMapping conventionMapping =((IConventionAware)this).getConventionMapping();
-		conventionMapping.map("draftCompile", new Callable<Boolean>() {
-			@Override
-			public Boolean call() throws Exception {
-				return options.getDraftCompile();
-			}
-		});
-		conventionMapping.map("compileReport", new Callable<Boolean>() {
-			@Override
-			public Boolean call() throws Exception {
-				return options.getCompileReport();
-			}
-		});
-		conventionMapping.map("compilerMetrics", new Callable<Boolean>() {
-			@Override
-			public Boolean call() throws Exception {
-				return options.getCompilerMetrics();
-			}
-		});
-		conventionMapping.map("validateOnly", new Callable<Boolean>() {
-			@Override
-			public Boolean call() throws Exception {
-				return options.getValidateOnly();
-			}
-		});
-		conventionMapping.map("disableGeneratingOnShards", new Callable<Boolean>() {
-			@Override
-			public Boolean call() throws Exception {
-				return options.getDisableGeneratingOnShards();
-			}
-		});
-		conventionMapping.map("optimize", new Callable<Integer>() {
-			@Override
-			public Integer call() throws Exception {
-				return options.getOptimize();
-			}
-		});
-		conventionMapping.map("disableAggressiveOptimization", new Callable<Boolean>() {
-			@Override
-			public Boolean call() throws Exception {
-				return options.getDisableAggressiveOptimization();
-			}
-		});
-		conventionMapping.map("disableClassMetadata", new Callable<Boolean>() {
-			@Override
-			public Boolean call() throws Exception {
-				return options.getDisableClassMetadata();
-			}
-		});
-		conventionMapping.map("disableCastChecking", new Callable<Boolean>() {
-			@Override
-			public Boolean call() throws Exception {
-				return options.getDisableCastChecking();
-			}
-		});
-		conventionMapping.map("ea", new Callable<Boolean>() {
-			@Override
-			public Boolean call() throws Exception {
-				return options.getEa();
-			}
-		});
-		conventionMapping.map("disableRunAsync", new Callable<Boolean>() {
-			@Override
-			public Boolean call() throws Exception {
-				return options.getDisableRunAsync();
-			}
-		});
-		conventionMapping.map("style", new Callable<Style>() {
-			@Override
-			public Style call() throws Exception {
-				return options.getStyle();
-			}
-		});
-		conventionMapping.map("soycDetailed", new Callable<Boolean>() {
-			@Override
-			public Boolean call() throws Exception {
-				return options.getSoycDetailed();
-			}
-		});
-		conventionMapping.map("strict", new Callable<Boolean>() {
-			@Override
-			public Boolean call() throws Exception {
-				return options.getStrict();
-			}
-		});
-		conventionMapping.map("disableSoycHtml", new Callable<Boolean>() {
-			@Override
-			public Boolean call() throws Exception {
-				return options.getDisableSoycHtml();
-			}
-		});
-		conventionMapping.map("fragmentCount", new Callable<Integer>() {
-			@Override
-			public Integer call() throws Exception {
-				return options.getFragmentCount();
-			}
-		});
-		conventionMapping.map("missingDepsFile", new Callable<File>() {
-			@Override
-			public File call() throws Exception {
-				return options.getMissingDepsFile();
-			}
-		});
-		conventionMapping.map("namespace", new Callable<Namespace>() {
-			@Override
-			public Namespace call() throws Exception {
-				return options.getNamespace();
-			}
-		});
-		conventionMapping.map("enforceStrictResources", new Callable<Boolean>() {
-			@Override
-			public Boolean call() throws Exception {
-				return options.getEnforceStrictResources();
-			}
-		});
-		conventionMapping.map("incrementalCompileWarnings", new Callable<Boolean>() {
-			@Override
-			public Boolean call() throws Exception {
-				return options.getIncrementalCompileWarnings();
-			}
-		});
-		conventionMapping.map("overlappingSourceWarnings", new Callable<Boolean>() {
-			@Override
-			public Boolean call() throws Exception {
-				return options.getOverlappingSourceWarnings();
-			}
-		});
-		conventionMapping.map("saveSource", new Callable<Boolean>() {
-			@Override
-			public Boolean call() throws Exception {
-				return options.getSaveSource();
-			}
-		});
-		conventionMapping.map("saveSourceOutput", new Callable<File>() {
-			@Override
-			public File call() throws Exception {
-				return options.getSaveSourceOutput();
-			}
-		});
-		conventionMapping.map("closureFormattedOutput", options::getClosureFormattedOutput);
-	}
+  /** {@inheritDoc} */
+  @Override
+  @OutputDirectory
+  public File getWar() {
+    return super.getWar();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected boolean isDevTask() {
+    return false;
+  }
+
+  protected void configure(final GwtCompileOptions options) {
+    super.configure(options);
+
+    ConventionMapping conventionMapping = ((IConventionAware) this)
+        .getConventionMapping();
+    conventionMapping.map("draftCompile",
+        (Callable<Boolean>) () -> options.getDraftCompile());
+    conventionMapping.map("compileReport",
+        (Callable<Boolean>) () -> options.getCompileReport());
+    conventionMapping.map("compilerMetrics",
+        (Callable<Boolean>) () -> options.getCompilerMetrics());
+    conventionMapping.map("validateOnly",
+        (Callable<Boolean>) () -> options.getValidateOnly());
+    conventionMapping.map("disableGeneratingOnShards",
+        (Callable<Boolean>) () -> options.getDisableGeneratingOnShards());
+    conventionMapping.map("optimize",
+        (Callable<Integer>) () -> options.getOptimize());
+    conventionMapping.map("disableAggressiveOptimization",
+        (Callable<Boolean>) () -> options.getDisableAggressiveOptimization());
+    conventionMapping.map("disableClassMetadata",
+        (Callable<Boolean>) () -> options.getDisableClassMetadata());
+    conventionMapping.map("disableCastChecking",
+        (Callable<Boolean>) () -> options.getDisableCastChecking());
+    conventionMapping.map("ea", (Callable<Boolean>) () -> options.getEa());
+    conventionMapping.map("disableRunAsync",
+        (Callable<Boolean>) () -> options.getDisableRunAsync());
+    conventionMapping.map("style", (Callable<Style>) () -> options.getStyle());
+    conventionMapping.map("soycDetailed",
+        (Callable<Boolean>) () -> options.getSoycDetailed());
+    conventionMapping.map("strict",
+        (Callable<Boolean>) () -> options.getStrict());
+    conventionMapping.map("disableSoycHtml",
+        (Callable<Boolean>) () -> options.getDisableSoycHtml());
+    conventionMapping.map("fragmentCount",
+        (Callable<Integer>) () -> options.getFragmentCount());
+    conventionMapping.map("missingDepsFile",
+        (Callable<File>) () -> options.getMissingDepsFile());
+    conventionMapping.map("namespace",
+        (Callable<Namespace>) () -> options.getNamespace());
+    conventionMapping.map("enforceStrictResources",
+        (Callable<Boolean>) () -> options.getEnforceStrictResources());
+    conventionMapping.map("incrementalCompileWarnings",
+        (Callable<Boolean>) () -> options.getIncrementalCompileWarnings());
+    conventionMapping.map("overlappingSourceWarnings",
+        (Callable<Boolean>) () -> options.getOverlappingSourceWarnings());
+    conventionMapping.map("saveSource",
+        (Callable<Boolean>) () -> options.getSaveSource());
+    conventionMapping.map("saveSourceOutput",
+        (Callable<File>) () -> options.getSaveSourceOutput());
+    conventionMapping
+        .map("closureFormattedOutput", options::getClosureFormattedOutput);
+  }
 }

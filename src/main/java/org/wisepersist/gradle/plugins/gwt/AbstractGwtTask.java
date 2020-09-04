@@ -16,120 +16,123 @@
 package org.wisepersist.gradle.plugins.gwt;
 
 import java.io.File;
+import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputDirectory;
 
 /**
  * Base class for several GWT related tasks that share specific parameters.
  */
 public abstract class AbstractGwtTask extends AbstractGwtActionTask {
-	public AbstractGwtTask(String main) {
-		super(main);
-	}
 
-	private File war;
-	private File deploy;
-	private File extra;
-	private File workDir;
-	private File gen;
-	private File cacheDir;
-	
-	@Override
-	protected void addArgs() {
-		dirArgIfSet("-war", getWar());
-		dirArgIfSet("-deploy", getDeploy());
-		dirArgIfSet("-extra", getExtra());
-		dirArgIfSet("-workDir", getWorkDir());
-		dirArgIfSet("-gen", getGen());
-		
-		final File cacheDir = getCacheDir();
-		if(cacheDir != null) {
-			cacheDir.mkdirs();
-			
-			jvmArgs("-Dgwt.persistentunitcachedir="+cacheDir.toString());
-		}
-	}
+  public AbstractGwtTask(String main) {
+    super(main);
+  }
 
-	@OutputDirectory
-	public File getWar() {
-		return war;
-	}
+  private File war;
+  private File deploy;
+  private File extra;
+  private File workDir;
+  private File gen;
+  private File cacheDir;
 
-	/**
-	 * Sets the "-war" option.
-	 * 
-	 * @param war The "-war" option specified.
-	 */
-	public void setWar(File war) {
-		this.war = war;
-	}
+  @Override
+  protected void addArgs() {
+    dirArgIfSet("-war", getWar());
+    dirArgIfSet("-deploy", getDeploy());
+    dirArgIfSet("-extra", getExtra());
+    dirArgIfSet("-workDir", getWorkDir());
+    dirArgIfSet("-gen", getGen());
 
-	@OutputDirectory
-	public File getDeploy() {
-		return deploy;
-	}
+    final File cacheDir = getCacheDir();
+    if (cacheDir != null) {
+      cacheDir.mkdirs();
 
-	/**
-	 * Sets the "-deploy" option.
-	 * 
-	 * @param deploy The "-deploy" option specified.
-	 */
-	public void setDeploy(File deploy) {
-		this.deploy = deploy;
-	}
+      jvmArgs("-Dgwt.persistentunitcachedir=" + cacheDir.toString());
+    }
+  }
 
-	@OutputDirectory
-	public File getExtra() {
-		return extra;
-	}
+  @OutputDirectory
+  public File getWar() {
+    return war;
+  }
 
-	/**
-	 * Sets the "-extra" option.
-	 * 
-	 * @param extra The "-extra" option specified.
-	 */
-	public void setExtra(File extra) {
-		this.extra = extra;
-	}
+  /**
+   * Sets the "-war" option.
+   *
+   * @param war The "-war" option specified.
+   */
+  public void setWar(File war) {
+    this.war = war;
+  }
 
-	@OutputDirectory
-	public File getWorkDir() {
-		return workDir;
-	}
+  @Optional
+  @OutputDirectory
+  public File getDeploy() {
+    return deploy;
+  }
 
-	/**
-	 * Sets the "-workDir" option.
-	 * 
-	 * @param workDir The "-workDir" option specified.
-	 */
-	public void setWorkDir(File workDir) {
-		this.workDir = workDir;
-	}
+  /**
+   * Sets the "-deploy" option.
+   *
+   * @param deploy The "-deploy" option specified.
+   */
+  public void setDeploy(File deploy) {
+    this.deploy = deploy;
+  }
 
-	@OutputDirectory
-	public File getGen() {
-		return gen;
-	}
+  @OutputDirectory
+  public File getExtra() {
+    return extra;
+  }
 
-	/**
-	 * Sets the "-gen" option.
-	 * 
-	 * @param gen The "-gen" option specified.
-	 */
-	public void setGen(File gen) {
-		this.gen = gen;
-	}
+  /**
+   * Sets the "-extra" option.
+   *
+   * @param extra The "-extra" option specified.
+   */
+  public void setExtra(File extra) {
+    this.extra = extra;
+  }
 
-	@OutputDirectory
-	public File getCacheDir() {
-		return cacheDir;
-	}
+  @OutputDirectory
+  public File getWorkDir() {
+    return workDir;
+  }
 
-	/**
-	 * Sets the directory where to put the persistent unit cache.
-	 * 
-	 * @param cacheDir The cache dir specified.
-	 */
-	public void setCacheDir(File cacheDir) {
-		this.cacheDir = cacheDir;
-	}
+  /**
+   * Sets the "-workDir" option.
+   *
+   * @param workDir The "-workDir" option specified.
+   */
+  public void setWorkDir(File workDir) {
+    this.workDir = workDir;
+  }
+
+  @OutputDirectory
+  public File getGen() {
+    return gen;
+  }
+
+  /**
+   * Sets the "-gen" option.
+   *
+   * @param gen The "-gen" option specified.
+   */
+  public void setGen(File gen) {
+    this.gen = gen;
+  }
+
+  @OutputDirectory
+  public File getCacheDir() {
+    return cacheDir;
+  }
+
+  /**
+   * Sets the directory where to put the persistent unit cache.
+   *
+   * @param cacheDir The cache dir specified.
+   */
+  public void setCacheDir(File cacheDir) {
+    this.cacheDir = cacheDir;
+  }
 }

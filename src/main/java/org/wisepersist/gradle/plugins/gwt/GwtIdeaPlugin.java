@@ -16,8 +16,6 @@
 package org.wisepersist.gradle.plugins.gwt;
 
 import java.util.Collection;
-
-import org.gradle.api.Action;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.plugins.ide.idea.IdeaPlugin;
@@ -36,25 +34,23 @@ import org.gradle.plugins.ide.idea.model.IdeaModel;
  */
 public class GwtIdeaPlugin {
 
-	private static final String SCOPE_PROVIDED = "PROVIDED";
-	private static final String KEY_PLUS = "plus";
+  private static final String SCOPE_PROVIDED = "PROVIDED";
+  private static final String KEY_PLUS = "plus";
 
-	public void apply(final Project project, final GwtBasePlugin gwtBasePlugin) {
-		project.getPlugins().apply(IdeaPlugin.class);
+  public void apply(final Project project, final GwtBasePlugin gwtBasePlugin) {
+    project.getPlugins().apply(IdeaPlugin.class);
 
-		project.afterEvaluate(new Action<Project>() {
-			@Override
-			public void execute(final Project project) {
-				IdeaModel ideaModel = project.getExtensions().getByType(IdeaModel.class);
-				Collection<Configuration> configurations =
-						ideaModel.getModule().getScopes().get(SCOPE_PROVIDED).get(KEY_PLUS);
+    project.afterEvaluate(p -> {
+      IdeaModel ideaModel = p.getExtensions().getByType(IdeaModel.class);
+      Collection<Configuration> configurations =
+          ideaModel.getModule().getScopes().get(SCOPE_PROVIDED).get(KEY_PLUS);
 
-				Configuration gwtSdkConfiguration = gwtBasePlugin.getGwtSdkConfiguration();
-				Configuration gwtConfiguration = gwtBasePlugin.getGwtConfiguration();
+      Configuration gwtSdkConfiguration = gwtBasePlugin
+          .getGwtSdkConfiguration();
+      Configuration gwtConfiguration = gwtBasePlugin.getGwtConfiguration();
 
-				configurations.add(gwtSdkConfiguration);
-				configurations.add(gwtConfiguration);
-			}
-		});
-	}
+      configurations.add(gwtSdkConfiguration);
+      configurations.add(gwtConfiguration);
+    });
+  }
 }

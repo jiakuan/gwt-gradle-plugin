@@ -16,156 +16,156 @@
 package org.wisepersist.gradle.plugins.gwt.internal;
 
 import java.io.File;
-
 import org.wisepersist.gradle.plugins.gwt.GwtSuperDevOptions;
 
 /**
  * Default implementation of {@link GwtSuperDevOptions}.
  */
 public class GwtSuperDevOptionsImpl implements GwtSuperDevOptions {
-	private File workDir;
 
-	private String bindAddress;
-	private Integer port;
-	private Boolean noPrecompile;
-	private Boolean useClasspathForSrc;
-	private Boolean allowMissingSrc;
-	private Boolean failOnError;
-	private Boolean compileTest;
-	private Integer compileTestRecompiles;
-	private File launcherDir;
-	// -X[no]closureFormattedOutput
-	private Boolean closureFormattedOutput;
+  private File workDir;
 
-	/** {@inheritDoc} */
-	@Override
-	public File getWorkDir() {
-		return workDir;
-	}
+  private String bindAddress;
+  private Integer port;
+  private Boolean noPrecompile;
+  private Boolean useClasspathForSrc;
+  private Boolean allowMissingSrc;
+  private Boolean failOnError;
+  private Boolean compileTest;
+  private Integer compileTestRecompiles;
+  private File launcherDir;
+  // -X[no]closureFormattedOutput
+  private Boolean closureFormattedOutput;
 
-	/** {@inheritDoc} */
-	@Override
-	public void setWorkDir(File workDir) {
-		this.workDir = workDir;
-	}
+  /** {@inheritDoc} */
+  @Override
+  public File getWorkDir() {
+    return workDir;
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	public String getBindAddress() {
-		return bindAddress;
-	}
+  /** {@inheritDoc} */
+  @Override
+  public void setWorkDir(File workDir) {
+    this.workDir = workDir;
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	public void setBindAddress(String bindAddress) {
-		this.bindAddress = bindAddress;
-	}
+  /** {@inheritDoc} */
+  @Override
+  public String getBindAddress() {
+    return bindAddress;
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	public Integer getPort() {
-		return port;
-	}
+  /** {@inheritDoc} */
+  @Override
+  public void setBindAddress(String bindAddress) {
+    this.bindAddress = bindAddress;
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	public void setPort(Integer port) {
-		this.port = port;
-	}
+  /** {@inheritDoc} */
+  @Override
+  public Integer getPort() {
+    return port;
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	public Boolean getNoPrecompile() {
-		return noPrecompile;
-	}
+  /** {@inheritDoc} */
+  @Override
+  public void setPort(Integer port) {
+    this.port = port;
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	public void setNoPrecompile(Boolean noPrecompile) {
-		this.noPrecompile = noPrecompile;
-	}
-	
-	/** {@inheritDoc} */
-	@Override
-	public void setUseClasspathForSrc(Boolean useClasspathForSrc) {
-		this.useClasspathForSrc = useClasspathForSrc;
-	}
-	
-	/** {@inheritDoc} */
-	@Override
-	public Boolean getUseClasspathForSrc() {
-		return useClasspathForSrc;
-	}
+  /** {@inheritDoc} */
+  @Override
+  public Boolean getNoPrecompile() {
+    return noPrecompile;
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	public Boolean getAllowMissingSrc() {
-		return allowMissingSrc;
-	}
+  /** {@inheritDoc} */
+  @Override
+  public void setNoPrecompile(Boolean noPrecompile) {
+    this.noPrecompile = noPrecompile;
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	public void setAllowMissingSrc(Boolean allowMissingSrc) {
-		this.allowMissingSrc = allowMissingSrc;
-	}
+  /** {@inheritDoc} */
+  @Override
+  public void setUseClasspathForSrc(Boolean useClasspathForSrc) {
+    this.useClasspathForSrc = useClasspathForSrc;
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	public Boolean getFailOnError() {
-		return failOnError;
-	}
+  /** {@inheritDoc} */
+  @Override
+  public Boolean getUseClasspathForSrc() {
+    return useClasspathForSrc;
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	public void setFailOnError(Boolean failOnError) {
-		this.failOnError = failOnError;
-	}
+  /** {@inheritDoc} */
+  @Override
+  public Boolean getAllowMissingSrc() {
+    return allowMissingSrc;
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	public Boolean getCompileTest() {
-		return compileTest;
-	}
+  /** {@inheritDoc} */
+  @Override
+  public void setAllowMissingSrc(Boolean allowMissingSrc) {
+    this.allowMissingSrc = allowMissingSrc;
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	public void setCompileTest(Boolean compileTest) {
-		this.compileTest = compileTest;
-	}
+  /** {@inheritDoc} */
+  @Override
+  public Boolean getFailOnError() {
+    return failOnError;
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	public Integer getCompileTestRecompiles() {
-		return compileTestRecompiles;
-	}
+  /** {@inheritDoc} */
+  @Override
+  public void setFailOnError(Boolean failOnError) {
+    this.failOnError = failOnError;
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	public void setCompileTestRecompiles(Integer compileTestRecompiles) {
-		this.compileTestRecompiles = compileTestRecompiles;
-	}
+  /** {@inheritDoc} */
+  @Override
+  public Boolean getCompileTest() {
+    return compileTest;
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	public File getLauncherDir() {
-		return launcherDir;
-	}
+  /** {@inheritDoc} */
+  @Override
+  public void setCompileTest(Boolean compileTest) {
+    this.compileTest = compileTest;
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	public void setLauncherDir(File launcherDir) {
-		this.launcherDir = launcherDir;
-	}
+  /** {@inheritDoc} */
+  @Override
+  public Integer getCompileTestRecompiles() {
+    return compileTestRecompiles;
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	public Boolean getClosureFormattedOutput() {
-		return closureFormattedOutput;
-	}
+  /** {@inheritDoc} */
+  @Override
+  public void setCompileTestRecompiles(Integer compileTestRecompiles) {
+    this.compileTestRecompiles = compileTestRecompiles;
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	public void setClosureFormattedOutput(Boolean closureFormattedOutput) {
-		this.closureFormattedOutput = closureFormattedOutput;
-	}
+  /** {@inheritDoc} */
+  @Override
+  public File getLauncherDir() {
+    return launcherDir;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void setLauncherDir(File launcherDir) {
+    this.launcherDir = launcherDir;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public Boolean getClosureFormattedOutput() {
+    return closureFormattedOutput;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void setClosureFormattedOutput(Boolean closureFormattedOutput) {
+    this.closureFormattedOutput = closureFormattedOutput;
+  }
 }

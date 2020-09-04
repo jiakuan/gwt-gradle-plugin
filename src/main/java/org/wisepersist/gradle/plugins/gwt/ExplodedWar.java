@@ -15,153 +15,97 @@
  */
 package org.wisepersist.gradle.plugins.gwt;
 
-import groovy.lang.Closure;
 import java.io.File;
 import java.util.Collections;
 import java.util.concurrent.Callable;
-import org.gradle.api.Action;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileCollection;
-import org.gradle.api.specs.Spec;
-import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputDirectory;
 import org.gradle.api.tasks.TaskAction;
-import org.wisepersist.gradle.plugins.gwt.internal.ActionClosure;
 
 public class ExplodedWar extends DefaultTask {
-	
-	private final CopySpec root;
-	
-	private File destinationDir;
-	private File webXml;
 
-    private FileCollection classpath;
-    private final CopySpec webInf;
-	
-	public ExplodedWar() {
-		root = getProject().copySpec(new ActionClosure<CopySpec>(this, new Action<CopySpec>() {
-			@Override
-			public void execute(CopySpec spec) {
-			}
-		}));
-		
-		webInf = root.into("WEB-INF", new ActionClosure<CopySpec>(this, new Action<CopySpec>(){
-			@Override
-			public void execute(CopySpec spec) {
-			}}));
-		
-		 webInf.into("", (new ActionClosure<CopySpec>(this, new Action<CopySpec>(){
-				@Override
-				public void execute(CopySpec spec) {
-					spec.from(new Callable<File>() {
-						
-						@Override
-						public File call() throws Exception {
-							return getWebXml();
-						}
-					}).rename(".*", "web.xml");
-				}})));
-		
-        webInf.into("classes", new ActionClosure<CopySpec>(this, new Action<CopySpec>(){
-			@Override
-			public void execute(CopySpec spec) {
-				spec.from(new Callable<Iterable<File>>() {
-					
-					@Override
-					public Iterable<File> call() throws Exception {
-						final FileCollection classpath = getClasspath();
-						return	classpath == null ? Collections.<File>emptyList() : classpath.filter(new Spec<File>() {
-							@Override
-							public boolean isSatisfiedBy(File file) {
-								return file.isDirectory();
-							}
-						});
-					}
-				});
-			}}));
-        
-        webInf.into("lib", new ActionClosure<CopySpec>(this, new Action<CopySpec>(){
-        	@Override
-        	public void execute(CopySpec spec) {
-        		spec.from(new Callable<Iterable<File>>() {
-        			
-        			@Override
-        			public Iterable<File> call() throws Exception {
-        				final FileCollection classpath = getClasspath();
-        				return	classpath == null ? Collections.<File>emptyList() : classpath.filter(new Spec<File>() {
-        					@Override
-        					public boolean isSatisfiedBy(File file) {
-        						return file.isFile();
-        					}
-        				});
-        			}
-        		});
-        	}}));
-	}
-	
-	@TaskAction
-	protected void buildWarTemplate() {
-		// TODO usage of ActionClosure can be removed when updating to Gradle 2.5+
-		getProject().copy(new ActionClosure<CopySpec>(this, new Action<CopySpec>() {
+  private File destinationDir;
+  private File webXml;
 
-			@Override
-			public void execute(CopySpec spec) {
-				spec.into(getDestinationDir());
-				spec.with(root);
-			}}));
-	}
+  private FileCollection classpath;
 
-	@Input
-	public CopySpec getWebInf() {
-        return webInf.into("", new ActionClosure<CopySpec>(this, new Action<CopySpec>(){
-			@Override
-			public void execute(CopySpec arg0) {
-			}}));
-    }
-	
-	public CopySpec webInf(Closure<CopySpec> configureClosure) {
-        return webInf.into("", configureClosure);
-    }
+  private final CopySpec root;
+  private final CopySpec webInf;
 
-	@InputFiles
-	@Optional
-	public FileCollection getClasspath() {
-		return classpath;
-	}
+  public ExplodedWar() {
+    root = getProject().copySpec(spec -> {
+    });
 
-	public void setClasspath(FileCollection classpath) {
-		this.classpath = classpath;
-	}
-	
-	public void classpath(Object... classpath) {
-        FileCollection oldClasspath = getClasspath();
-        this.classpath = oldClasspath == null ? getProject().files(classpath) : getProject().files( this.classpath, classpath);
-    }
+    webInf = root.into("WEB-INF", spec -> {
+    });
 
-	@InputFile
-	@Optional
-	public File getWebXml() {
-		return webXml;
-	}
+    webInf.into("", spec -> spec.from(
+        (Callable<File>) () -> getWebXml()).rename(".*", "web.xml"));
 
-	public void setWebXml(File webXml) {
-		this.webXml = webXml;
-	}
+    webInf.into("classes",
+        spec -> spec.from(
+            (Callable<Iterable<File>>) () -> {
+              final FileCollection classpath = getClasspath();
+              return classpath == null ? Collections.emptyList()
+                  : classpath.filter(file -> file.isDirectory());
+            }));
+    webInf.into("lib", spec -> spec.from(
+        (Callable<Iterable<File>>) () -> {
+          final FileCollection classpath = getClasspath();
+          return classpath == null ? Collections.emptyList()
+              : classpath.filter(file -> file.isFile());
+        }));
+  }
 
-	@OutputDirectory
-	public File getDestinationDir() {
-		return destinationDir;
-	}
+  @TaskAction
+  protected void buildWarTemplate() {
+    getProject().copy(spec -> {
+      spec.into(getDestinationDir());
+      spec.with(root);
+    });
+  }
 
-	public void setDestinationDir(File destinationDir) {
-		this.destinationDir = destinationDir;
-	}
-	
-	public CopySpec from(Object... input) {
-		return root.from(input);
-	}
+  @InputFiles
+  @Optional
+  public FileCollection getClasspath() {
+    return classpath;
+  }
+
+  public void setClasspath(FileCollection classpath) {
+    this.classpath = classpath;
+  }
+
+  public void classpath(Object... classpath) {
+    FileCollection oldClasspath = getClasspath();
+    this.classpath = oldClasspath == null ? getProject().files(classpath)
+        : getProject().files(this.classpath, classpath);
+  }
+
+  @InputFile
+  @Optional
+  public File getWebXml() {
+    return webXml;
+  }
+
+  public void setWebXml(File webXml) {
+    this.webXml = webXml;
+  }
+
+  @OutputDirectory
+  public File getDestinationDir() {
+    return destinationDir;
+  }
+
+  public void setDestinationDir(File destinationDir) {
+    this.destinationDir = destinationDir;
+  }
+
+  public CopySpec from(Object... input) {
+    return root.from(input);
+  }
 }

@@ -16,258 +16,259 @@
 package org.wisepersist.gradle.plugins.gwt;
 
 import groovy.lang.Closure;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import org.gradle.api.file.FileCollection;
 import org.gradle.util.ConfigureUtil;
-
 import org.wisepersist.gradle.plugins.gwt.internal.GwtCompileOptionsImpl;
 import org.wisepersist.gradle.plugins.gwt.internal.GwtDevOptionsImpl;
 import org.wisepersist.gradle.plugins.gwt.internal.GwtJsInteropExportsOptionsImpl;
 import org.wisepersist.gradle.plugins.gwt.internal.GwtSuperDevOptionsImpl;
 
 public class GwtPluginExtension {
-	private String gwtVersion;
-	private boolean codeserver = true;
-	private boolean elemental = false;
-	private File devWar;
-	private File extraDir;
-	private File workDir;
-	private File genDir;
-	private File cacheDir;
-	private LogLevel logLevel;
-	private List<String> modules = new ArrayList<String>();
-	private List<String> devModules = new ArrayList<String>();
-	private FileCollection src;
-	private String sourceLevel;
-	private String modulePathPrefix;
 
-	private Boolean incremental;
-	private JsInteropMode jsInteropMode;
-	private MethodNameDisplayMode methodNameDisplayMode;
+  private String gwtVersion;
+  private boolean codeserver = true;
+  private boolean elemental = false;
+  private File devWar;
+  private File extraDir;
+  private File workDir;
+  private File genDir;
+  private File cacheDir;
+  private LogLevel logLevel;
+  private List<String> modules = new ArrayList<>();
+  private List<String> devModules = new ArrayList<>();
+  private FileCollection src;
+  private String sourceLevel;
+  private String modulePathPrefix;
 
-	private String minHeapSize = "256M";
-	private String maxHeapSize = "256M";
+  private Boolean incremental;
+  private JsInteropMode jsInteropMode;
+  private MethodNameDisplayMode methodNameDisplayMode;
 
-	private final GwtJsInteropExportsOptions jsInteropExports = new GwtJsInteropExportsOptionsImpl();
-	private final GwtDevOptions dev = new GwtDevOptionsImpl();
-	private final GwtSuperDevOptions superDev = new GwtSuperDevOptionsImpl();
-	private final GwtCompileOptions compiler = new GwtCompileOptionsImpl();
-	private final GwtTestOptions test = new GwtTestOptions();
+  private String minHeapSize = "256M";
+  private String maxHeapSize = "256M";
 
-	public List<String> getModules() {
-		return modules;
-	}
+  private final GwtJsInteropExportsOptions jsInteropExports = new GwtJsInteropExportsOptionsImpl();
+  private final GwtDevOptions dev = new GwtDevOptionsImpl();
+  private final GwtSuperDevOptions superDev = new GwtSuperDevOptionsImpl();
+  private final GwtCompileOptions compiler = new GwtCompileOptionsImpl();
+  private final GwtTestOptions test = new GwtTestOptions();
 
-	public void setModules(List<String> modules) {
-		this.modules.clear();
-		this.modules.addAll(modules);
-	}
+  public List<String> getModules() {
+    return modules;
+  }
 
-	public void modules(String... modules) {
-		this.modules.addAll(Arrays.asList(modules));
-	}
+  public void setModules(List<String> modules) {
+    this.modules.clear();
+    this.modules.addAll(modules);
+  }
 
-	public String getGwtVersion() {
-		return gwtVersion;
-	}
+  public void modules(String... modules) {
+    this.modules.addAll(Arrays.asList(modules));
+  }
 
-	public void setGwtVersion(String gwtVersion) {
-		this.gwtVersion = gwtVersion;
-	}
+  public String getGwtVersion() {
+    return gwtVersion;
+  }
 
-	public boolean isCodeserver() {
-		return codeserver;
-	}
+  public void setGwtVersion(String gwtVersion) {
+    this.gwtVersion = gwtVersion;
+  }
 
-	public void setCodeserver(boolean codeserver) {
-		this.codeserver = codeserver;
-	}
+  public boolean isCodeserver() {
+    return codeserver;
+  }
 
-	public boolean isElemental() {
-		return elemental;
-	}
+  public void setCodeserver(boolean codeserver) {
+    this.codeserver = codeserver;
+  }
 
-	public void setElemental(boolean elemental) {
-		this.elemental = elemental;
-	}
+  public boolean isElemental() {
+    return elemental;
+  }
 
-	public List<String> getDevModules() {
-		return devModules;
-	}
+  public void setElemental(boolean elemental) {
+    this.elemental = elemental;
+  }
 
-	public void setDevModules(List<String> devModules) {
-		this.devModules.clear();
-		this.devModules.addAll(devModules);
-	}
+  public List<String> getDevModules() {
+    return devModules;
+  }
 
-	public void devModules(String... modules) {
-		this.devModules.addAll(Arrays.asList(modules));
-	}
+  public void setDevModules(List<String> devModules) {
+    this.devModules.clear();
+    this.devModules.addAll(devModules);
+  }
 
-	public File getDevWar() {
-		return devWar;
-	}
+  public void devModules(String... modules) {
+    this.devModules.addAll(Arrays.asList(modules));
+  }
 
-	public void setDevWar(File devWar) {
-		this.devWar = devWar;
-	}
+  public File getDevWar() {
+    return devWar;
+  }
 
-	public File getExtraDir() {
-		return extraDir;
-	}
+  public void setDevWar(File devWar) {
+    this.devWar = devWar;
+  }
 
-	public void setExtraDir(File extraDir) {
-		this.extraDir = extraDir;
-	}
+  public File getExtraDir() {
+    return extraDir;
+  }
 
-	public File getWorkDir() {
-		return workDir;
-	}
+  public void setExtraDir(File extraDir) {
+    this.extraDir = extraDir;
+  }
 
-	public void setWorkDir(File workDir) {
-		this.workDir = workDir;
-	}
+  public File getWorkDir() {
+    return workDir;
+  }
 
-	public File getGenDir() {
-		return genDir;
-	}
+  public void setWorkDir(File workDir) {
+    this.workDir = workDir;
+  }
 
-	public void setGenDir(File genDir) {
-		this.genDir = genDir;
-	}
+  public File getGenDir() {
+    return genDir;
+  }
 
-	public File getCacheDir() {
-		return cacheDir;
-	}
+  public void setGenDir(File genDir) {
+    this.genDir = genDir;
+  }
 
-	public void setCacheDir(File cacheDir) {
-		this.cacheDir = cacheDir;
-	}
+  public File getCacheDir() {
+    return cacheDir;
+  }
 
-	public LogLevel getLogLevel() {
-		return logLevel;
-	}
+  public void setCacheDir(File cacheDir) {
+    this.cacheDir = cacheDir;
+  }
 
-	public void setLogLevel(LogLevel logLevel) {
-		this.logLevel = logLevel;
-	}
+  public LogLevel getLogLevel() {
+    return logLevel;
+  }
 
-	public String getMinHeapSize() {
-		return minHeapSize;
-	}
+  public void setLogLevel(LogLevel logLevel) {
+    this.logLevel = logLevel;
+  }
 
-	public void setMinHeapSize(String minHeapSize) {
-		this.minHeapSize = minHeapSize;
-	}
+  public String getMinHeapSize() {
+    return minHeapSize;
+  }
 
-	public String getMaxHeapSize() {
-		return maxHeapSize;
-	}
+  public void setMinHeapSize(String minHeapSize) {
+    this.minHeapSize = minHeapSize;
+  }
 
-	public void setMaxHeapSize(String maxHeapSize) {
-		this.maxHeapSize = maxHeapSize;
-	}
+  public String getMaxHeapSize() {
+    return maxHeapSize;
+  }
 
-	public GwtJsInteropExportsOptions getJsInteropExports() {
-		return jsInteropExports;
-	}
+  public void setMaxHeapSize(String maxHeapSize) {
+    this.maxHeapSize = maxHeapSize;
+  }
 
-	public GwtPluginExtension jsInteropExports(Closure<GwtJsInteropExportsOptions> c) {
-		ConfigureUtil.configure(c, jsInteropExports);
-		return this;
-	}
+  public GwtJsInteropExportsOptions getJsInteropExports() {
+    return jsInteropExports;
+  }
 
-	public GwtDevOptions getDev() {
-		return dev;
-	}
+  public GwtPluginExtension jsInteropExports(
+      Closure<GwtJsInteropExportsOptions> c) {
+    ConfigureUtil.configure(c, jsInteropExports);
+    return this;
+  }
 
-	public GwtPluginExtension dev(Closure<GwtDevOptions> c) {
-		ConfigureUtil.configure(c, dev);
-		return this;
-	}
+  public GwtDevOptions getDev() {
+    return dev;
+  }
 
-	public GwtSuperDevOptions getSuperDev() {
-		return superDev;
-	}
+  public GwtPluginExtension dev(Closure<GwtDevOptions> c) {
+    ConfigureUtil.configure(c, dev);
+    return this;
+  }
 
-	public GwtPluginExtension superDev(Closure<GwtSuperDevOptions> c) {
-		ConfigureUtil.configure(c, superDev);
-		return this;
-	}
+  public GwtSuperDevOptions getSuperDev() {
+    return superDev;
+  }
 
-	public GwtCompileOptions getCompiler() {
-		return compiler;
-	}
+  public GwtPluginExtension superDev(Closure<GwtSuperDevOptions> c) {
+    ConfigureUtil.configure(c, superDev);
+    return this;
+  }
 
-	public GwtPluginExtension compiler(Closure<GwtCompileOptions> c) {
-		ConfigureUtil.configure(c, compiler);
-		return this;
-	}
+  public GwtCompileOptions getCompiler() {
+    return compiler;
+  }
 
-	public GwtTestOptions getTest() {
-		return test;
-	}
+  public GwtPluginExtension compiler(Closure<GwtCompileOptions> c) {
+    ConfigureUtil.configure(c, compiler);
+    return this;
+  }
 
-	public GwtPluginExtension test(Closure<GwtTestOptions> c) {
-		ConfigureUtil.configure(c, test);
-		return this;
-	}
+  public GwtTestOptions getTest() {
+    return test;
+  }
 
-	public FileCollection getSrc() {
-		return src;
-	}
+  public GwtPluginExtension test(Closure<GwtTestOptions> c) {
+    ConfigureUtil.configure(c, test);
+    return this;
+  }
 
-	public void setSrc(FileCollection src) {
-		this.src = src;
-	}
+  public FileCollection getSrc() {
+    return src;
+  }
 
-	public String getSourceLevel() {
-		return sourceLevel;
-	}
+  public void setSrc(FileCollection src) {
+    this.src = src;
+  }
 
-	public void setSourceLevel(String sourceLevel) {
-		this.sourceLevel = sourceLevel;
-	}
+  public String getSourceLevel() {
+    return sourceLevel;
+  }
 
-	public Boolean getIncremental() {
-		return incremental;
-	}
+  public void setSourceLevel(String sourceLevel) {
+    this.sourceLevel = sourceLevel;
+  }
 
-	public void setIncremental(Boolean incremental) {
-		this.incremental = incremental;
-	}
+  public Boolean getIncremental() {
+    return incremental;
+  }
 
-	public JsInteropMode getJsInteropMode() {
-		return jsInteropMode;
-	}
+  public void setIncremental(Boolean incremental) {
+    this.incremental = incremental;
+  }
 
-	public void setJsInteropMode(JsInteropMode jsInteropMode) {
-		this.jsInteropMode = jsInteropMode;
-	}
+  public JsInteropMode getJsInteropMode() {
+    return jsInteropMode;
+  }
 
-	public String getModulePathPrefix() {
-		return modulePathPrefix;
-	}
+  public void setJsInteropMode(JsInteropMode jsInteropMode) {
+    this.jsInteropMode = jsInteropMode;
+  }
 
-	public void setModulePathPrefix(String modulePathPrefix) {
-		this.modulePathPrefix = modulePathPrefix;
-	}
+  public String getModulePathPrefix() {
+    return modulePathPrefix;
+  }
 
-	public MethodNameDisplayMode getMethodNameDisplayMode() {
-		return methodNameDisplayMode;
-	}
+  public void setModulePathPrefix(String modulePathPrefix) {
+    this.modulePathPrefix = modulePathPrefix;
+  }
 
-	/**
-	 * If set, this causes the "-XmethodNameDisplayMode" (added in GWT 2.7/2.8) parameter to be added.
-	 *
-	 * @param methodNameDisplayMode The method name display mode.
-	 */
-	public void setMethodNameDisplayMode(MethodNameDisplayMode methodNameDisplayMode) {
-		this.methodNameDisplayMode = methodNameDisplayMode;
-	}
+  public MethodNameDisplayMode getMethodNameDisplayMode() {
+    return methodNameDisplayMode;
+  }
+
+  /**
+   * If set, this causes the "-XmethodNameDisplayMode" (added in GWT 2.7/2.8)
+   * parameter to be added.
+   *
+   * @param methodNameDisplayMode The method name display mode.
+   */
+  public void setMethodNameDisplayMode(
+      MethodNameDisplayMode methodNameDisplayMode) {
+    this.methodNameDisplayMode = methodNameDisplayMode;
+  }
 }

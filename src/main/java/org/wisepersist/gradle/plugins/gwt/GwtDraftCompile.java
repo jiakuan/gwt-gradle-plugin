@@ -16,7 +16,6 @@
 package org.wisepersist.gradle.plugins.gwt;
 
 import java.io.File;
-
 import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.OutputDirectory;
 
@@ -25,14 +24,15 @@ import org.gradle.api.tasks.OutputDirectory;
  */
 @CacheableTask
 public class GwtDraftCompile extends AbstractGwtCompile {
-	public GwtDraftCompile() {
-		setDraftCompile(true);
-	}
 
-	/** {@inheritDoc} */
-	@Override
-	@OutputDirectory
-	public File getWar() {
-		return super.getWar();
-	}
+  public GwtDraftCompile() {
+    setDraftCompile(true);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  @OutputDirectory
+  public File getWar() {
+    return super.getWar();
+  }
 }

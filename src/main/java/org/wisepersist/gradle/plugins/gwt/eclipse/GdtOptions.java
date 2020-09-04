@@ -22,31 +22,34 @@ import java.io.File;
  */
 public interface GdtOptions {
 
-	/**
-	 * Sets the value of the warSrcDirIsOutput property. This specifies if the warSrcDir is the one to use to compile to or use for Dev Mode.
-	 * 
-	 * @param warSrcDirIsOutput Whether the war source dir is out put.
-	 */
-	void setWarSrcDirIsOutput(Boolean warSrcDirIsOutput);
+  /**
+   * Sets the value of the warSrcDirIsOutput property. This specifies
+   * if the warSrcDir is the one to use to compile to or use for Dev Mode.
+   *
+   * @param warSrcDirIsOutput Whether the war source dir is out put.
+   */
+  void setWarSrcDirIsOutput(Boolean warSrcDirIsOutput);
 
-	Boolean getWarSrcDirIsOutput();
+  Boolean getWarSrcDirIsOutput();
 
-	/**
-	 * Sets the location of the web application source (typical location is src/main/webapp). 
-	 * 
-	 * @param warSrcDir The war source dir specified.
-	 */
-	void setWarSrcDir(File warSrcDir);
+  /**
+   * Sets the location of the web application source
+   * (typical location is src/main/webapp).
+   *
+   * @param warSrcDir The war source dir specified.
+   */
+  void setWarSrcDir(File warSrcDir);
 
-	File getWarSrcDir();
+  File getWarSrcDir();
 
-	/**
-	 * If set this will cause the lastWarOutDir property to be set to the specified path.
-	 * 
-	 * @param lastWarOutDir The last war out dir specified.
-	 */
-	void setLastWarOutDir(File lastWarOutDir);
+  /**
+   * If set this will cause the lastWarOutDir property to be set to
+   * the specified path.
+   *
+   * @param lastWarOutDir The last war out dir specified.
+   */
+  void setLastWarOutDir(File lastWarOutDir);
 
-	File getLastWarOutDir();
+  File getLastWarOutDir();
 
 }

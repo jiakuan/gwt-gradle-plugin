@@ -21,11 +21,11 @@ import org.gradle.api.plugins.WarPlugin;
 
 public class GwtPlugin implements Plugin<Project> {
 
-	@Override
-	public void apply(final Project project) {
-		project.getPlugins().apply(GwtCompilerPlugin.class);
+  @Override
+  public void apply(final Project project) {
+    project.getPlugins().apply(GwtCompilerPlugin.class);
 
-		project.getPlugins().withType(WarPlugin.class,
-				(warPlugin) -> project.getPlugins().apply(GwtWarPlugin.class));
-	}
+    project.getPlugins().withType(WarPlugin.class,
+        (warPlugin) -> project.getPlugins().apply(GwtWarPlugin.class));
+  }
 }

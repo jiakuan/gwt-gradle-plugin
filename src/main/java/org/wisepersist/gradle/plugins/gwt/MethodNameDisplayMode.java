@@ -16,5 +16,5 @@
 package org.wisepersist.gradle.plugins.gwt;
 
 public enum MethodNameDisplayMode {
-    NONE, ONLY_METHOD_NAME, ABBREVIATED, FULL
+  NONE, ONLY_METHOD_NAME, ABBREVIATED, FULL
 }

@@ -18,222 +18,223 @@ package org.wisepersist.gradle.plugins.gwt;
 import java.io.File;
 
 public class GwtTestOptionsBase {
-	private LogLevel logLevel;
-	
-	private Integer port;
-	private Boolean autoPort;
-	private String whitelist;
-	private String blacklist;
-	private File logDir;
-	private Integer codeServerPort;
-	private Boolean autoCodeServerPort;
 
-	private Style style;
-	private Boolean ea;
-	private Boolean disableClassMetadata;
-	private Boolean disableCastChecking;
-	private Boolean draftCompile;
-	private Integer localWorkers;
-	private Boolean prod;
-	private Integer testMethodTimeout;
-	private Integer testBeginTimeout;
-	private String runStyle;
-	private Boolean notHeadless;
-	private Boolean standardsMode;
-	private Boolean quirksMode;
-	// -Xtries
-	private Integer tries;
-	private String userAgents;
+  private LogLevel logLevel;
 
-	public boolean isProd() {
-		return prod;
-	}
+  private Integer port;
+  private Boolean autoPort;
+  private String whitelist;
+  private String blacklist;
+  private File logDir;
+  private Integer codeServerPort;
+  private Boolean autoCodeServerPort;
 
-	public void setProd(boolean prod) {
-		this.prod = prod;
-	}
+  private Style style;
+  private Boolean ea;
+  private Boolean disableClassMetadata;
+  private Boolean disableCastChecking;
+  private Boolean draftCompile;
+  private Integer localWorkers;
+  private Boolean prod;
+  private Integer testMethodTimeout;
+  private Integer testBeginTimeout;
+  private String runStyle;
+  private Boolean notHeadless;
+  private Boolean standardsMode;
+  private Boolean quirksMode;
+  // -Xtries
+  private Integer tries;
+  private String userAgents;
 
-	public LogLevel getLogLevel() {
-		return logLevel;
-	}
+  public boolean isProd() {
+    return prod;
+  }
 
-	public void setLogLevel(LogLevel logLevel) {
-		this.logLevel = logLevel;
-	}
+  public void setProd(boolean prod) {
+    this.prod = prod;
+  }
 
-	public Integer getPort() {
-		return port;
-	}
+  public LogLevel getLogLevel() {
+    return logLevel;
+  }
 
-	public void setPort(Integer port) {
-		this.port = port;
-	}
+  public void setLogLevel(LogLevel logLevel) {
+    this.logLevel = logLevel;
+  }
 
-	public Boolean getAutoPort() {
-		return autoPort;
-	}
+  public Integer getPort() {
+    return port;
+  }
 
-	public void setAutoPort(Boolean autoPort) {
-		this.autoPort = autoPort;
-	}
+  public void setPort(Integer port) {
+    this.port = port;
+  }
 
-	public String getWhitelist() {
-		return whitelist;
-	}
+  public Boolean getAutoPort() {
+    return autoPort;
+  }
 
-	public void setWhitelist(String whitelist) {
-		this.whitelist = whitelist;
-	}
+  public void setAutoPort(Boolean autoPort) {
+    this.autoPort = autoPort;
+  }
 
-	public String getBlacklist() {
-		return blacklist;
-	}
+  public String getWhitelist() {
+    return whitelist;
+  }
 
-	public void setBlacklist(String blacklist) {
-		this.blacklist = blacklist;
-	}
+  public void setWhitelist(String whitelist) {
+    this.whitelist = whitelist;
+  }
 
-	public File getLogDir() {
-		return logDir;
-	}
+  public String getBlacklist() {
+    return blacklist;
+  }
 
-	public void setLogDir(File logDir) {
-		this.logDir = logDir;
-	}
+  public void setBlacklist(String blacklist) {
+    this.blacklist = blacklist;
+  }
 
-	public Integer getCodeServerPort() {
-		return codeServerPort;
-	}
+  public File getLogDir() {
+    return logDir;
+  }
 
-	public void setCodeServerPort(Integer codeServerPort) {
-		this.codeServerPort = codeServerPort;
-	}
+  public void setLogDir(File logDir) {
+    this.logDir = logDir;
+  }
 
-	public Boolean getAutoCodeServerPort() {
-		return autoCodeServerPort;
-	}
+  public Integer getCodeServerPort() {
+    return codeServerPort;
+  }
 
-	public void setAutoCodeServerPort(Boolean autoCodeServerPort) {
-		this.autoCodeServerPort = autoCodeServerPort;
-	}
+  public void setCodeServerPort(Integer codeServerPort) {
+    this.codeServerPort = codeServerPort;
+  }
 
-	public Style getStyle() {
-		return style;
-	}
+  public Boolean getAutoCodeServerPort() {
+    return autoCodeServerPort;
+  }
 
-	public void setStyle(Style style) {
-		this.style = style;
-	}
+  public void setAutoCodeServerPort(Boolean autoCodeServerPort) {
+    this.autoCodeServerPort = autoCodeServerPort;
+  }
 
-	public Boolean getEa() {
-		return ea;
-	}
+  public Style getStyle() {
+    return style;
+  }
 
-	public void setEa(Boolean ea) {
-		this.ea = ea;
-	}
+  public void setStyle(Style style) {
+    this.style = style;
+  }
 
-	public Boolean getDisableClassMetadata() {
-		return disableClassMetadata;
-	}
+  public Boolean getEa() {
+    return ea;
+  }
 
-	public void setDisableClassMetadata(Boolean disableClassMetadata) {
-		this.disableClassMetadata = disableClassMetadata;
-	}
+  public void setEa(Boolean ea) {
+    this.ea = ea;
+  }
 
-	public Boolean getDisableCastChecking() {
-		return disableCastChecking;
-	}
+  public Boolean getDisableClassMetadata() {
+    return disableClassMetadata;
+  }
 
-	public void setDisableCastChecking(Boolean disableCastChecking) {
-		this.disableCastChecking = disableCastChecking;
-	}
+  public void setDisableClassMetadata(Boolean disableClassMetadata) {
+    this.disableClassMetadata = disableClassMetadata;
+  }
 
-	public Boolean getDraftCompile() {
-		return draftCompile;
-	}
+  public Boolean getDisableCastChecking() {
+    return disableCastChecking;
+  }
 
-	public void setDraftCompile(Boolean draftCompile) {
-		this.draftCompile = draftCompile;
-	}
+  public void setDisableCastChecking(Boolean disableCastChecking) {
+    this.disableCastChecking = disableCastChecking;
+  }
 
-	public Integer getLocalWorkers() {
-		return localWorkers;
-	}
+  public Boolean getDraftCompile() {
+    return draftCompile;
+  }
 
-	public void setLocalWorkers(Integer localWorkers) {
-		this.localWorkers = localWorkers;
-	}
+  public void setDraftCompile(Boolean draftCompile) {
+    this.draftCompile = draftCompile;
+  }
 
-	public Boolean getProd() {
-		return prod;
-	}
+  public Integer getLocalWorkers() {
+    return localWorkers;
+  }
 
-	public void setProd(Boolean prod) {
-		this.prod = prod;
-	}
+  public void setLocalWorkers(Integer localWorkers) {
+    this.localWorkers = localWorkers;
+  }
 
-	public Integer getTestMethodTimeout() {
-		return testMethodTimeout;
-	}
+  public Boolean getProd() {
+    return prod;
+  }
 
-	public void setTestMethodTimeout(Integer testMethodTimeout) {
-		this.testMethodTimeout = testMethodTimeout;
-	}
+  public void setProd(Boolean prod) {
+    this.prod = prod;
+  }
 
-	public Integer getTestBeginTimeout() {
-		return testBeginTimeout;
-	}
+  public Integer getTestMethodTimeout() {
+    return testMethodTimeout;
+  }
 
-	public void setTestBeginTimeout(Integer testBeginTimeout) {
-		this.testBeginTimeout = testBeginTimeout;
-	}
+  public void setTestMethodTimeout(Integer testMethodTimeout) {
+    this.testMethodTimeout = testMethodTimeout;
+  }
 
-	public Boolean getNotHeadless() {
-		return notHeadless;
-	}
+  public Integer getTestBeginTimeout() {
+    return testBeginTimeout;
+  }
 
-	public void setNotHeadless(Boolean notHeadless) {
-		this.notHeadless = notHeadless;
-	}
+  public void setTestBeginTimeout(Integer testBeginTimeout) {
+    this.testBeginTimeout = testBeginTimeout;
+  }
 
-	public Boolean getStandardsMode() {
-		return standardsMode;
-	}
+  public Boolean getNotHeadless() {
+    return notHeadless;
+  }
 
-	public void setStandardsMode(Boolean standardsMode) {
-		this.standardsMode = standardsMode;
-	}
+  public void setNotHeadless(Boolean notHeadless) {
+    this.notHeadless = notHeadless;
+  }
 
-	public Boolean getQuirksMode() {
-		return quirksMode;
-	}
+  public Boolean getStandardsMode() {
+    return standardsMode;
+  }
 
-	public void setQuirksMode(Boolean quirksMode) {
-		this.quirksMode = quirksMode;
-	}
+  public void setStandardsMode(Boolean standardsMode) {
+    this.standardsMode = standardsMode;
+  }
 
-	public Integer getTries() {
-		return tries;
-	}
+  public Boolean getQuirksMode() {
+    return quirksMode;
+  }
 
-	public void setTries(Integer tries) {
-		this.tries = tries;
-	}
+  public void setQuirksMode(Boolean quirksMode) {
+    this.quirksMode = quirksMode;
+  }
 
-	public String getUserAgents() {
-		return userAgents;
-	}
+  public Integer getTries() {
+    return tries;
+  }
 
-	public void setUserAgents(String userAgents) {
-		this.userAgents = userAgents;
-	}
+  public void setTries(Integer tries) {
+    this.tries = tries;
+  }
 
-	public String getRunStyle() {
-		return runStyle;
-	}
+  public String getUserAgents() {
+    return userAgents;
+  }
 
-	public void setRunStyle(String runStyle) {
-		this.runStyle = runStyle;
-	}
+  public void setUserAgents(String userAgents) {
+    this.userAgents = userAgents;
+  }
+
+  public String getRunStyle() {
+    return runStyle;
+  }
+
+  public void setRunStyle(String runStyle) {
+    this.runStyle = runStyle;
+  }
 }

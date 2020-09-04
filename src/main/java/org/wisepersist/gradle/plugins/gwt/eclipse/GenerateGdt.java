@@ -33,123 +33,127 @@ import org.wisepersist.gradle.plugins.gwt.eclipse.internal.GdtOptionsImpl;
 /**
  * Task to generate the Eclipse GDT settings file.
  */
-// TODO It's currently not possible to use PropertiesGeneratorTask as it forces imports of internal stuff. Evaluate this again later.
+// TODO It's currently not possible to use PropertiesGeneratorTask
+//  as it forces imports of internal stuff. Evaluate this again later.
 public class GenerateGdt extends DefaultTask implements GdtOptions {
-	
-	private final GdtOptions options = new GdtOptionsImpl();
-	
-	@OutputFile
-	private File settingsFile;
-	
-	@TaskAction
-	private void generate() {
-		if(getSettingsFile() == null || getSettingsFile().isDirectory()) {
-			throw new IllegalStateException();
-		}
-		final Properties properties = new Properties();
-		readProperties(properties);
-			
-		configureProperties(properties);
-		
-		writeProperties(properties);
-	}
 
-	private void configureProperties(Properties properties) {
-		if(getLastWarOutDir() != null) {
-			properties.put("lastWarOutDir", getLastWarOutDir().getAbsoluteFile().getPath());
-		}
-		String warSrcPath = getProject().getProjectDir().toURI().relativize(getWarSrcDir().toURI()).getPath();
-		properties.put("warSrcDir", warSrcPath);
-		properties.put("warSrcDirIsOutput", ""+Boolean.TRUE.equals(getWarSrcDirIsOutput()));
-	}
+  private final GdtOptions options = new GdtOptionsImpl();
 
-	private void readProperties(final Properties properties) {
-		InputStream inputStream = null;
-		try {
-			if(getSettingsFile().exists()) {
-			inputStream = new FileInputStream(getSettingsFile());
-			} else {
-				inputStream = GenerateGdt.class.getResourceAsStream("defaultGdtPrefs.properties");
-			}
-			properties.load(inputStream);
-		} catch (Exception e) {
-			throw new IllegalStateException(e);
-		} finally {
-			if(inputStream != null) {
-				try {
-					inputStream.close();
-				} catch (IOException e) {
-					throw new IllegalStateException(e);
-				}
-			}
-		}
-	}
+  @OutputFile
+  private File settingsFile;
 
+  @TaskAction
+  private void generate() {
+    if (getSettingsFile() == null || getSettingsFile().isDirectory()) {
+      throw new IllegalStateException();
+    }
+    final Properties properties = new Properties();
+    readProperties(properties);
 
-	private void writeProperties(final Properties properties) {
-		OutputStream stream = null;
-		try {
-			stream = new FileOutputStream(getSettingsFile());
-			properties.store(stream, null);
-		} catch (Exception e) {
-			throw new IllegalStateException(e);
-		} finally {
-			if(stream != null) {
-				try {
-					stream.close();
-				} catch (IOException e) {
-					throw new IllegalStateException(e);
-				}
-			}
-		}
-	}
+    configureProperties(properties);
 
-	/** {@inheritDoc} */
-	@Override
-	public void setWarSrcDirIsOutput(Boolean warSrcDirIsOutput) {
-		options.setWarSrcDirIsOutput(warSrcDirIsOutput);
-	}
+    writeProperties(properties);
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	@Input
-	public Boolean getWarSrcDirIsOutput() {
-		return options.getWarSrcDirIsOutput();
-	}
+  private void configureProperties(Properties properties) {
+    if (getLastWarOutDir() != null) {
+      properties
+          .put("lastWarOutDir", getLastWarOutDir().getAbsoluteFile().getPath());
+    }
+    String warSrcPath = getProject().getProjectDir().toURI()
+        .relativize(getWarSrcDir().toURI()).getPath();
+    properties.put("warSrcDir", warSrcPath);
+    properties.put("warSrcDirIsOutput",
+        "" + Boolean.TRUE.equals(getWarSrcDirIsOutput()));
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	public void setWarSrcDir(File warSrcDir) {
-		options.setWarSrcDir(warSrcDir);
-	}
+  private void readProperties(final Properties properties) {
+    InputStream inputStream = null;
+    try {
+      if (getSettingsFile().exists()) {
+        inputStream = new FileInputStream(getSettingsFile());
+      } else {
+        inputStream = GenerateGdt.class
+            .getResourceAsStream("defaultGdtPrefs.properties");
+      }
+      properties.load(inputStream);
+    } catch (Exception e) {
+      throw new IllegalStateException(e);
+    } finally {
+      if (inputStream != null) {
+        try {
+          inputStream.close();
+        } catch (IOException e) {
+          throw new IllegalStateException(e);
+        }
+      }
+    }
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	@InputDirectory
-	public File getWarSrcDir() {
-		return options.getWarSrcDir();
-	}
+  private void writeProperties(final Properties properties) {
+    OutputStream stream = null;
+    try {
+      stream = new FileOutputStream(getSettingsFile());
+      properties.store(stream, null);
+    } catch (Exception e) {
+      throw new IllegalStateException(e);
+    } finally {
+      if (stream != null) {
+        try {
+          stream.close();
+        } catch (IOException e) {
+          throw new IllegalStateException(e);
+        }
+      }
+    }
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	public void setLastWarOutDir(File lastWarOutDir) {
-		options.setLastWarOutDir(lastWarOutDir);
-	}
+  /** {@inheritDoc} */
+  @Override
+  public void setWarSrcDirIsOutput(Boolean warSrcDirIsOutput) {
+    options.setWarSrcDirIsOutput(warSrcDirIsOutput);
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	@InputDirectory
-	@Optional
-	public File getLastWarOutDir() {
-		return options.getLastWarOutDir();
-	}
+  /** {@inheritDoc} */
+  @Override
+  @Input
+  public Boolean getWarSrcDirIsOutput() {
+    return options.getWarSrcDirIsOutput();
+  }
 
-	public File getSettingsFile() {
-		return settingsFile;
-	}
+  /** {@inheritDoc} */
+  @Override
+  public void setWarSrcDir(File warSrcDir) {
+    options.setWarSrcDir(warSrcDir);
+  }
 
-	public void setSettingsFile(File settingsFile) {
-		this.settingsFile = settingsFile;
-	}
+  /** {@inheritDoc} */
+  @Override
+  @InputDirectory
+  public File getWarSrcDir() {
+    return options.getWarSrcDir();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void setLastWarOutDir(File lastWarOutDir) {
+    options.setLastWarOutDir(lastWarOutDir);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  @InputDirectory
+  @Optional
+  public File getLastWarOutDir() {
+    return options.getLastWarOutDir();
+  }
+
+  public File getSettingsFile() {
+    return settingsFile;
+  }
+
+  public void setSettingsFile(File settingsFile) {
+    this.settingsFile = settingsFile;
+  }
 
 }

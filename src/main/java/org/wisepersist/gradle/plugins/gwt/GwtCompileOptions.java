@@ -19,220 +19,221 @@ import java.io.File;
 
 
 /**
- * Defines the options known by the {@link GwtCompile} and {@link GwtDraftCompile} tasks.
+ * Defines the options known by the {@link GwtCompile} and
+ * {@link GwtDraftCompile} tasks.
  */
 public interface GwtCompileOptions {
 
-	Integer getLocalWorkers();
+  Integer getLocalWorkers();
 
-	/**
-	 * Sets the "-localWorkers" option.
-	 * 
-	 * @param localWorkers Whether to add the "-localWorkers" option.
-	 */
-	void setLocalWorkers(Integer localWorkers);
+  /**
+   * Sets the "-localWorkers" option.
+   *
+   * @param localWorkers Whether to add the "-localWorkers" option.
+   */
+  void setLocalWorkers(Integer localWorkers);
 
-	Boolean getDraftCompile();
+  Boolean getDraftCompile();
 
-	/**
-	 * If set to true, this adds the "-draftCompile" flag.
-	 * 
-	 * @param draftCompile Whether to add the "-draftCompile" flag.
-	 */
-	void setDraftCompile(Boolean draftCompile);
+  /**
+   * If set to true, this adds the "-draftCompile" flag.
+   *
+   * @param draftCompile Whether to add the "-draftCompile" flag.
+   */
+  void setDraftCompile(Boolean draftCompile);
 
-	Boolean getCompileReport();
+  Boolean getCompileReport();
 
-	/**
-	 * If set to true, this adds the "-compileReport" flag.
-	 * 
-	 * @param compileReport Whether to add the "-compileReport" flag.
-	 */
-	void setCompileReport(Boolean compileReport);
+  /**
+   * If set to true, this adds the "-compileReport" flag.
+   *
+   * @param compileReport Whether to add the "-compileReport" flag.
+   */
+  void setCompileReport(Boolean compileReport);
 
-	Boolean getCompilerMetrics();
+  Boolean getCompilerMetrics();
 
-	/**
-	 * If set to true, this adds the "-XcompilerMetrics" flag.
-	 * 
-	 * @param compilerMetrics Whether to add the "-XcompilerMetrics" flag.
-	 */
-	void setCompilerMetrics(Boolean compilerMetrics);
+  /**
+   * If set to true, this adds the "-XcompilerMetrics" flag.
+   *
+   * @param compilerMetrics Whether to add the "-XcompilerMetrics" flag.
+   */
+  void setCompilerMetrics(Boolean compilerMetrics);
 
-	Boolean getValidateOnly();
+  Boolean getValidateOnly();
 
-	/**
-	 * If set to true, this adds the "-validateOnly" flag.
-	 * 
-	 * @param validateOnly Whether to add the "-validateOnly" flag.
-	 */
-	void setValidateOnly(Boolean validateOnly);
+  /**
+   * If set to true, this adds the "-validateOnly" flag.
+   *
+   * @param validateOnly Whether to add the "-validateOnly" flag.
+   */
+  void setValidateOnly(Boolean validateOnly);
 
-	Boolean getDisableGeneratingOnShards();
+  Boolean getDisableGeneratingOnShards();
 
-	/**
-	 * If set to true, this adds the "-XdisableGeneratingOnShards" flag.
-	 * 
-	 * @param disableGeneratingOnShards Whether to add the "-XdisableGeneratingOnShards" flag.
-	 */
-	void setDisableGeneratingOnShards(Boolean disableGeneratingOnShards);
+  /**
+   * If set to true, this adds the "-XdisableGeneratingOnShards" flag.
+   *
+   * @param disableGeneratingOnShards Whether to add the "-XdisableGeneratingOnShards" flag.
+   */
+  void setDisableGeneratingOnShards(Boolean disableGeneratingOnShards);
 
-	Integer getOptimize();
+  Integer getOptimize();
 
-	/**
-	 * Sets the "-optimize" option.
-	 * 
-	 * @param optimize the optimization level to set. Valid values are in the interval [0, 9].
-	 */
-	void setOptimize(Integer optimize);
+  /**
+   * Sets the "-optimize" option.
+   *
+   * @param optimize the optimization level to set. Valid values are in the interval [0, 9].
+   */
+  void setOptimize(Integer optimize);
 
-	Boolean getDisableAggressiveOptimization();
+  Boolean getDisableAggressiveOptimization();
 
-	/**
-	 * If set to true, this adds the "-XdisableAggressiveOptimization" flag.
-	 * 
-	 * @param disableAggressiveOptimization Whether to add the "-XdisableAggressiveOptimization" flag.
-	 */
-	void setDisableAggressiveOptimization(Boolean disableAggressiveOptimization);
+  /**
+   * If set to true, this adds the "-XdisableAggressiveOptimization" flag.
+   *
+   * @param disableAggressiveOptimization Whether to add the "-XdisableAggressiveOptimization" flag.
+   */
+  void setDisableAggressiveOptimization(Boolean disableAggressiveOptimization);
 
-	Boolean getDisableClassMetadata();
+  Boolean getDisableClassMetadata();
 
-	/**
-	 * If set to true, this adds the "-XdisableClassMetadata" flag.
-	 * 
-	 * @param disableClassMetadata Whether to add the "-XdisableClassMetadata" flag.
-	 */
-	void setDisableClassMetadata(Boolean disableClassMetadata);
+  /**
+   * If set to true, this adds the "-XdisableClassMetadata" flag.
+   *
+   * @param disableClassMetadata Whether to add the "-XdisableClassMetadata" flag.
+   */
+  void setDisableClassMetadata(Boolean disableClassMetadata);
 
-	Boolean getDisableCastChecking();
+  Boolean getDisableCastChecking();
 
-	/**
-	 * If set to true, this adds the "-XdisableCastChecking" flag.
-	 * 
-	 * @param disableCastChecking Whether to add the "-XdisableCastChecking" flag.
-	 */
-	void setDisableCastChecking(Boolean disableCastChecking);
+  /**
+   * If set to true, this adds the "-XdisableCastChecking" flag.
+   *
+   * @param disableCastChecking Whether to add the "-XdisableCastChecking" flag.
+   */
+  void setDisableCastChecking(Boolean disableCastChecking);
 
-	Boolean getEa();
+  Boolean getEa();
 
-	/**
-	 * If set to true, this adds the "-ea" (enable assertions) flag.
-	 * 
-	 * @param ea Whether to add the "-ea" (enable assertions) flag.
-	 */
-	void setEa(Boolean ea);
+  /**
+   * If set to true, this adds the "-ea" (enable assertions) flag.
+   *
+   * @param ea Whether to add the "-ea" (enable assertions) flag.
+   */
+  void setEa(Boolean ea);
 
-	Boolean getDisableRunAsync();
+  Boolean getDisableRunAsync();
 
-	/**
-	 * If set to true, this adds the "-XdisableRunAsync" flag.
-	 * 
-	 * @param disableRunAsync Whether to add the "-XdisableRunAsync" flag.
-	 */
-	void setDisableRunAsync(Boolean disableRunAsync);
+  /**
+   * If set to true, this adds the "-XdisableRunAsync" flag.
+   *
+   * @param disableRunAsync Whether to add the "-XdisableRunAsync" flag.
+   */
+  void setDisableRunAsync(Boolean disableRunAsync);
 
-	Style getStyle();
+  Style getStyle();
 
-	/**
-	 * Sets the "-style" option.
-	 * 
-	 * @param style Whether to add the "-style" option.
-	 */
-	void setStyle(Style style);
+  /**
+   * Sets the "-style" option.
+   *
+   * @param style Whether to add the "-style" option.
+   */
+  void setStyle(Style style);
 
-	Boolean getSoycDetailed();
+  Boolean getSoycDetailed();
 
-	/**
-	 * If set to true, this adds the "-XsoycDetailed" flag.
-	 * 
-	 * @param soycDetailed Whether to addthe "-XsoycDetailed" flag.
-	 */
-	void setSoycDetailed(Boolean soycDetailed);
+  /**
+   * If set to true, this adds the "-XsoycDetailed" flag.
+   *
+   * @param soycDetailed Whether to addthe "-XsoycDetailed" flag.
+   */
+  void setSoycDetailed(Boolean soycDetailed);
 
-	Boolean getStrict();
+  Boolean getStrict();
 
-	/**
-	 * If set to true, this adds the "-strict" flag.
-	 * 
-	 * @param strict Whether to add the "-strict" flag.
-	 */
-	void setStrict(Boolean strict);
+  /**
+   * If set to true, this adds the "-strict" flag.
+   *
+   * @param strict Whether to add the "-strict" flag.
+   */
+  void setStrict(Boolean strict);
 
-	Boolean getDisableSoycHtml();
+  Boolean getDisableSoycHtml();
 
-	/**
-	 * If set to true, this adds the "-XdisableSoycHtml" flag.
-	 * 
-	 * @param disableSoycHtml Whether to add the "-XdisableSoycHtml" flag.
-	 */
-	void setDisableSoycHtml(Boolean disableSoycHtml);
+  /**
+   * If set to true, this adds the "-XdisableSoycHtml" flag.
+   *
+   * @param disableSoycHtml Whether to add the "-XdisableSoycHtml" flag.
+   */
+  void setDisableSoycHtml(Boolean disableSoycHtml);
 
-	Integer getFragmentCount();
+  Integer getFragmentCount();
 
-	/**
-	 * Sets the "-XfragmentCount" option.
-	 * 
-	 * @param fragmentCount The "-XfragmentCount" option specified.
-	 */
-	void setFragmentCount(Integer fragmentCount);
+  /**
+   * Sets the "-XfragmentCount" option.
+   *
+   * @param fragmentCount The "-XfragmentCount" option specified.
+   */
+  void setFragmentCount(Integer fragmentCount);
 
-	File getMissingDepsFile();
+  File getMissingDepsFile();
 
-	/**
-	 * @param missingDepsFile the missingDepsFile to set
-	 */
-	void setMissingDepsFile(File missingDepsFile);
+  /**
+   * @param missingDepsFile the missingDepsFile to set
+   */
+  void setMissingDepsFile(File missingDepsFile);
 
-	Namespace getNamespace();
+  Namespace getNamespace();
 
-	/**
-	 * @param namespace the namespace to set
-	 */
-	void setNamespace(Namespace namespace);
+  /**
+   * @param namespace the namespace to set
+   */
+  void setNamespace(Namespace namespace);
 
-	Boolean getEnforceStrictResources();
+  Boolean getEnforceStrictResources();
 
-	/**
-	 * @param enforceStrictResources the enforceStrictResources to set
-	 */
-	void setEnforceStrictResources(Boolean enforceStrictResources);
+  /**
+   * @param enforceStrictResources the enforceStrictResources to set
+   */
+  void setEnforceStrictResources(Boolean enforceStrictResources);
 
-	Boolean getIncrementalCompileWarnings();
+  Boolean getIncrementalCompileWarnings();
 
-	/**
-	 * @param incrementalCompileWarnings the incrementalCompileWarnings to set
-	 */
-	void setIncrementalCompileWarnings(Boolean incrementalCompileWarnings);
+  /**
+   * @param incrementalCompileWarnings the incrementalCompileWarnings to set
+   */
+  void setIncrementalCompileWarnings(Boolean incrementalCompileWarnings);
 
-	Boolean getOverlappingSourceWarnings();
+  Boolean getOverlappingSourceWarnings();
 
-	/**
-	 * @param overlappingSourceWarnings the overlappingSourceWarnings to set
-	 */
-	void setOverlappingSourceWarnings(Boolean overlappingSourceWarnings);
+  /**
+   * @param overlappingSourceWarnings the overlappingSourceWarnings to set
+   */
+  void setOverlappingSourceWarnings(Boolean overlappingSourceWarnings);
 
-	Boolean getSaveSource();
+  Boolean getSaveSource();
 
-	/**
-	 * @param saveSource the saveSource to set
-	 */
-	void setSaveSource(Boolean saveSource);
+  /**
+   * @param saveSource the saveSource to set
+   */
+  void setSaveSource(Boolean saveSource);
 
-	File getSaveSourceOutput();
+  File getSaveSourceOutput();
 
-	/**
-	 * @param saveSourceOutput the saveSourceOutput to set
-	 */
-	void setSaveSourceOutput(File saveSourceOutput);
+  /**
+   * @param saveSourceOutput the saveSourceOutput to set
+   */
+  void setSaveSourceOutput(File saveSourceOutput);
 
-	Boolean getClosureFormattedOutput();
+  Boolean getClosureFormattedOutput();
 
-	/**
-	 * If set to true, this adds the parameter -XclosureFormattedOutput.
-	 * If set to false, this adds the parameter -XnoclosureFormattedOutput.
-	 * Added in GWT 2.8.
-	 *
-	 * @param closureFormattedOutput The closure formatted output.
-	 */
-	void setClosureFormattedOutput(Boolean closureFormattedOutput);
+  /**
+   * If set to true, this adds the parameter -XclosureFormattedOutput.
+   * If set to false, this adds the parameter -XnoclosureFormattedOutput.
+   * Added in GWT 2.8.
+   *
+   * @param closureFormattedOutput The closure formatted output.
+   */
+  void setClosureFormattedOutput(Boolean closureFormattedOutput);
 }

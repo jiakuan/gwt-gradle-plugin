@@ -20,18 +20,20 @@ package org.wisepersist.gradle.plugins.gwt;
  * GWT test related options.
  */
 public class GwtTestOptions extends GwtTestOptionsBase {
-	private boolean hasGwtTests = true;
 
-	public boolean isHasGwtTests() {
-		return hasGwtTests;
-	}
+  private boolean hasGwtTests = true;
 
-	/**
-	 * If set to true this causes the test task to be manipulated to be able to run GWTTestCases.
-	 * 
-	 * @param hasGwtTests true if the project has GWTTestCases, false otherwise.
-	 */
-	public void setHasGwtTests(boolean hasGwtTests) {
-		this.hasGwtTests = hasGwtTests;
-	}
+  public boolean isHasGwtTests() {
+    return hasGwtTests;
+  }
+
+  /**
+   * If set to true this causes the test task to be manipulated to
+	 * be able to run GWTTestCases.
+   *
+   * @param hasGwtTests true if the project has GWTTestCases, false otherwise.
+   */
+  public void setHasGwtTests(boolean hasGwtTests) {
+    this.hasGwtTests = hasGwtTests;
+  }
 }

@@ -22,124 +22,132 @@ import java.io.File;
  */
 public interface GwtDevOptions {
 
-	Boolean getNoserver();
+  Boolean getNoserver();
 
-	/**
-	 * Sets the "-noserver" flag that causes the GWT dev mode to not start the
-	 * internal webserver (jetty) but only the code server that runs the GWT
-	 * client part. The developer must ensure that an appropriate webserver is
-	 * running to serve the static files/backend.
-	 * 
-	 * @param noserver
-	 *            true if the "-noserver" flag should be set.
-	 */
-	void setNoserver(Boolean noserver);
+  /**
+   * Sets the "-noserver" flag that causes the GWT dev mode to not start the
+   * internal webserver (jetty) but only the code server that runs the GWT
+   * client part. The developer must ensure that an appropriate webserver is
+   * running to serve the static files/backend.
+   *
+   * @param noserver
+   *            true if the "-noserver" flag should be set.
+   */
+  void setNoserver(Boolean noserver);
 
-	Integer getPort();
+  Integer getPort();
 
-	/**
-	 * Sets the "-port" option.
-	 * 
-	 * @param port Valid range is [1, 65535]
-	 */
-	void setPort(Integer port);
+  /**
+   * Sets the "-port" option.
+   *
+   * @param port Valid range is [1, 65535]
+   */
+  void setPort(Integer port);
 
-	String getWhitelist();
+  String getWhitelist();
 
-	/**
-	 * Sets the "-whitelist" option
-	 * 
-	 * @param whitelist The white list specified.
-	 */
-	void setWhitelist(String whitelist);
+  /**
+   * Sets the "-whitelist" option
+   *
+   * @param whitelist The white list specified.
+   */
+  void setWhitelist(String whitelist);
 
-	String getBlacklist();
+  String getBlacklist();
 
-	/**
-	 * Sets the "-blacklist" option.
-	 * 
-	 * @param blacklist The black list specified.
-	 */
-	void setBlacklist(String blacklist);
+  /**
+   * Sets the "-blacklist" option.
+   *
+   * @param blacklist The black list specified.
+   */
+  void setBlacklist(String blacklist);
 
-	File getLogDir();
+  File getLogDir();
 
-	/**
-	 * Sets the "-logdir" option.
-	 * 
-	 * @param logDir The log dir specified.
-	 */
-	void setLogDir(File logDir);
+  /**
+   * Sets the "-logdir" option.
+   *
+   * @param logDir The log dir specified.
+   */
+  void setLogDir(File logDir);
 
-	String getBindAddress();
+  String getBindAddress();
 
-	/**
-	 * Sets the "-bindAddress" option.
-	 * 
-	 * @param bindAddress The bind address option specified.
-	 */
-	void setBindAddress(String bindAddress);
+  /**
+   * Sets the "-bindAddress" option.
+   *
+   * @param bindAddress The bind address option specified.
+   */
+  void setBindAddress(String bindAddress);
 
-	Integer getCodeServerPort();
+  Integer getCodeServerPort();
 
-	/**
-	 * Sets the "-codeServerPort" option.
-	 * 
-	 * @param codeServerPort Valid range is [1, 65535]
-	 */
-	void setCodeServerPort(Integer codeServerPort);
+  /**
+   * Sets the "-codeServerPort" option.
+   *
+   * @param codeServerPort Valid range is [1, 65535]
+   */
+  void setCodeServerPort(Integer codeServerPort);
 
-	String getServer();
+  String getServer();
 
-	/**
-	 * Sets the "-server" option.
-	 * 
-	 * @param server The server option specified.
-	 */
-	void setServer(String server);
+  /**
+   * Sets the "-server" option.
+   *
+   * @param server The server option specified.
+   */
+  void setServer(String server);
 
-	String getStartupUrl();
+  String getStartupUrl();
 
-	/**
-	 * Sets the "-startupUrl" option.
-	 * 
-	 * @param startupUrl The startup Url specified.
-	 */
-	void setStartupUrl(String startupUrl);
+  /**
+   * Sets the "-startupUrl" option.
+   *
+   * @param startupUrl The startup Url specified.
+   */
+  void setStartupUrl(String startupUrl);
 
-	Boolean getAutoPort();
+  Boolean getAutoPort();
 
-	/**
-	 * Is set to true, this causes the "-port" to be automatically assigned using a free port.
-	 * 
-	 * @param autoPort Whether to be automatically assigned using a free port for "-port" or not.
-	 */
-	void setAutoPort(Boolean autoPort);
+  /**
+   * Is set to true, this causes the "-port" to be automatically assigned
+   * using a free port.
+   *
+   * @param autoPort Whether to be automatically assigned using a free port
+   * for "-port" or not.
+   */
+  void setAutoPort(Boolean autoPort);
 
-	Boolean getAutoCodeServerPort();
+  Boolean getAutoCodeServerPort();
 
-	/**
-	 * Is set to true, this causes the "-codeServerPort" to be automatically assigned using a free port.
-	 * 
-	 * @param autoCodeServerPort Whether to be automatically assigned using a free port for "-codeServerPort" or not.
-	 */
-	void setAutoCodeServerPort(Boolean autoCodeServerPort);
-	
-	Boolean getSuperDevMode();
-	
-	/**
-	 * Is set to true, this causes the "-superDevMode" (added in GWT 2.7) flag to be added.
-	 * 
-	 * @param superDevMode Whether to add "-superDevMode" (added in GWT 2.7) flag or not.
-	 */
-	void setSuperDevMode(Boolean superDevMode);
-	
-	Boolean getStartServer();
-	
-	/**
-	 * Is set to true, this causes the "-startServer" (added in GWT 2.7) flag to be added.
-	 * 
-	 * @param startServer Whether to add "-startServer" (added in GWT 2.7) flag or not.
-	 */
-	void setStartServer(Boolean startServer);
+  /**
+   * Is set to true, this causes the "-codeServerPort" to be automatically
+   * assigned using a free port.
+   *
+   * @param autoCodeServerPort Whether to be automatically assigned using
+   * a free port for "-codeServerPort" or not.
+   */
+  void setAutoCodeServerPort(Boolean autoCodeServerPort);
+
+  Boolean getSuperDevMode();
+
+  /**
+   * Is set to true, this causes the "-superDevMode" (added in GWT 2.7)
+   * flag to be added.
+   *
+   * @param superDevMode Whether to add "-superDevMode" (added in GWT 2.7)
+   * flag or not.
+   */
+  void setSuperDevMode(Boolean superDevMode);
+
+  Boolean getStartServer();
+
+  /**
+   * Is set to true, this causes the "-startServer" (added in GWT 2.7)
+   * flag to be added.
+   *
+   * @param startServer Whether to add "-startServer" (added in GWT 2.7)
+   * flag or not.
+   */
+  void setStartServer(Boolean startServer);
 }

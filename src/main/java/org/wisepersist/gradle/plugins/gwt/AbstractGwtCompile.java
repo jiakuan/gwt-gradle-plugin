@@ -29,396 +29,408 @@ import org.wisepersist.gradle.plugins.gwt.internal.GwtCompileOptionsImpl;
 /**
  * Common implementation of tasks used for GWT compilation.
  */
-public class AbstractGwtCompile extends AbstractGwtTask implements GwtCompileOptions {
+public class AbstractGwtCompile extends AbstractGwtTask implements
+    GwtCompileOptions {
 
-	private final GwtCompileOptions options = new GwtCompileOptionsImpl();
+  private final GwtCompileOptions options = new GwtCompileOptionsImpl();
 
-	public AbstractGwtCompile() {
-		super("com.google.gwt.dev.Compiler");
-	}
+  public AbstractGwtCompile() {
+    super("com.google.gwt.dev.Compiler");
+  }
 
-	@Override
-	protected void addArgs() {
-		super.addArgs();
+  @Override
+  protected void addArgs() {
+    super.addArgs();
 
-		argIfSet("-localWorkers", getLocalWorkers());
-		argIfEnabled(getDraftCompile(), "-draftCompile");
-		argIfEnabled(getCompileReport(), "-compileReport");
-		argIfEnabled(getCompilerMetrics(), "-XcompilerMetrics");
+    argIfSet("-localWorkers", getLocalWorkers());
+    argIfEnabled(getDraftCompile(), "-draftCompile");
+    argIfEnabled(getCompileReport(), "-compileReport");
+    argIfEnabled(getCompilerMetrics(), "-XcompilerMetrics");
 
-		argIfEnabled(getValidateOnly(), "-validateOnly");
-		argIfEnabled(getDisableGeneratingOnShards(), "-XdisableGeneratingOnShards");
+    argIfEnabled(getValidateOnly(), "-validateOnly");
+    argIfEnabled(getDisableGeneratingOnShards(), "-XdisableGeneratingOnShards");
 
-		argIfSet("-optimize", getOptimize());
-		argIfEnabled(getDisableAggressiveOptimization(), "-XdisableAggressiveOptimization");
-		argIfEnabled(getDisableClassMetadata(), "-XdisableClassMetadata");
-		argIfEnabled(getDisableCastChecking(), "-XdisableCastChecking");
-		argIfEnabled(getEa(), "-ea");
-		argIfEnabled(getDisableRunAsync(), "-XdisableRunAsync");
-		argIfSet("-style", getStyle());
-		argIfEnabled(getSoycDetailed(), "-XsoycDetailed");
-		argIfEnabled(getStrict(), "-strict");
-		argIfEnabled(getDisableSoycHtml(), "-XdisableSoycHtml");
-		argIfSet("-XfragmentCount", getFragmentCount());
-		argIfSet("-missingDepsFile ", getMissingDepsFile());
-		argIfSet("-Xnamespace  ", getNamespace());
-		argOnOff(getEnforceStrictResources(), "-XenforceStrictResources", "-XnoenforceStrictResources");
-		argOnOff(getIncrementalCompileWarnings(), "-incrementalCompileWarnings", "-noincrementalCompileWarnings");
-		argOnOff(getOverlappingSourceWarnings(), "-overlappingSourceWarnings", "-nooverlappingSourceWarnings");
-		argOnOff(getSaveSource(), "-saveSource", "-nosaveSource");
-		argIfSet("-saveSourceOutput", getSaveSourceOutput());
-		argOnOff(getClosureFormattedOutput(), "-XclosureFormattedOutput", "-XnoclosureFormattedOutput");
-	}
+    argIfSet("-optimize", getOptimize());
+    argIfEnabled(getDisableAggressiveOptimization(),
+        "-XdisableAggressiveOptimization");
+    argIfEnabled(getDisableClassMetadata(), "-XdisableClassMetadata");
+    argIfEnabled(getDisableCastChecking(), "-XdisableCastChecking");
+    argIfEnabled(getEa(), "-ea");
+    argIfEnabled(getDisableRunAsync(), "-XdisableRunAsync");
+    argIfSet("-style", getStyle());
+    argIfEnabled(getSoycDetailed(), "-XsoycDetailed");
+    argIfEnabled(getStrict(), "-strict");
+    argIfEnabled(getDisableSoycHtml(), "-XdisableSoycHtml");
+    argIfSet("-XfragmentCount", getFragmentCount());
+    argIfSet("-missingDepsFile ", getMissingDepsFile());
+    argIfSet("-Xnamespace  ", getNamespace());
+    argOnOff(getEnforceStrictResources(), "-XenforceStrictResources",
+        "-XnoenforceStrictResources");
+    argOnOff(getIncrementalCompileWarnings(), "-incrementalCompileWarnings",
+        "-noincrementalCompileWarnings");
+    argOnOff(getOverlappingSourceWarnings(), "-overlappingSourceWarnings",
+        "-nooverlappingSourceWarnings");
+    argOnOff(getSaveSource(), "-saveSource", "-nosaveSource");
+    argIfSet("-saveSourceOutput", getSaveSourceOutput());
+    argOnOff(getClosureFormattedOutput(), "-XclosureFormattedOutput",
+        "-XnoclosureFormattedOutput");
+  }
 
-	protected void configure(final GwtCompileOptions options) {
-		((IConventionAware)this).getConventionMapping().map("localWorkers", new Callable<Integer>() {
-			@Override
-			public Integer call() throws Exception {
-				return options.getLocalWorkers();
-			}
-		});
-	}
+  protected void configure(final GwtCompileOptions options) {
+    ((IConventionAware) this).getConventionMapping()
+        .map("localWorkers",
+            (Callable<Integer>) () -> options.getLocalWorkers());
+  }
 
-	/** {@inheritDoc} */
-	@Input
-	@Override
-	public Integer getLocalWorkers() {
-		return options.getLocalWorkers();
-	}
+  /** {@inheritDoc} */
+  @Input
+  @Override
+  public Integer getLocalWorkers() {
+    return options.getLocalWorkers();
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	public void setLocalWorkers(Integer localWorkers) {
-		options.setLocalWorkers(localWorkers);
-	}
+  /** {@inheritDoc} */
+  @Override
+  public void setLocalWorkers(Integer localWorkers) {
+    options.setLocalWorkers(localWorkers);
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	@Input
-	@Optional
-	public Boolean getDraftCompile() {
-		return options.getDraftCompile();
-	}
+  /** {@inheritDoc} */
+  @Override
+  @Input
+  @Optional
+  public Boolean getDraftCompile() {
+    return options.getDraftCompile();
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	public void setDraftCompile(Boolean draftCompile) {
-		options.setDraftCompile(draftCompile);
-	}
+  /** {@inheritDoc} */
+  @Override
+  public void setDraftCompile(Boolean draftCompile) {
+    options.setDraftCompile(draftCompile);
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	@Input
-	@Optional
-	public Boolean getCompileReport() {
-		return options.getCompileReport();
-	}
+  /** {@inheritDoc} */
+  @Override
+  @Input
+  @Optional
+  public Boolean getCompileReport() {
+    return options.getCompileReport();
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	public void setCompileReport(Boolean compileReport) {
-		options.setCompileReport(compileReport);
-	}
+  /** {@inheritDoc} */
+  @Override
+  public void setCompileReport(Boolean compileReport) {
+    options.setCompileReport(compileReport);
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	@Input
-	@Optional
-	public Boolean getCompilerMetrics() {
-		return options.getCompilerMetrics();
-	}
+  /** {@inheritDoc} */
+  @Override
+  @Input
+  @Optional
+  public Boolean getCompilerMetrics() {
+    return options.getCompilerMetrics();
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	public void setCompilerMetrics(Boolean compilerMetrics) {
-		options.setCompilerMetrics(compilerMetrics);
-	}
+  /** {@inheritDoc} */
+  @Override
+  public void setCompilerMetrics(Boolean compilerMetrics) {
+    options.setCompilerMetrics(compilerMetrics);
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	@Input
-	@Optional
-	public Boolean getValidateOnly() {
-		return options.getValidateOnly();
-	}
+  /** {@inheritDoc} */
+  @Override
+  @Input
+  @Optional
+  public Boolean getValidateOnly() {
+    return options.getValidateOnly();
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	public void setValidateOnly(Boolean validateOnly) {
-		options.setValidateOnly(validateOnly);
-	}
+  /** {@inheritDoc} */
+  @Override
+  public void setValidateOnly(Boolean validateOnly) {
+    options.setValidateOnly(validateOnly);
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	@Input
-	@Optional
-	public Boolean getDisableGeneratingOnShards() {
-		return options.getDisableGeneratingOnShards();
-	}
+  /** {@inheritDoc} */
+  @Override
+  @Input
+  @Optional
+  public Boolean getDisableGeneratingOnShards() {
+    return options.getDisableGeneratingOnShards();
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	public void setDisableGeneratingOnShards(Boolean disableGeneratingOnShards) {
-		options.setDisableGeneratingOnShards(disableGeneratingOnShards);
-	}
+  /** {@inheritDoc} */
+  @Override
+  public void setDisableGeneratingOnShards(Boolean disableGeneratingOnShards) {
+    options.setDisableGeneratingOnShards(disableGeneratingOnShards);
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	@Input
-	@Optional
-	public Integer getOptimize() {
-		return options.getOptimize();
-	}
+  /** {@inheritDoc} */
+  @Override
+  @Input
+  @Optional
+  public Integer getOptimize() {
+    return options.getOptimize();
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	public void setOptimize(Integer optimize) {
-		options.setOptimize(optimize);
-	}
+  /** {@inheritDoc} */
+  @Override
+  public void setOptimize(Integer optimize) {
+    options.setOptimize(optimize);
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	@Input
-	@Optional
-	public Boolean getDisableAggressiveOptimization() {
-		return options.getDisableAggressiveOptimization();
-	}
+  /** {@inheritDoc} */
+  @Override
+  @Input
+  @Optional
+  public Boolean getDisableAggressiveOptimization() {
+    return options.getDisableAggressiveOptimization();
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	public void setDisableAggressiveOptimization(
-			Boolean disableAggressiveOptimization) {
-		options.setDisableAggressiveOptimization(disableAggressiveOptimization);
-	}
+  /** {@inheritDoc} */
+  @Override
+  public void setDisableAggressiveOptimization(
+      Boolean disableAggressiveOptimization) {
+    options.setDisableAggressiveOptimization(disableAggressiveOptimization);
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	@Input
-	@Optional
-	public Boolean getDisableClassMetadata() {
-		return options.getDisableClassMetadata();
-	}
+  /** {@inheritDoc} */
+  @Override
+  @Input
+  @Optional
+  public Boolean getDisableClassMetadata() {
+    return options.getDisableClassMetadata();
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	public void setDisableClassMetadata(Boolean disableClassMetadata) {
-		options.setDisableClassMetadata(disableClassMetadata);
-	}
+  /** {@inheritDoc} */
+  @Override
+  public void setDisableClassMetadata(Boolean disableClassMetadata) {
+    options.setDisableClassMetadata(disableClassMetadata);
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	@Input
-	@Optional
-	public Boolean getDisableCastChecking() {
-		return options.getDisableCastChecking();
-	}
+  /** {@inheritDoc} */
+  @Override
+  @Input
+  @Optional
+  public Boolean getDisableCastChecking() {
+    return options.getDisableCastChecking();
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	public void setDisableCastChecking(Boolean disableCastChecking) {
-		options.setDisableCastChecking(disableCastChecking);
-	}
+  /** {@inheritDoc} */
+  @Override
+  public void setDisableCastChecking(Boolean disableCastChecking) {
+    options.setDisableCastChecking(disableCastChecking);
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	@Input
-	@Optional
-	public Boolean getEa() {
-		return options.getEa();
-	}
+  /** {@inheritDoc} */
+  @Override
+  @Input
+  @Optional
+  public Boolean getEa() {
+    return options.getEa();
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	public void setEa(Boolean ea) {
-		options.setEa(ea);
-	}
+  /** {@inheritDoc} */
+  @Override
+  public void setEa(Boolean ea) {
+    options.setEa(ea);
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	@Input
-	@Optional
-	public Boolean getDisableRunAsync() {
-		return options.getDisableRunAsync();
-	}
+  /** {@inheritDoc} */
+  @Override
+  @Input
+  @Optional
+  public Boolean getDisableRunAsync() {
+    return options.getDisableRunAsync();
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	public void setDisableRunAsync(Boolean disableRunAsync) {
-		options.setDisableRunAsync(disableRunAsync);
-	}
+  /** {@inheritDoc} */
+  @Override
+  public void setDisableRunAsync(Boolean disableRunAsync) {
+    options.setDisableRunAsync(disableRunAsync);
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	@Input
-	@Optional
-	public Style getStyle() {
-		return options.getStyle();
-	}
+  /** {@inheritDoc} */
+  @Override
+  @Input
+  @Optional
+  public Style getStyle() {
+    return options.getStyle();
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	public void setStyle(Style style) {
-		options.setStyle(style);
-	}
+  /** {@inheritDoc} */
+  @Override
+  public void setStyle(Style style) {
+    options.setStyle(style);
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	@Input
-	@Optional
-	public Boolean getSoycDetailed() {
-		return options.getSoycDetailed();
-	}
+  /** {@inheritDoc} */
+  @Override
+  @Input
+  @Optional
+  public Boolean getSoycDetailed() {
+    return options.getSoycDetailed();
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	public void setSoycDetailed(Boolean soycDetailed) {
-		options.setSoycDetailed(soycDetailed);
-	}
+  /** {@inheritDoc} */
+  @Override
+  public void setSoycDetailed(Boolean soycDetailed) {
+    options.setSoycDetailed(soycDetailed);
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	@Input
-	@Optional
-	public Boolean getStrict() {
-		return options.getStrict();
-	}
+  /** {@inheritDoc} */
+  @Override
+  @Input
+  @Optional
+  public Boolean getStrict() {
+    return options.getStrict();
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	public void setStrict(Boolean strict) {
-		options.setStrict(strict);
-	}
+  /** {@inheritDoc} */
+  @Override
+  public void setStrict(Boolean strict) {
+    options.setStrict(strict);
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	@Input
-	@Optional
-	public Boolean getDisableSoycHtml() {
-		return options.getDisableSoycHtml();
-	}
+  /** {@inheritDoc} */
+  @Override
+  @Input
+  @Optional
+  public Boolean getDisableSoycHtml() {
+    return options.getDisableSoycHtml();
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	public void setDisableSoycHtml(Boolean disableSoycHtml) {
-		options.setDisableSoycHtml(disableSoycHtml);
-	}
+  /** {@inheritDoc} */
+  @Override
+  public void setDisableSoycHtml(Boolean disableSoycHtml) {
+    options.setDisableSoycHtml(disableSoycHtml);
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	@Input
-	@Optional
-	public Integer getFragmentCount() {
-		return options.getFragmentCount();
-	}
+  /** {@inheritDoc} */
+  @Override
+  @Input
+  @Optional
+  public Integer getFragmentCount() {
+    return options.getFragmentCount();
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	public void setFragmentCount(Integer fragmentCount) {
-		options.setFragmentCount(fragmentCount);
-	}
+  /** {@inheritDoc} */
+  @Override
+  public void setFragmentCount(Integer fragmentCount) {
+    options.setFragmentCount(fragmentCount);
+  }
 
-	/** {@inheritDoc} */
-	@InputFile
-	@PathSensitive(PathSensitivity.ABSOLUTE)
-	@Override
-	public File getMissingDepsFile() {
-		return options.getMissingDepsFile();
-	}
+  /** {@inheritDoc} */
+  @Optional
+  @InputFile
+  @PathSensitive(PathSensitivity.ABSOLUTE)
+  @Override
+  public File getMissingDepsFile() {
+    return options.getMissingDepsFile();
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	public void setMissingDepsFile(File missingDepsFile) {
-		options.setMissingDepsFile(missingDepsFile);
-	}
+  /** {@inheritDoc} */
+  @Override
+  public void setMissingDepsFile(File missingDepsFile) {
+    options.setMissingDepsFile(missingDepsFile);
+  }
 
-	/** {@inheritDoc} */
-	@Input
-	@Override
-	public Namespace getNamespace() {
-		return options.getNamespace();
-	}
+  /** {@inheritDoc} */
+  @Optional
+  @Input
+  @Override
+  public Namespace getNamespace() {
+    return options.getNamespace();
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	public void setNamespace(Namespace namespace) {
-		options.setNamespace(namespace);
-	}
+  /** {@inheritDoc} */
+  @Override
+  public void setNamespace(Namespace namespace) {
+    options.setNamespace(namespace);
+  }
 
-	/** {@inheritDoc} */
-	@Input
-	@Override
-	public Boolean getEnforceStrictResources() {
-		return options.getEnforceStrictResources();
-	}
+  /** {@inheritDoc} */
+  @Optional
+  @Input
+  @Override
+  public Boolean getEnforceStrictResources() {
+    return options.getEnforceStrictResources();
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	public void setEnforceStrictResources(Boolean enforceStrictResources) {
-		options.setEnforceStrictResources(enforceStrictResources);
-	}
+  /** {@inheritDoc} */
+  @Override
+  public void setEnforceStrictResources(Boolean enforceStrictResources) {
+    options.setEnforceStrictResources(enforceStrictResources);
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	@Input
-	public Boolean getIncrementalCompileWarnings() {
-		return options.getIncrementalCompileWarnings();
-	}
+  /** {@inheritDoc} */
+  @Optional
+  @Input
+  @Override
+  public Boolean getIncrementalCompileWarnings() {
+    return options.getIncrementalCompileWarnings();
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	public void setIncrementalCompileWarnings(Boolean incrementalCompileWarnings) {
-		options.setIncrementalCompileWarnings(incrementalCompileWarnings);
-	}
+  /** {@inheritDoc} */
+  @Override
+  public void setIncrementalCompileWarnings(
+      Boolean incrementalCompileWarnings) {
+    options.setIncrementalCompileWarnings(incrementalCompileWarnings);
+  }
 
-	/** {@inheritDoc} */
-	@Input
-	@Override
-	public Boolean getOverlappingSourceWarnings() {
-		return options.getOverlappingSourceWarnings();
-	}
+  /** {@inheritDoc} */
+  @Optional
+  @Input
+  @Override
+  public Boolean getOverlappingSourceWarnings() {
+    return options.getOverlappingSourceWarnings();
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	public void setOverlappingSourceWarnings(Boolean overlappingSourceWarnings) {
-		options.setOverlappingSourceWarnings(overlappingSourceWarnings);
-	}
+  /** {@inheritDoc} */
+  @Override
+  public void setOverlappingSourceWarnings(Boolean overlappingSourceWarnings) {
+    options.setOverlappingSourceWarnings(overlappingSourceWarnings);
+  }
 
-	/** {@inheritDoc} */
-	@Input
-	@Override
-	public Boolean getSaveSource() {
-		return options.getSaveSource();
-	}
+  /** {@inheritDoc} */
+  @Optional
+  @Input
+  @Override
+  public Boolean getSaveSource() {
+    return options.getSaveSource();
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	public void setSaveSource(Boolean saveSource) {
-		options.setSaveSource(saveSource);
-	}
+  /** {@inheritDoc} */
+  @Override
+  public void setSaveSource(Boolean saveSource) {
+    options.setSaveSource(saveSource);
+  }
 
-	/** {@inheritDoc} */
-	@OutputDirectory
-	@Override
-	public File getSaveSourceOutput() {
-		return options.getSaveSourceOutput();
-	}
+  /** {@inheritDoc} */
+  @Optional
+  @OutputDirectory
+  @Override
+  public File getSaveSourceOutput() {
+    return options.getSaveSourceOutput();
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	public void setSaveSourceOutput(File saveSourceOutput) {
-		options.setSaveSourceOutput(saveSourceOutput);
-	}
+  /** {@inheritDoc} */
+  @Override
+  public void setSaveSourceOutput(File saveSourceOutput) {
+    options.setSaveSourceOutput(saveSourceOutput);
+  }
 
-	/** {@inheritDoc} */
-	@Input
-	@Override
-	public Boolean getClosureFormattedOutput() {
-		return options.getClosureFormattedOutput();
-	}
+  /** {@inheritDoc} */
+  @Optional
+  @Input
+  @Override
+  public Boolean getClosureFormattedOutput() {
+    return options.getClosureFormattedOutput();
+  }
 
-	/** {@inheritDoc} */
-	@Override
-	public void setClosureFormattedOutput(Boolean closureFormattedOutput) {
-		options.setClosureFormattedOutput(closureFormattedOutput);
-	}
+  /** {@inheritDoc} */
+  @Override
+  public void setClosureFormattedOutput(Boolean closureFormattedOutput) {
+    options.setClosureFormattedOutput(closureFormattedOutput);
+  }
 }

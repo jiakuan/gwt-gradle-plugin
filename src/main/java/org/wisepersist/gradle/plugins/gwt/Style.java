@@ -19,10 +19,10 @@ package org.wisepersist.gradle.plugins.gwt;
  * Output styles supported by the GWT compiler.
  */
 public enum Style {
-	/** Obfuscated or minimized style. This should be used for production. */
-	OBF,
-	/** Human readable output. */
-	PRETTY,
-	/** Detailed and human readable output. */
-	DETAILED
+  /** Obfuscated or minimized style. This should be used for production. */
+  OBF,
+  /** Human readable output. */
+  PRETTY,
+  /** Detailed and human readable output. */
+  DETAILED
 }

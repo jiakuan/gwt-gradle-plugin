@@ -16,11 +16,11 @@
 package org.wisepersist.gradle.plugins.gwt;
 
 public enum JsInteropMode {
-	JS,
-	/** GWT 2.7 only */
-	NONE,
-	/** GWT 2.7 only */
-	CLOSURE,
-	/** GWT 2.8 */
-	JS_RC
+  JS,
+  /** GWT 2.7 only */
+  NONE,
+  /** GWT 2.7 only */
+  CLOSURE,
+  /** GWT 2.8 */
+  JS_RC
 }

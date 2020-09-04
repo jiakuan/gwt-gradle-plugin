@@ -5,39 +5,39 @@ apply plugin: 'gwt'
 apply plugin: 'eclipse'
 
 buildscript {
-	repositories {
-		mavenCentral()
-	}
+  repositories {
+    mavenCentral()
+  }
 
-	dependencies {
-		classpath 'org.gradle.api.plugins:gradle-cargo-plugin:0.6.1'
-	}
+  dependencies {
+    classpath 'org.gradle.api.plugins:gradle-cargo-plugin:0.6.1'
+  }
 }
 
 repositories { mavenCentral() }
 
 dependencies {
-	def cargoVersion = '1.4.4'
-	cargo "org.codehaus.cargo:cargo-core-uberjar:$cargoVersion",
-		  "org.codehaus.cargo:cargo-ant:$cargoVersion"
-	
-	// Needed for Legacy SuperDevMode
+  def cargoVersion = '1.4.4'
+  cargo "org.codehaus.cargo:cargo-core-uberjar:$cargoVersion",
+    "org.codehaus.cargo:cargo-ant:$cargoVersion"
+
+  // Needed for Legacy SuperDevMode
 //	gwt files('etc/superdevmode-launcher-legacy.jar')
 }
 
 gwt {
-	gwtVersion='2.9.0'
-	minHeapSize = "512M"
-	maxHeapSize = "1024M"
+  gwtVersion = '2.9.0'
+  minHeapSize = "512M"
+  maxHeapSize = "1024M"
 
-	modules 'org.wisepersist.gradle.plugins.gwt.example.Example'
-	devModules 'org.wisepersist.gradle.plugins.gwt.example.ExampleDev'
-	
-	maxHeapSize = "1024M"
-	
-	superDev {
-		noPrecompile=true
-	}
+  modules 'org.wisepersist.gradle.plugins.gwt.example.Example'
+  devModules 'org.wisepersist.gradle.plugins.gwt.example.ExampleDev'
+
+  maxHeapSize = "1024M"
+
+  superDev {
+    noPrecompile = true
+  }
 }
 
 // Needed for Legacy SuperDevMode
@@ -46,21 +46,21 @@ gwt {
 //}
 
 cargo {
-	containerId = 'jetty9x'
-	port = 8080
+  containerId = 'jetty9x'
+  port = 8080
 
-	deployable {
-		file = tasks.draftWar.archivePath
-		context = 'app'
-	}
+  deployable {
+    file = tasks.draftWar.archiveFile.get().asFile
+    context = 'app'
+  }
 
-	local {
-		installer {
-            installUrl = file("$projectDir/etc/jetty-distribution-9.0.5.v20130815.zip").toURI()
-            downloadDir = file("$buildDir/download")
-            extractDir = file("$buildDir/extract")
-        }
-	}
+  local {
+    installer {
+      installUrl = file("$projectDir/etc/jetty-distribution-9.0.5.v20130815.zip").toURI()
+      downloadDir = file("$buildDir/download")
+      extractDir = file("$buildDir/extract")
+    }
+  }
 }
 
 //task jettyDraftWar(type: JettyRunWar) {
@@ -70,6 +70,6 @@ cargo {
 //}
 
 afterEvaluate {
-	tasks.cargoStartLocal.dependsOn(tasks.draftWar)
-	tasks.cargoRunLocal.dependsOn(tasks.draftWar)
+  tasks.cargoStartLocal.dependsOn(tasks.draftWar)
+  tasks.cargoRunLocal.dependsOn(tasks.draftWar)
 }
