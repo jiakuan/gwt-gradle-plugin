@@ -21,6 +21,7 @@ import org.gradle.api.internal.ConventionMapping;
 import org.gradle.api.internal.IConventionAware;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputDirectory;
+import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputDirectory;
 import org.gradle.api.tasks.PathSensitive;
 import org.gradle.api.tasks.PathSensitivity;
@@ -107,6 +108,7 @@ public class GwtSuperDev extends AbstractGwtActionTask implements
   }
 
   /** {@inheritDoc} */
+  @Optional
   @Input
   @Override
   public String getBindAddress() {
@@ -120,6 +122,7 @@ public class GwtSuperDev extends AbstractGwtActionTask implements
   }
 
   /** {@inheritDoc} */
+  @Optional
   @Input
   @Override
   public Integer getPort() {
@@ -165,6 +168,7 @@ public class GwtSuperDev extends AbstractGwtActionTask implements
   }
 
   /** {@inheritDoc} */
+  @Optional
   @InputDirectory
   @PathSensitive(PathSensitivity.ABSOLUTE)
   @Override
@@ -179,6 +183,7 @@ public class GwtSuperDev extends AbstractGwtActionTask implements
   }
 
   /** {@inheritDoc} */
+  @Optional
   @Input
   @Override
   public Integer getCompileTestRecompiles() {
@@ -192,6 +197,7 @@ public class GwtSuperDev extends AbstractGwtActionTask implements
   }
 
   /** {@inheritDoc} */
+  @Optional
   @Input
   @Override
   public Boolean getCompileTest() {
@@ -205,6 +211,7 @@ public class GwtSuperDev extends AbstractGwtActionTask implements
   }
 
   /** {@inheritDoc} */
+  @Optional
   @Input
   @Override
   public Boolean getFailOnError() {
@@ -218,6 +225,7 @@ public class GwtSuperDev extends AbstractGwtActionTask implements
   }
 
   /** {@inheritDoc} */
+  @Optional
   @Input
   @Override
   public Boolean getAllowMissingSrc() {
@@ -225,6 +233,7 @@ public class GwtSuperDev extends AbstractGwtActionTask implements
   }
 
   /** {@inheritDoc} */
+  @Optional
   @Input
   @Override
   public Boolean getClosureFormattedOutput() {

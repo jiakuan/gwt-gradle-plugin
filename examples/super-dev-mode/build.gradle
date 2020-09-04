@@ -64,9 +64,9 @@ cargo {
 }
 
 //task jettyDraftWar(type: JettyRunWar) {
-//	dependsOn draftWar
-//	dependsOn.remove('war')
-//	webApp=draftWar.archivePath
+//  dependsOn draftWar
+//  dependsOn.remove('war')
+//  webApp = draftWar.archivePath
 //}
 
 afterEvaluate {

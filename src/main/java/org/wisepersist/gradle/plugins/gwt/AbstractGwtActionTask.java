@@ -316,6 +316,7 @@ public abstract class AbstractGwtActionTask extends DefaultTask {
     this.debug = debug;
   }
 
+  @Optional
   @Input
   public LogLevel getLogLevel() {
     return logLevel;
