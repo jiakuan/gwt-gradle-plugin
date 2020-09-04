@@ -57,6 +57,8 @@ public abstract class AbstractGwtActionTask extends DefaultTask {
 
   private List<Object> jvmArgs = new ArrayList<Object>();
 
+  private List<String> extraJvmArgs = new ArrayList<>();
+
   private boolean debug;
 
   private LogLevel logLevel;
@@ -135,6 +137,8 @@ public abstract class AbstractGwtActionTask extends DefaultTask {
           argIfSet("-logLevel", getLogLevel());
 
           addArgs();
+          // Configure extraJvmArgs specified by users
+          jvmArgs(extraJvmArgs);
           javaExecSpec.jvmArgs(jvmArgs);
           javaExecSpec.args(args);
           // the module names are expected to be the last parameters
@@ -300,6 +304,15 @@ public abstract class AbstractGwtActionTask extends DefaultTask {
    */
   public void setMaxHeapSize(String maxHeapSize) {
     this.maxHeapSize = maxHeapSize;
+  }
+
+  @Input
+  public List<String> getExtraJvmArgs() {
+    return extraJvmArgs;
+  }
+
+  public void setExtraJvmArgs(List<String> extraJvmArgs) {
+    this.extraJvmArgs = extraJvmArgs;
   }
 
   @Input

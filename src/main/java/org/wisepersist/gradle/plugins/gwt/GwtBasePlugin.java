@@ -253,6 +253,8 @@ public class GwtBasePlugin implements Plugin<Project> {
           (Callable<String>) () -> extension.getMinHeapSize());
       conventionMapping.map("maxHeapSize",
           (Callable<String>) () -> extension.getMaxHeapSize());
+      conventionMapping.map("extraJvmArgs",
+          (Callable<List<String>>) () -> extension.getExtraJvmArgs());
       conventionMapping.map("sourceLevel",
           (Callable<String>) () -> extension.getSourceLevel());
       conventionMapping.map("incremental",

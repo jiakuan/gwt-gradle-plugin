@@ -50,6 +50,7 @@ public class GwtPluginExtension {
 
   private String minHeapSize = "256M";
   private String maxHeapSize = "256M";
+  private List<String> extraJvmArgs = new ArrayList<>();
 
   private final GwtJsInteropExportsOptions jsInteropExports = new GwtJsInteropExportsOptionsImpl();
   private final GwtDevOptions dev = new GwtDevOptionsImpl();
@@ -169,6 +170,14 @@ public class GwtPluginExtension {
 
   public void setMaxHeapSize(String maxHeapSize) {
     this.maxHeapSize = maxHeapSize;
+  }
+
+  public List<String> getExtraJvmArgs() {
+    return extraJvmArgs;
+  }
+
+  public void setExtraJvmArgs(List<String> extraJvmArgs) {
+    this.extraJvmArgs = extraJvmArgs;
   }
 
   public GwtJsInteropExportsOptions getJsInteropExports() {

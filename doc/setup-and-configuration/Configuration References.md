@@ -86,6 +86,16 @@ compileGwt {
 
 The default value for both, minHeapSize and maxHeapSize is "256M".
 
+### Extra JVM arguments
+
+Extra JVM arguments can be provided through the `extraJvmArgs` property.
+
+```
+gwt {
+    extraJvmArgs = ["-Djava.io.tmpdir=${buildDir}"]
+}
+```
+
 ### Log level
 
 The log level of GWT tasks is automatically configured depending on Gradle's log level. So by default this is "ERROR".
