@@ -5,12 +5,15 @@ repositories {
   mavenCentral()
 }
 
+ext.userHome = System.getProperty("user.home")
+
 gwt {
   gwtVersion = '2.9.0'
   minHeapSize = "512M"
   maxHeapSize = "1024M"
 
   modules 'org.wisepersist.gradle.plugins.gwt.example.Example'
+  extraJvmArgs = ["-Djava.io.tmpdir=${userHome}/Desktop/temp"]
 
   compiler {
     strict = true

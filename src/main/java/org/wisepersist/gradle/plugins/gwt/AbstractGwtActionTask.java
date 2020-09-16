@@ -24,6 +24,8 @@ import java.util.List;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.InvalidUserDataException;
 import org.gradle.api.file.FileCollection;
+import org.gradle.api.logging.Logger;
+import org.gradle.api.logging.Logging;
 import org.gradle.api.tasks.Classpath;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFiles;
@@ -39,6 +41,9 @@ import org.wisepersist.gradle.plugins.gwt.internal.GwtVersion;
  */
 public abstract class AbstractGwtActionTask extends DefaultTask {
 
+  private static final Logger logger =
+      Logging.getLogger(AbstractGwtActionTask.class);
+
   private String gwtVersion;
 
   private List<String> modules;
@@ -53,9 +58,9 @@ public abstract class AbstractGwtActionTask extends DefaultTask {
 
   private final String main;
 
-  private List<Object> args = new ArrayList<Object>();
+  private List<Object> args = new ArrayList<>();
 
-  private List<Object> jvmArgs = new ArrayList<Object>();
+  private List<Object> jvmArgs = new ArrayList<>();
 
   private List<String> extraJvmArgs = new ArrayList<>();
 
@@ -138,11 +143,17 @@ public abstract class AbstractGwtActionTask extends DefaultTask {
 
           addArgs();
           // Configure extraJvmArgs specified by users
-          jvmArgs(extraJvmArgs);
+          for (Object extraJvmArg : getExtraJvmArgs()) {
+            jvmArgs.add(extraJvmArg);
+          }
           javaExecSpec.jvmArgs(jvmArgs);
           javaExecSpec.args(args);
           // the module names are expected to be the last parameters
           javaExecSpec.args(getModules());
+          logger.info("main={}, gwtVersion={}, modules={}, "
+                  + "minHeapSize={}, maxHeapSize={},  extraJvmArgs={} ",
+              main, getGwtVersion(), getModules(), getMinHeapSize(),
+              getMaxHeapSize(), getExtraJvmArgs());
         });
     execResult.assertNormalExitValue().rethrowFailure();
   }

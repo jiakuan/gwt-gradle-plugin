@@ -6,9 +6,21 @@ buildscript {
   }
 }
 
+//plugins {
+//  id 'java'
+//
+//  // https://github.com/jiakuan/gwt-gradle-plugin
+//  // https://plugins.gradle.org/plugin/org.wisepersist.gwt
+//  id "org.wisepersist.gwt" version "1.1.7-rc" apply false
+//}
+
 subprojects {
   apply plugin: 'java'
+//  if (!name.equalsIgnoreCase('example-war-using-compile-only')) {
+//    apply plugin: 'org.wisepersist.gwt'
+//  }
 
+  // The old way of using the plugin
   buildscript {
     repositories {
       mavenLocal()
@@ -18,7 +30,7 @@ subprojects {
       }
     }
     dependencies {
-      classpath "org.wisepersist:gwt-gradle-plugin:1.1.6-SNAPSHOT"
+      classpath "org.wisepersist:gwt-gradle-plugin:1.1.8-SNAPSHOT"
     }
   }
 

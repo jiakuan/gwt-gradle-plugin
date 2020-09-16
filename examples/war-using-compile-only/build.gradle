@@ -5,5 +5,5 @@ apply plugin: 'eclipse'
 repositories { mavenCentral() }
 
 war {
-	from project(':example-compile-only').tasks.compileGwt.outputs
+  from project(':example-compile-only').tasks.compileGwt.outputs
 }
