@@ -25,7 +25,7 @@ If you want to use the latest snapshot version, you can also use the following r
 			mavenCentral()
 		}
 		dependencies {
-			classpath 'org.wisepersist:gwt-gradle-plugin:1.0.7-SNAPSHOT'
+			classpath 'org.wisepersist:gwt-gradle-plugin:1.1.9-SNAPSHOT'
 		}
 	}
 
