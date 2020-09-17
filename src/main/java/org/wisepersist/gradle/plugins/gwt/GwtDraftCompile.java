@@ -17,6 +17,7 @@ package org.wisepersist.gradle.plugins.gwt;
 
 import java.io.File;
 import org.gradle.api.tasks.CacheableTask;
+import org.gradle.api.tasks.OutputDirectory;
 
 /**
  * Task to run the GWT compiler for development quality output.
@@ -30,6 +31,7 @@ public class GwtDraftCompile extends AbstractGwtCompile {
 
   /** {@inheritDoc} */
   @Override
+  @OutputDirectory
   public File getWar() {
     return super.getWar();
   }

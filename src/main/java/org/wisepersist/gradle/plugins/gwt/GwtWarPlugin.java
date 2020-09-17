@@ -56,6 +56,9 @@ public class GwtWarPlugin implements Plugin<Project> {
     final War warTask = (War) project.getTasks().getByName(
         WarPlugin.WAR_TASK_NAME);
 
+    // Make sure GWT is compiled before 'war' task
+    warTask.dependsOn(GwtCompilerPlugin.TASK_COMPILE_GWT);
+
     logger.debug("Configuring war plugin with GWT settings");
 
     project.afterEvaluate(p -> {
