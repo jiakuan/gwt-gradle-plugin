@@ -13,7 +13,13 @@ gwt {
   maxHeapSize = "1024M"
 
   modules 'org.wisepersist.gradle.plugins.gwt.example.Example'
-  extraJvmArgs = ["-Djava.io.tmpdir=${userHome}/Desktop/temp"]
+
+  File tempDir = new File(userHome, "Desktop/temp")
+  if (!tempDir.exists()) {
+    boolean createdDir = tempDir.mkdir()
+    println("Created directory: " + tempDir.getAbsolutePath())
+  }
+  extraJvmArgs = ["-Djava.io.tmpdir=" + tempDir.getAbsolutePath()]
 
   compiler {
     strict = true

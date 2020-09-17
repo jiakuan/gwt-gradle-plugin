@@ -14,6 +14,10 @@ build:
 build-fast:
 	./gradlew build -Pcheck=false
 
+.PHONY: examples
+examples:
+	cd examples && ./gradlew clean build
+
 release:
 	./gradlew release
 
