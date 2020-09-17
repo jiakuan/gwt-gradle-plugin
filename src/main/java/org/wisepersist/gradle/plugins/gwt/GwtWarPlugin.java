@@ -61,16 +61,16 @@ public class GwtWarPlugin implements Plugin<Project> {
     project.afterEvaluate(p -> {
       String modulePathPrefix = extension.getModulePathPrefix();
       if (modulePathPrefix == null || modulePathPrefix.isEmpty()) {
-        warTask.from(compileTask.getOutputs());
+        warTask.from(compileTask.getWar());
         return;
       }
 
       warTask.into(modulePathPrefix == null ? "" : modulePathPrefix, spec -> {
-        spec.from(compileTask.getOutputs());
+        spec.from(compileTask.getWar());
         spec.exclude("WEB-INF");
       });
       warTask.into("", spec -> {
-        spec.from(compileTask.getOutputs());
+        spec.from(compileTask.getWar());
         spec.include("WEB-INF");
       });
     });

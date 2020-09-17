@@ -5,23 +5,23 @@ apply plugin: 'eclipse'
 repositories { mavenCentral() }
 
 sourceSets {
-	main {
-		java {
-			srcDir 'src'
-		}
-	}
+  main {
+    java {
+      srcDir 'src'
+    }
+  }
 }
 
-war{ 
-	webAppDirName = file('webapp') 
+war {
+  webAppDirName = file('webapp')
 }
 
 gwt {
-	gwtVersion='2.9.0'
-	minHeapSize = "512M"
-	maxHeapSize = "1024M"
+  gwtVersion = '2.9.0'
+  minHeapSize = "512M"
+  maxHeapSize = "1024M"
 
-	modules 'org.wisepersist.gradle.plugins.gwt.example.Example'
-	
-	devWar = file('devWar')
+  modules 'org.wisepersist.gradle.plugins.gwt.example.Example'
+
+  devWar = file('devWar')
 }
