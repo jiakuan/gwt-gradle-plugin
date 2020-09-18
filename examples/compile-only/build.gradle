@@ -14,12 +14,7 @@ gwt {
 
   modules 'org.wisepersist.gradle.plugins.gwt.example.Example'
 
-  File tempDir = new File(userHome, "Desktop/temp")
-  if (!tempDir.exists()) {
-    boolean createdDir = tempDir.mkdir()
-    println("Created directory: " + tempDir.getAbsolutePath())
-  }
-  extraJvmArgs = ["-Djava.io.tmpdir=" + tempDir.getAbsolutePath()]
+  extraJvmArgs = ["-Djava.io.tmpdir=$buildDir"]
 
   compiler {
     strict = true
