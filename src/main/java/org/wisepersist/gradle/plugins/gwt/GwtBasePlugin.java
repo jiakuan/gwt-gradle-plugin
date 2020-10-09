@@ -45,9 +45,7 @@ public class GwtBasePlugin implements Plugin<Project> {
   public static final String GWT_SDK_CONFIGURATION = "gwtSdk";
   public static final String EXTENSION_NAME = "gwt";
   public static final String BUILD_DIR = "gwt";
-  public static final String EXTRA_DIR = "extra";
   public static final String WORK_DIR = "work";
-  public static final String GEN_DIR = "gen";
   public static final String CACHE_DIR = "cache";
   public static final String LOG_DIR = "log";
 
@@ -175,9 +173,7 @@ public class GwtBasePlugin implements Plugin<Project> {
     final GwtPluginExtension extension = project.getExtensions()
         .create(EXTENSION_NAME, GwtPluginExtension.class);
     extension.setDevWar(project.file(DEV_WAR));
-    extension.setExtraDir(new File(buildDir, EXTRA_DIR));
     extension.setWorkDir(new File(buildDir, WORK_DIR));
-    extension.setGenDir(new File(buildDir, GEN_DIR));
     extension.setCacheDir(new File(buildDir, CACHE_DIR));
     extension.getDev().setLogDir(new File(buildDir, LOG_DIR));
     extension.getCompiler()

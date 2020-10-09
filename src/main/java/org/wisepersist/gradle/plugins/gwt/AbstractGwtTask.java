@@ -81,6 +81,7 @@ public abstract class AbstractGwtTask extends AbstractGwtActionTask {
     this.deploy = deploy;
   }
 
+  @Optional
   @OutputDirectory
   public File getExtra() {
     return extra;
@@ -109,6 +110,7 @@ public abstract class AbstractGwtTask extends AbstractGwtActionTask {
     this.workDir = workDir;
   }
 
+  @Optional
   @OutputDirectory
   public File getGen() {
     return gen;
