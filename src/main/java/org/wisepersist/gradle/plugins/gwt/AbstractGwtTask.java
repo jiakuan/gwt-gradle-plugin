@@ -16,6 +16,7 @@
 package org.wisepersist.gradle.plugins.gwt;
 
 import java.io.File;
+import org.gradle.api.tasks.Internal;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputDirectory;
 
@@ -94,7 +95,7 @@ public abstract class AbstractGwtTask extends AbstractGwtActionTask {
     this.extra = extra;
   }
 
-  @OutputDirectory
+  @Internal
   public File getWorkDir() {
     return workDir;
   }
@@ -122,7 +123,7 @@ public abstract class AbstractGwtTask extends AbstractGwtActionTask {
     this.gen = gen;
   }
 
-  @OutputDirectory
+  @Internal
   public File getCacheDir() {
     return cacheDir;
   }

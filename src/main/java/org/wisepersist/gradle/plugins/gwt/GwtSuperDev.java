@@ -21,8 +21,8 @@ import org.gradle.api.internal.ConventionMapping;
 import org.gradle.api.internal.IConventionAware;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputDirectory;
+import org.gradle.api.tasks.Internal;
 import org.gradle.api.tasks.Optional;
-import org.gradle.api.tasks.OutputDirectory;
 import org.gradle.api.tasks.PathSensitive;
 import org.gradle.api.tasks.PathSensitivity;
 import org.wisepersist.gradle.plugins.gwt.internal.GwtSuperDevOptionsImpl;
@@ -95,7 +95,7 @@ public class GwtSuperDev extends AbstractGwtActionTask implements
   }
 
   /** {@inheritDoc} */
-  @OutputDirectory
+  @Internal
   @Override
   public File getWorkDir() {
     return options.getWorkDir();
