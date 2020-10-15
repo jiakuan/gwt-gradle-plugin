@@ -20,6 +20,7 @@ import java.util.concurrent.Callable;
 import org.gradle.api.internal.ConventionMapping;
 import org.gradle.api.internal.IConventionAware;
 import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputDirectory;
 import org.wisepersist.gradle.plugins.gwt.internal.GwtDevOptionsImpl;
 
@@ -90,6 +91,7 @@ public class GwtDev extends AbstractGwtTask implements GwtDevOptions {
   }
 
   /** {@inheritDoc} */
+  @Optional
   @Input
   @Override
   public Boolean getNoserver() {
@@ -103,6 +105,7 @@ public class GwtDev extends AbstractGwtTask implements GwtDevOptions {
   }
 
   /** {@inheritDoc} */
+  @Optional
   @Input
   @Override
   public Integer getPort() {
@@ -116,6 +119,7 @@ public class GwtDev extends AbstractGwtTask implements GwtDevOptions {
   }
 
   /** {@inheritDoc} */
+  @Optional
   @Input
   @Override
   public String getWhitelist() {
@@ -129,6 +133,7 @@ public class GwtDev extends AbstractGwtTask implements GwtDevOptions {
   }
 
   /** {@inheritDoc} */
+  @Optional
   @Input
   @Override
   public String getBlacklist() {
@@ -155,6 +160,7 @@ public class GwtDev extends AbstractGwtTask implements GwtDevOptions {
   }
 
   /** {@inheritDoc} */
+  @Optional
   @Input
   @Override
   public String getBindAddress() {
@@ -168,6 +174,7 @@ public class GwtDev extends AbstractGwtTask implements GwtDevOptions {
   }
 
   /** {@inheritDoc} */
+  @Optional
   @Input
   @Override
   public Integer getCodeServerPort() {
@@ -181,6 +188,7 @@ public class GwtDev extends AbstractGwtTask implements GwtDevOptions {
   }
 
   /** {@inheritDoc} */
+  @Optional
   @Input
   @Override
   public String getServer() {
@@ -194,6 +202,7 @@ public class GwtDev extends AbstractGwtTask implements GwtDevOptions {
   }
 
   /** {@inheritDoc} */
+  @Optional
   @Input
   @Override
   public String getStartupUrl() {
@@ -207,6 +216,7 @@ public class GwtDev extends AbstractGwtTask implements GwtDevOptions {
   }
 
   /** {@inheritDoc} */
+  @Optional
   @Input
   @Override
   public Boolean getAutoPort() {
@@ -220,6 +230,7 @@ public class GwtDev extends AbstractGwtTask implements GwtDevOptions {
   }
 
   /** {@inheritDoc} */
+  @Optional
   @Input
   @Override
   public Boolean getAutoCodeServerPort() {
@@ -233,6 +244,7 @@ public class GwtDev extends AbstractGwtTask implements GwtDevOptions {
   }
 
   /** {@inheritDoc} */
+  @Optional
   @Input
   @Override
   public Boolean getSuperDevMode() {
@@ -246,6 +258,7 @@ public class GwtDev extends AbstractGwtTask implements GwtDevOptions {
   }
 
   /** {@inheritDoc} */
+  @Optional
   @Input
   @Override
   public Boolean getStartServer() {
@@ -258,6 +271,7 @@ public class GwtDev extends AbstractGwtTask implements GwtDevOptions {
     options.setStartServer(startServer);
   }
 
+  @Optional
   @Input
   public String getModulePathPrefix() {
     return modulePathPrefix;

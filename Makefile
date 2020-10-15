@@ -29,6 +29,9 @@ publish:
 	./gradlew build publishMavenJavaPublicationToMavenLocal publishMavenJavaPublicationToMavenRepository
 	git checkout master
 
+publish-plugins-snapshot:
+	./gradlew publishPlugins
+
 publish-plugins:
 	git checkout tags/${LATEST_TAG}
 	./gradlew publishPlugins

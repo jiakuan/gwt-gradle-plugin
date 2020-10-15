@@ -136,6 +136,7 @@ public class GwtSuperDev extends AbstractGwtActionTask implements
   }
 
   /** {@inheritDoc} */
+  @Optional
   @Input
   @Override
   public Boolean getNoPrecompile() {
