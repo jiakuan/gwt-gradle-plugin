@@ -11,7 +11,7 @@ buildscript {
 //
 //  // https://github.com/jiakuan/gwt-gradle-plugin
 //  // https://plugins.gradle.org/plugin/org.wisepersist.gwt
-//  id "org.wisepersist.gwt" version "1.1.9" apply false
+//  id "org.wisepersist.gwt" version "1.1.10" apply false
 //}
 
 subprojects {
@@ -30,7 +30,7 @@ subprojects {
       }
     }
     dependencies {
-      classpath "org.wisepersist:gwt-gradle-plugin:1.1.9"
+      classpath "org.wisepersist:gwt-gradle-plugin:1.1.10"
     }
   }
 
