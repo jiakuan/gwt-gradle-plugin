@@ -62,8 +62,8 @@ public class AbstractGwtCompile extends AbstractGwtTask implements
     argIfEnabled(getStrict(), "-strict");
     argIfEnabled(getDisableSoycHtml(), "-XdisableSoycHtml");
     argIfSet("-XfragmentCount", getFragmentCount());
-    argIfSet("-missingDepsFile ", getMissingDepsFile());
-    argIfSet("-Xnamespace  ", getNamespace());
+    argIfSet("-missingDepsFile", getMissingDepsFile());
+    argIfSet("-Xnamespace", getNamespace());
     argOnOff(getEnforceStrictResources(), "-XenforceStrictResources",
         "-XnoenforceStrictResources");
     argOnOff(getIncrementalCompileWarnings(), "-incrementalCompileWarnings",

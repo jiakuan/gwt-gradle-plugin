@@ -1,4 +1,4 @@
-﻿# Configuration References
+# Configuration References
 
 ## Plugin configuration
 
@@ -9,9 +9,15 @@ An example of both kinds of properties looks this way:
 ```
 gwt {
     gwtVersion='2.9.0'
-
+    minHeapSize = "512M"
+    maxHeapSize = "1024M"
+    logLevel = 'INFO'
     modules 'org.wisepersist.gradle.plugins.gwt.example.Example'
-    
+
+    jsInteropExports {
+        shouldGenerate = true
+    }
+
     compiler {
         strict = true
         disableClassMetadata = true
