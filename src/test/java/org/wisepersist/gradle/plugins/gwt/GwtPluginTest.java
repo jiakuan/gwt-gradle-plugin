@@ -15,9 +15,7 @@
  */
 package org.wisepersist.gradle.plugins.gwt;
 
-import static org.hamcrest.core.IsCollectionContaining.hasItem;
 import static org.hamcrest.core.IsInstanceOf.instanceOf;
-import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
@@ -28,11 +26,7 @@ import org.gradle.api.plugins.ExtensionContainer;
 import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.bundling.War;
-import org.gradle.plugins.ide.eclipse.EclipsePlugin;
-import org.gradle.plugins.ide.eclipse.model.BuildCommand;
-import org.gradle.plugins.ide.eclipse.model.EclipseModel;
 import org.gradle.testfixtures.ProjectBuilder;
-import org.hamcrest.core.IsCollectionContaining;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -100,26 +94,7 @@ public class GwtPluginTest {
         instanceOf(War.class));
   }
 
-  @Test
-  public void testEclipseSetup() {
-    project.getPlugins().apply(EclipsePlugin.class);
-
-    final EclipseModel eclipseModel = project.getExtensions()
-        .getByType(EclipseModel.class);
-    assertThat(eclipseModel.getProject().getNatures(),
-        IsCollectionContaining.hasItem(GwtEclipsePlugin.ECLIPSE_NATURE));
-    assertThat(eclipseModel.getProject().getBuildCommands(), hasItem(
-        new BuildCommand(GwtEclipsePlugin.ECLIPSE_BUILDER_PROJECT_VALIDATOR)));
-    assertThat(eclipseModel.getProject().getBuildCommands(), not(hasItem(
-        new BuildCommand(GwtEclipsePlugin.ECLIPSE_BUILDER_WEBAPP_VALIDATOR))));
-
-    project.getPlugins().apply(WarPlugin.class);
-    assertThat(eclipseModel.getProject().getBuildCommands(), hasItem(
-        new BuildCommand(GwtEclipsePlugin.ECLIPSE_BUILDER_WEBAPP_VALIDATOR)));
-  }
-
   private GwtPluginExtension getExtension() {
     return extensions.getByType(GwtPluginExtension.class);
   }
-
 }

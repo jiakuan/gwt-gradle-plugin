@@ -1,5 +1,8 @@
 # Working with Eclipse
 
+> From 1.2.0, the eclipse related code has been removed from the plugin
+> code, please use the GWT eclipse plugin etc. to setup your projects.
+
 This Eclipse feature has been tested with Eclipse 4.7 and the gwt plugin version 3.0.0.
 
 This will now not work with gwt plugin versions less than 3.0.0.

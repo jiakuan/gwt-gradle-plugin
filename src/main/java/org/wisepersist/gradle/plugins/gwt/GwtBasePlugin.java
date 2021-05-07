@@ -146,13 +146,6 @@ public class GwtBasePlugin implements Plugin<Project> {
       }
 
     });
-
-    project.getPlugins().withType(EclipsePlugin.class,
-        eclipsePlugin -> new GwtEclipsePlugin()
-            .apply(project, GwtBasePlugin.this));
-
-    project.getPlugins().withType(IdeaPlugin.class,
-        ideaPlugin -> new GwtIdeaPlugin().apply(project, GwtBasePlugin.this));
   }
 
   private GwtVersion parseGwtVersion() {
