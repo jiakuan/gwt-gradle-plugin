@@ -40,4 +40,4 @@ publish-plugins:
 .PHONY: doc
 doc: build
 	rm -rf doc/javadoc/
-	cp -r gwt-gradle-plugin/build/docs/javadoc doc/
+	cp -r build/docs/javadoc doc/

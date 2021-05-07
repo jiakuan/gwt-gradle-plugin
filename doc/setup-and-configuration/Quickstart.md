@@ -11,7 +11,7 @@ As it is not a core Gradle plugin, you have to ensure, that Gradle knows how to 
             mavenCentral()
         }
         dependencies {
-            classpath 'org.wisepersist:gwt-gradle-plugin:1.0.10'
+            classpath 'org.wisepersist:gwt-gradle-plugin:1.1.12'
         }
     }
 
@@ -25,7 +25,7 @@ If you want to use the latest snapshot version, you can also use the following r
 			mavenCentral()
 		}
 		dependencies {
-			classpath 'org.wisepersist:gwt-gradle-plugin:1.1.11-SNAPSHOT'
+			classpath 'org.wisepersist:gwt-gradle-plugin:1.1.13-SNAPSHOT'
 		}
 	}
 
