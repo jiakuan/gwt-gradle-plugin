@@ -170,3 +170,7 @@ tasks.eclipse.doLast {
     project.file('.settings/org.eclipse.core.resources.prefs') << "eclipse.preferences.version=1\nencoding/<project>=$encoding\n";
   }
 }
+
+tasks['eclipse'].doLast {
+    mkdir 'build/pluginUnderTestMetadata'
+}
