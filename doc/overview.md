@@ -25,7 +25,7 @@ The following example shows the code to set up gwt-gradle-plugin for a GWT web a
             mavenCentral()
         }
         dependencies {
-            classpath 'org.wisepersist:gwt-gradle-plugin:1.1.12'
+            classpath 'org.wisepersist:gwt-gradle-plugin:1.1.13'
         }
     }
 
