@@ -30,7 +30,7 @@ subprojects {
       }
     }
     dependencies {
-      classpath "org.wisepersist:gwt-gradle-plugin:1.1.12-SNAPSHOT"
+      classpath "org.wisepersist:gwt-gradle-plugin:1.1.12"
     }
   }
 
