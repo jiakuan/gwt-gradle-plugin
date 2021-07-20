@@ -61,7 +61,7 @@ public final class GwtVersion {
       throw new IllegalArgumentException(
           format(PARSING_ERROR_MESSAGE_FORMAT, gwtVersion));
     }
-    throw new IllegalArgumentException("GWT version is is null or empty.");
+    throw new IllegalArgumentException("GWT version is null or empty.");
   }
 
   public int getMajor() {
