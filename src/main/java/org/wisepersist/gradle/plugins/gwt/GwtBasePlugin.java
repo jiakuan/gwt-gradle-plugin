@@ -33,8 +33,6 @@ import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.JavaPluginConvention;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.testing.Test;
-import org.gradle.plugins.ide.eclipse.EclipsePlugin;
-import org.gradle.plugins.ide.idea.IdeaPlugin;
 import org.wisepersist.gradle.plugins.gwt.internal.GwtVersion;
 
 public class GwtBasePlugin implements Plugin<Project> {
@@ -109,7 +107,7 @@ public class GwtBasePlugin implements Plugin<Project> {
       }
       testSourceSet.setRuntimeClasspath(runtimeClasspath);
 
-      final GwtVersion parsedGwtVersion = parseGwtVersion();
+      final GwtVersion parsedGwtVersion = GwtVersion.parse(extension.getGwtVersion());
       final int major =
           (parsedGwtVersion == null) ? 2 : parsedGwtVersion.getMajor();
       final int minor =
@@ -121,7 +119,9 @@ public class GwtBasePlugin implements Plugin<Project> {
         }
       }
 
-      if (parsedGwtVersion != null) {
+      if (parsedGwtVersion == null) {
+        logger.debug("No automatic adding of GWT dependencies because gwtVersion is null or empty.");
+      } else {
         project.getDependencies().add(GWT_SDK_CONFIGURATION,
             gwtDependency(GWT_DEV, parsedGwtVersion));
         project.getDependencies().add(GWT_SDK_CONFIGURATION,
@@ -146,15 +146,6 @@ public class GwtBasePlugin implements Plugin<Project> {
       }
 
     });
-  }
-
-  private GwtVersion parseGwtVersion() {
-    try {
-      return GwtVersion.parse(extension.getGwtVersion());
-    } catch (final IllegalArgumentException e) {
-      logger.warn(e.getMessage());
-      return null;
-    }
   }
 
   private String gwtDependency(final String artifactId,
