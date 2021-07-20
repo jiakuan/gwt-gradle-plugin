@@ -25,43 +25,29 @@ public final class GwtVersion {
   /**
    * @param gwtVersion the gwt version string to be parsed
    * @return a newly created {@linkplain GwtVersion} instance representing
-   * the parsed GWT version string argument, or {@code null} if parsing failed
-   */
-  public static GwtVersion parseOrNull(final String gwtVersion) {
-    try {
-      return GwtVersion.parse(gwtVersion);
-    } catch (final IllegalArgumentException e) {
-      return null;
-    }
-  }
-
-  /**
-   * @param gwtVersion the gwt version string to be parsed
-   * @return a newly created {@linkplain GwtVersion} instance representing
-   * the parsed GWT version string argument
+   * the parsed GWT version string argument. null if gwtVersion is null or empty.
    * @throws IllegalArgumentException if any of the passed arguments are invalid
    */
   public static GwtVersion parse(final String gwtVersion) {
-    if ((gwtVersion != null) && !gwtVersion.isEmpty()) {
-      try {
-        final String[] versionParts = gwtVersion.split("\\.", 3);
-        if (versionParts.length >= 3) {
-          return new GwtVersion(Integer.parseUnsignedInt(versionParts[0]),
-              Integer.parseUnsignedInt(versionParts[1]),
-              versionParts[2]);
-        } else if (versionParts.length >= 2) {
-          return new GwtVersion(Integer.parseUnsignedInt(versionParts[0]),
-              Integer.parseUnsignedInt(versionParts[1]),
-              "0");
-        }
-      } catch (final NumberFormatException e) {
-        throw new IllegalArgumentException(
-            format(PARSING_ERROR_MESSAGE_FORMAT, gwtVersion), e);
-      }
-      throw new IllegalArgumentException(
-          format(PARSING_ERROR_MESSAGE_FORMAT, gwtVersion));
+    if (gwtVersion == null || gwtVersion.trim().isEmpty()) {
+        return null;
     }
-    throw new IllegalArgumentException("GWT version is is null or empty.");
+    try {
+      final String[] versionParts = gwtVersion.split("\\.", 3);
+      if (versionParts.length >= 3) {
+        return new GwtVersion(Integer.parseUnsignedInt(versionParts[0]),
+            Integer.parseUnsignedInt(versionParts[1]),
+            versionParts[2]);
+      } else if (versionParts.length >= 2) {
+        return new GwtVersion(Integer.parseUnsignedInt(versionParts[0]),
+            Integer.parseUnsignedInt(versionParts[1]),
+            "0");
+      }
+    } catch (final NumberFormatException e) {
+      throw new IllegalArgumentException(
+          format(PARSING_ERROR_MESSAGE_FORMAT, gwtVersion), e);
+    }
+    throw new IllegalArgumentException(format(PARSING_ERROR_MESSAGE_FORMAT, gwtVersion));
   }
 
   public int getMajor() {

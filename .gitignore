@@ -13,3 +13,4 @@ gwt-unitCache/
 /doc/javadoc/
 /doc/__output__/
 /.dnconfig
+/eclipse.xml

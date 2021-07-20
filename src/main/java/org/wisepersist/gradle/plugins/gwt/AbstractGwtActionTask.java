@@ -15,12 +15,11 @@
  */
 package org.wisepersist.gradle.plugins.gwt;
 
-import static org.wisepersist.gradle.plugins.gwt.internal.GwtVersion.parseOrNull;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import org.gradle.api.DefaultTask;
 import org.gradle.api.InvalidUserDataException;
 import org.gradle.api.file.FileCollection;
@@ -123,7 +122,7 @@ public abstract class AbstractGwtActionTask extends DefaultTask {
           }
 
           argIfSet("-XjsInteropMode", getJsInteropMode());
-          if (doesSupportJsInteropExports(parseOrNull(getGwtVersion()))) {
+          if (doesSupportJsInteropExports(GwtVersion.parse(getGwtVersion()))) {
             argOnOff(getJsInteropExports().shouldGenerate(),
                 "-generateJsInteropExports",
                 "-nogenerateJsInteropExports");

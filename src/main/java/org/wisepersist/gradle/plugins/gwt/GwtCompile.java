@@ -41,6 +41,7 @@ public class GwtCompile extends AbstractGwtCompile {
     return false;
   }
 
+  @Override
   protected void configure(final GwtCompileOptions options) {
     super.configure(options);
 
