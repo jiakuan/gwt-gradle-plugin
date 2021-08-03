@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.gradle.api.file.FileCollection;
+import org.gradle.api.tasks.Optional;
 import org.gradle.util.ConfigureUtil;
 import org.wisepersist.gradle.plugins.gwt.internal.GwtCompileOptionsImpl;
 import org.wisepersist.gradle.plugins.gwt.internal.GwtDevOptionsImpl;
@@ -71,6 +72,7 @@ public class GwtPluginExtension {
     this.modules.addAll(Arrays.asList(modules));
   }
 
+  @Optional
   public String getGwtVersion() {
     return gwtVersion;
   }
