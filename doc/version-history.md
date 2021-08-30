@@ -1,5 +1,9 @@
 # Version History
 
+## 1.1+
+
+Please see Github
+
 ## 1.0.0+ (2017-07-09)
 
 * Compatibility
