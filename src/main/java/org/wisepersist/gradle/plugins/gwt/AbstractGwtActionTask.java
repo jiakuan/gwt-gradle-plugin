@@ -19,7 +19,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import org.gradle.api.DefaultTask;
 import org.gradle.api.InvalidUserDataException;
 import org.gradle.api.file.FileCollection;
@@ -181,6 +180,7 @@ public abstract class AbstractGwtActionTask extends DefaultTask {
         (parsedGwtVersion.getMinor() >= 8);
   }
 
+  @Optional
   @Input
   public String getGwtVersion() {
     return gwtVersion;
