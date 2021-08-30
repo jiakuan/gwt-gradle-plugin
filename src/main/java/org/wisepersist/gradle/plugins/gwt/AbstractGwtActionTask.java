@@ -102,7 +102,7 @@ public abstract class AbstractGwtActionTask extends DefaultTask {
             }
           }
 
-          javaExecSpec.setMain(main);
+          javaExecSpec.getMainClass().set(main);
           javaExecSpec.setDebug(isDebug());
 
           // "Fixes" convention mapping
