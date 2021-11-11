@@ -258,7 +258,7 @@ public abstract class AbstractGwtActionTask extends DefaultTask {
   }
 
   @InputFiles
-  @PathSensitive(PathSensitivity.ABSOLUTE)
+  @PathSensitive(PathSensitivity.RELATIVE)
   public FileCollection getSrc() {
     return src;
   }
