@@ -18,7 +18,7 @@ Using the plugins DSL:
 
 ```
 plugins {
-  id "org.wisepersist.gwt" version "1.1.15"
+  id "org.wisepersist.gwt" version "1.1.16"
 }
 ```
 
@@ -32,7 +32,7 @@ buildscript {
     }
   }
   dependencies {
-    classpath "org.wisepersist:gwt-gradle-plugin:1.1.15"
+    classpath "org.wisepersist:gwt-gradle-plugin:1.1.16"
   }
 }
 
@@ -48,7 +48,7 @@ The following example shows the code to set up gwt-gradle-plugin for a GWT web a
             mavenCentral()
         }
         dependencies {
-            classpath 'org.wisepersist:gwt-gradle-plugin:1.1.15'
+            classpath 'org.wisepersist:gwt-gradle-plugin:1.1.16'
         }
     }
 
