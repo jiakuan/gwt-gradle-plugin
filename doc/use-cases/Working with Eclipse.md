@@ -1,6 +1,6 @@
 # Working with Eclipse
 
-> From 1.2.0, the eclipse related code has been removed from the plugin code, please use the GWT eclipse plugin etc. to setup your projects.
+> From 1.12.0, the eclipse related code has been removed from the plugin code, please use the GWT eclipse plugin etc. to setup your projects.
 > 
 > The information on this page is outdated.
 
