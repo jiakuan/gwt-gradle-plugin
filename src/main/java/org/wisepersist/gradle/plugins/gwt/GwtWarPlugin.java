@@ -57,7 +57,7 @@ public class GwtWarPlugin implements Plugin<Project> {
         WarPlugin.WAR_TASK_NAME);
 
     // Make sure GWT is compiled before 'war' task
-    warTask.dependsOn(GwtCompilerPlugin.TASK_COMPILE_GWT);
+    warTask.dependsOn(project.getTasks().named(GwtCompilerPlugin.TASK_COMPILE_GWT));
 
     logger.debug("Configuring war plugin with GWT settings");
 
@@ -78,45 +78,40 @@ public class GwtWarPlugin implements Plugin<Project> {
       });
     });
 
-    final WarPluginConvention warPluginConvention = (WarPluginConvention) project
-        .getConvention().getPlugins().get("war");
+    project.getTasks().register(TASK_WAR_TEMPLATE, ExplodedWar.class, task -> {
+      final WarPluginConvention warPluginConvention = (WarPluginConvention) project
+              .getConvention().getPlugins().get("war");
+      task.setGroup(GwtBasePlugin.GWT_TASK_GROUP);
+      task.from((Callable<File>) warPluginConvention::getWebAppDir);
+      task.dependsOn(
+              (Callable<FileCollection>) () -> project.getConvention()
+                      .getPlugin(JavaPluginConvention.class).getSourceSets().getByName(
+                              SourceSet.MAIN_SOURCE_SET_NAME).getRuntimeClasspath());
+      task.classpath((Callable<FileCollection>) warTask::getClasspath);
+      ((IConventionAware) task).getConventionMapping()
+              .map("destinationDir", (Callable<File>) extension::getDevWar);
+      task.setDescription(
+              "Creates an exploded web application template to be used by GWT dev mode and eclipse to ensure src/main/webapp stays clean"
+      );
+    });
 
-    final ExplodedWar warTemplateTask = project.getTasks().create(
-        TASK_WAR_TEMPLATE, ExplodedWar.class);
-    warTemplateTask.setGroup(GwtBasePlugin.GWT_TASK_GROUP);
-    warTemplateTask.from(
-        (Callable<File>) () -> warPluginConvention.getWebAppDir());
-    warTemplateTask.dependsOn(
-        (Callable<FileCollection>) () -> project.getConvention()
-            .getPlugin(JavaPluginConvention.class).getSourceSets().getByName(
-                SourceSet.MAIN_SOURCE_SET_NAME).getRuntimeClasspath());
-    warTemplateTask.classpath(new Object[]{
-        (Callable<FileCollection>) () -> warTask.getClasspath()});
-    ((IConventionAware) warTemplateTask).getConventionMapping()
-        .map("destinationDir", (Callable<File>) () -> extension.getDevWar());
-    warTemplateTask
-        .setDescription(
-            "Creates an exploded web application template to be used by GWT dev mode and eclipse to ensure src/main/webapp stays clean");
+    project.getTasks().register(TASK_GWT_DEV, GwtDev.class, task -> {
+      task.setDescription("Runs the GWT development mode");
+      ((IConventionAware) task).getConventionMapping()
+              .map("war", (Callable<File>) extension::getDevWar);
+      task.dependsOn(project.getTasks().named(JavaPlugin.CLASSES_TASK_NAME));
+      task.dependsOn(project.getTasks().named(TASK_WAR_TEMPLATE));
+    });
 
-    final GwtDev devModeTask = project.getTasks().create(TASK_GWT_DEV,
-        GwtDev.class);
-    devModeTask.setDescription("Runs the GWT development mode");
-    ((IConventionAware) devModeTask).getConventionMapping()
-        .map("war", (Callable<File>) () -> extension.getDevWar());
+    project.getTasks().register(TASK_DRAFT_WAR, War.class, draftWar -> {
+      draftWar.from(draftCompileTask.getOutputs());
 
-    final War draftWar = project.getTasks().create(TASK_DRAFT_WAR,
-        War.class);
-    draftWar.from(draftCompileTask.getOutputs());
-
-    String appendix = "draft";
-    draftWar.getArchiveAppendix().convention(appendix);
-    draftWar.getArchiveAppendix().set(appendix);
-    draftWar.setDescription("Creates a war using the output of the task "
-        + GwtCompilerPlugin.TASK_DRAFT_COMPILE_GWT);
-
-    devModeTask.dependsOn(JavaPlugin.CLASSES_TASK_NAME);
-    devModeTask.dependsOn(warTemplateTask);
-
+      String appendix = "draft";
+      draftWar.getArchiveAppendix().convention(appendix);
+      draftWar.getArchiveAppendix().set(appendix);
+      draftWar.setDescription("Creates a war using the output of the task "
+              + GwtCompilerPlugin.TASK_DRAFT_COMPILE_GWT);
+    });
   }
 
 }

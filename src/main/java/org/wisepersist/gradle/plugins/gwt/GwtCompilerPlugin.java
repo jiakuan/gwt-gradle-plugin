@@ -37,28 +37,25 @@ public class GwtCompilerPlugin implements Plugin<Project> {
     final File gwtBuildDir = new File(project.getBuildDir(),
         GwtBasePlugin.BUILD_DIR);
 
-    final GwtCompile compileTask = project.getTasks()
-        .create(TASK_COMPILE_GWT, GwtCompile.class);
-    compileTask.setWar(new File(gwtBuildDir, OUT_DIR));
-    compileTask.setDescription(
-        "Runs the GWT compiler to translate Java sources to JavaScript for production ready output");
-    compileTask.dependsOn(JavaPlugin.COMPILE_JAVA_TASK_NAME,
-        JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
+    project.getTasks().register(TASK_COMPILE_GWT, GwtCompile.class, task -> {
+      task.setWar(new File(gwtBuildDir, OUT_DIR));
+      task.setDescription("Runs the GWT compiler to translate Java sources to JavaScript for production ready output");
+      task.dependsOn(project.getTasks().named(JavaPlugin.COMPILE_JAVA_TASK_NAME),
+              project.getTasks().named(JavaPlugin.PROCESS_RESOURCES_TASK_NAME));
+    });
 
-    final GwtDraftCompile draftCompileTask = project.getTasks()
-        .create(TASK_DRAFT_COMPILE_GWT, GwtDraftCompile.class);
-    draftCompileTask.setWar(new File(gwtBuildDir, DRAFT_OUT_DIR));
-    draftCompileTask.setDescription(
-        "Runs the GWT compiler to produce draft quality output used for development");
-    draftCompileTask.dependsOn(JavaPlugin.COMPILE_JAVA_TASK_NAME,
-        JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
+    project.getTasks().register(TASK_DRAFT_COMPILE_GWT, GwtDraftCompile.class, task -> {
+      task.setWar(new File(gwtBuildDir, DRAFT_OUT_DIR));
+      task.setDescription("Runs the GWT compiler to produce draft quality output used for development");
+      task.dependsOn(project.getTasks().named(JavaPlugin.COMPILE_JAVA_TASK_NAME),
+              project.getTasks().named(JavaPlugin.PROCESS_RESOURCES_TASK_NAME));
+    });
 
-    final GwtCheck gwtCheck = project.getTasks()
-        .create(TASK_CHECK, GwtCheck.class);
-    gwtCheck.setDescription(
-        "Runs the GWT compiler to validate the relevant sources");
-    gwtCheck.dependsOn(JavaPlugin.COMPILE_JAVA_TASK_NAME,
-        JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
-    gwtCheck.setGroup(JavaBasePlugin.VERIFICATION_GROUP);
+    project.getTasks().register(TASK_CHECK, task -> {
+      task.setDescription("Runs the GWT compiler to validate the relevant sources");
+      task.dependsOn(project.getTasks().named(JavaPlugin.COMPILE_JAVA_TASK_NAME),
+              project.getTasks().named(JavaPlugin.PROCESS_RESOURCES_TASK_NAME));
+      task.setGroup(JavaBasePlugin.VERIFICATION_GROUP);
+    });
   }
 }
