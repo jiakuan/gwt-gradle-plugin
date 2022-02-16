@@ -178,15 +178,15 @@ public class GwtBasePlugin implements Plugin<Project> {
 
 
   private void createSuperDevModeTask(final Project project) {
-    final GwtSuperDev superDevTask = project.getTasks()
-        .create(TASK_GWT_SUPER_DEV, GwtSuperDev.class);
-    superDevTask.dependsOn(JavaPlugin.COMPILE_JAVA_TASK_NAME,
-        JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
-    superDevTask.setDescription("Runs the GWT super dev mode");
+    project.getTasks().register(TASK_GWT_SUPER_DEV, GwtSuperDev.class, task -> {
+      task.dependsOn(project.getTasks().named(JavaPlugin.COMPILE_JAVA_TASK_NAME),
+              project.getTasks().named(JavaPlugin.PROCESS_RESOURCES_TASK_NAME));
+      task.setDescription("Runs the GWT super dev mode");
+    });
   }
 
   private void configureAbstractTasks() {
-    project.getTasks().withType(AbstractGwtTask.class, task -> {
+    project.getTasks().withType(AbstractGwtTask.class).configureEach(task -> {
       ConventionMapping conventionMapping = ((IConventionAware) task)
           .getConventionMapping();
       conventionMapping.map("extra",
@@ -210,7 +210,7 @@ public class GwtBasePlugin implements Plugin<Project> {
     final JavaPluginConvention javaConvention = getJavaConvention();
     final SourceSet mainSourceSet = javaConvention.getSourceSets()
         .getByName(SourceSet.MAIN_SOURCE_SET_NAME);
-    project.getTasks().withType(AbstractGwtActionTask.class, task -> {
+    project.getTasks().withType(AbstractGwtActionTask.class).configureEach(task -> {
       task.setGroup(GwtBasePlugin.GWT_TASK_GROUP);
 
       ConventionMapping conventionMapping = ((IConventionAware) task)
@@ -248,20 +248,20 @@ public class GwtBasePlugin implements Plugin<Project> {
   }
 
   private void configureGwtCompile() {
-    project.getTasks().withType(AbstractGwtCompile.class,
+    project.getTasks().withType(AbstractGwtCompile.class).configureEach(
         task -> task.configure(extension.getCompiler()));
   }
 
   private void configureGwtDev() {
     final boolean debug = "true".equals(System.getProperty("gwtDev.debug"));
-    project.getTasks().withType(GwtDev.class, task -> {
+    project.getTasks().withType(GwtDev.class).configureEach(task -> {
       task.configure(extension);
       task.setDebug(debug);
     });
   }
 
   private void configureGwtSuperDev() {
-    project.getTasks().withType(GwtSuperDev.class, task -> {
+    project.getTasks().withType(GwtSuperDev.class).configureEach(task -> {
       task.configure(extension.getSuperDev());
       ConventionMapping conventionMapping = ((IConventionAware) task)
           .getConventionMapping();
@@ -294,7 +294,7 @@ public class GwtBasePlugin implements Plugin<Project> {
       });
 
       project.getPlugins().withType(GwtWarPlugin.class,
-          plugin -> testTask.dependsOn(GwtWarPlugin.TASK_WAR_TEMPLATE));
+          plugin -> testTask.dependsOn(project.getTasks().named(GwtWarPlugin.TASK_WAR_TEMPLATE)));
     });
   }
 
