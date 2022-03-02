@@ -15,10 +15,9 @@
  */
 package org.wisepersist.gradle.plugins.gwt;
 
-import java.io.File;
-import java.util.concurrent.Callable;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
+import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.internal.IConventionAware;
 import org.gradle.api.logging.Logger;
@@ -28,7 +27,11 @@ import org.gradle.api.plugins.JavaPluginConvention;
 import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.plugins.WarPluginConvention;
 import org.gradle.api.tasks.SourceSet;
+import org.gradle.api.tasks.TaskProvider;
 import org.gradle.api.tasks.bundling.War;
+
+import java.io.File;
+import java.util.concurrent.Callable;
 
 public class GwtWarPlugin implements Plugin<Project> {
 
@@ -53,30 +56,28 @@ public class GwtWarPlugin implements Plugin<Project> {
     final GwtDraftCompile draftCompileTask = (GwtDraftCompile) project
         .getTasks().getByName(GwtCompilerPlugin.TASK_DRAFT_COMPILE_GWT);
 
-    final War warTask = (War) project.getTasks().getByName(
-        WarPlugin.WAR_TASK_NAME);
-
-    // Make sure GWT is compiled before 'war' task
-    warTask.dependsOn(project.getTasks().named(GwtCompilerPlugin.TASK_COMPILE_GWT));
+    final TaskProvider<War> warTaskProvider = project.getTasks().named(WarPlugin.WAR_TASK_NAME, War.class);
 
     logger.debug("Configuring war plugin with GWT settings");
 
-    project.afterEvaluate(p -> {
+    project.afterEvaluate(p -> warTaskProvider.configure(warTask -> {
+      ConfigurableFileCollection files = project.files(compileTask.getWar()).builtBy(compileTask);
+
       String modulePathPrefix = extension.getModulePathPrefix();
       if (modulePathPrefix == null || modulePathPrefix.isEmpty()) {
-        warTask.from(compileTask.getWar());
+        warTask.from(files);
         return;
       }
 
-      warTask.into(modulePathPrefix == null ? "" : modulePathPrefix, spec -> {
-        spec.from(compileTask.getWar());
+      warTask.into(modulePathPrefix, spec -> {
+        spec.from(files);
         spec.exclude("WEB-INF");
       });
       warTask.into("", spec -> {
-        spec.from(compileTask.getWar());
+        spec.from(files);
         spec.include("WEB-INF");
       });
-    });
+    }));
 
     project.getTasks().register(TASK_WAR_TEMPLATE, ExplodedWar.class, task -> {
       final WarPluginConvention warPluginConvention = (WarPluginConvention) project
@@ -87,7 +88,7 @@ public class GwtWarPlugin implements Plugin<Project> {
               (Callable<FileCollection>) () -> project.getConvention()
                       .getPlugin(JavaPluginConvention.class).getSourceSets().getByName(
                               SourceSet.MAIN_SOURCE_SET_NAME).getRuntimeClasspath());
-      task.classpath((Callable<FileCollection>) warTask::getClasspath);
+      task.classpath(warTaskProvider.map(War::getClasspath));
       ((IConventionAware) task).getConventionMapping()
               .map("destinationDir", (Callable<File>) extension::getDevWar);
       task.setDescription(
