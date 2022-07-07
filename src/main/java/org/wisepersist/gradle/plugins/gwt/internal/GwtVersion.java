@@ -69,4 +69,8 @@ public final class GwtVersion {
   public String toString() {
     return format("%d.%d.%s", major, minor, patch);
   }
+
+  public boolean isAtLeast(int majorMin, int minorMin) {
+    return major > majorMin || (major == majorMin && minor >= minorMin);
+  }
 }

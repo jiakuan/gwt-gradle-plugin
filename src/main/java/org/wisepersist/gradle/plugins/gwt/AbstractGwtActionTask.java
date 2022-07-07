@@ -176,8 +176,7 @@ public abstract class AbstractGwtActionTask extends DefaultTask {
   private boolean doesSupportJsInteropExports(
       final GwtVersion parsedGwtVersion) {
     return (parsedGwtVersion != null) &&
-        (parsedGwtVersion.getMajor() >= 2) &&
-        (parsedGwtVersion.getMinor() >= 8);
+        (parsedGwtVersion.isAtLeast(2, 8));
   }
 
   @Optional

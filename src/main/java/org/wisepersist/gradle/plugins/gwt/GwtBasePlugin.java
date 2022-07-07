@@ -51,7 +51,8 @@ public class GwtBasePlugin implements Plugin<Project> {
 
   public static final String TASK_GWT_SUPER_DEV = "gwtSuperDev";
 
-  public static final String GWT_GROUP = "com.google.gwt";
+  public static final String GWT_GROUP_GOOGLE = "com.google.gwt";
+  public static final String GWT_GROUP_OSS = "org.gwtproject";
   public static final String GWT_DEV = "gwt-dev";
   public static final String GWT_USER = "gwt-user";
   public static final String GWT_CODESERVER = "gwt-codeserver";
@@ -108,12 +109,8 @@ public class GwtBasePlugin implements Plugin<Project> {
       testSourceSet.setRuntimeClasspath(runtimeClasspath);
 
       final GwtVersion parsedGwtVersion = GwtVersion.parse(extension.getGwtVersion());
-      final int major =
-          (parsedGwtVersion == null) ? 2 : parsedGwtVersion.getMajor();
-      final int minor =
-          (parsedGwtVersion == null) ? 5 : parsedGwtVersion.getMinor();
 
-      if ((major == 2 && minor >= 5) || major > 2) {
+      if (parsedGwtVersion == null || parsedGwtVersion.isAtLeast(2, 5)) {
         if (extension.isCodeserver()) {
           createSuperDevModeTask(project);
         }
@@ -130,7 +127,7 @@ public class GwtBasePlugin implements Plugin<Project> {
             .add(JavaPlugin.RUNTIME_ONLY_CONFIGURATION_NAME,
                 gwtDependency(GWT_SERVLET, parsedGwtVersion));
 
-        if ((major == 2 && minor >= 5) || major > 2) {
+        if (parsedGwtVersion.isAtLeast(2, 5)) {
           if (extension.isCodeserver()) {
             project.getDependencies().add(GWT_CONFIGURATION,
                 gwtDependency(GWT_CODESERVER, parsedGwtVersion));
@@ -150,7 +147,8 @@ public class GwtBasePlugin implements Plugin<Project> {
 
   private String gwtDependency(final String artifactId,
       final GwtVersion gwtVersion) {
-    return format("%s:%s:%s", GWT_GROUP, artifactId, gwtVersion.toString());
+    String group = gwtVersion.isAtLeast(2, 10) ? GWT_GROUP_OSS : GWT_GROUP_GOOGLE;
+    return format("%s:%s:%s", group, artifactId, gwtVersion);
   }
 
   private GwtPluginExtension configureGwtExtension(final File buildDir) {

@@ -22,7 +22,16 @@ public class GwtVersionTest {
         Assert.assertEquals("1-ABC", v.getPatch());
         Assert.assertEquals("2.5.1-ABC", v.toString());
     }
-    
+
+    @Test
+    public void comparison() {
+        GwtVersion v = GwtVersion.parse("2.5.1-ABC");
+
+        Assert.assertFalse("Should be less than 3.0", v.isAtLeast(3, 0));
+        Assert.assertFalse("Should be less than 2.6", v.isAtLeast(2, 6));
+        Assert.assertTrue("Should be at least 2.5", v.isAtLeast(2, 5));
+    }
+
     @Test(expected = IllegalArgumentException.class)
     public void invalid() {
         GwtVersion.parse("0");
