@@ -23,7 +23,7 @@ plugins {
   id "com.gradle.plugin-publish" version "0.12.0"
 }
 
-group = 'org.wisepersist'
+group = 'org.docstr'
 version = "$version"
 
 sourceCompatibility = 1.8
@@ -53,10 +53,10 @@ pluginBundle {
 gradlePlugin {
   plugins {
     gwtGradlePlugin {
-      id = 'org.wisepersist.gwt'
+      id = 'org.docstr.gwt'
       displayName = 'GWT Gradle Plugin'
       description = 'Gradle plugin to support GWT related tasks.'
-      implementationClass = 'org.wisepersist.gradle.plugins.gwt.GwtPlugin'
+      implementationClass = 'org.docstr.gradle.plugins.gwt.GwtPlugin'
     }
   }
 }

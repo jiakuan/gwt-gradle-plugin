@@ -27,7 +27,7 @@ Using the default configuration, the plugin will use the following directory str
 
 ## Plugin extension
 
-An extension with name “gwt” of type [org.wisepersist.gradle.plugins.gwt.GwtPluginExtension](latest/javadoc/org/wisepersist/gradle/plugins/gwt/GwtPluginExtension.html). For details on how to configure the plugin, please refer to the chapter “Plugin configuration”. Alternatively you can have a look at the source code of this class to check what can be configured.
+An extension with name “gwt” of type [org.docstr.gradle.plugins.gwt.GwtPluginExtension](latest/javadoc/org/docstr/gradle/plugins/gwt/GwtPluginExtension.html). For details on how to configure the plugin, please refer to the chapter “Plugin configuration”. Alternatively you can have a look at the source code of this class to check what can be configured.
 
 ## Configuration
 

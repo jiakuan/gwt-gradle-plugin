@@ -16,7 +16,7 @@ Several example projects can be found in [/examples](https://github.com/jiakuan/
 
 ## Usage
 
-GWT Gradle Plugin is available in [Maven central repository](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.wisepersist%22AND%20a%3A%22gwt-gradle-plugin%22).
+GWT Gradle Plugin is available in [Maven central repository](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.docstr%22AND%20a%3A%22gwt-gradle-plugin%22).
 
 The following example shows the code to set up gwt-gradle-plugin for a GWT web application project using Maven/Gradle standard layout.
 
@@ -25,7 +25,7 @@ The following example shows the code to set up gwt-gradle-plugin for a GWT web a
             mavenCentral()
         }
         dependencies {
-            classpath 'org.wisepersist:gwt-gradle-plugin:1.1.15'
+            classpath 'org.docstr:gwt-gradle-plugin:1.1.15'
         }
     }
 

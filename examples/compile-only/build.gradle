@@ -12,7 +12,7 @@ gwt {
   minHeapSize = "512M"
   maxHeapSize = "1024M"
 
-  modules 'org.wisepersist.gradle.plugins.gwt.example.Example'
+  modules 'org.docstr.gradle.plugins.gwt.example.Example'
 
   extraJvmArgs = ["-Djava.io.tmpdir=$buildDir"]
 

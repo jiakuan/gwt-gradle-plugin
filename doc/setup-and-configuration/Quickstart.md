@@ -4,14 +4,14 @@ This chapter will guide you through the first steps to configure gwt-gradle-plug
 
 ## Plugin dependency
 
-As it is not a core Gradle plugin, you have to ensure, that Gradle knows how to get the plugin. To do this, add the following lines to your build.gradle, as GWT Gradle Plugin is available in [Maven central repository](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.wisepersist%22AND%20a%3A%22gwt-gradle-plugin%22).
+As it is not a core Gradle plugin, you have to ensure, that Gradle knows how to get the plugin. To do this, add the following lines to your build.gradle, as GWT Gradle Plugin is available in [Maven central repository](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.docstr%22AND%20a%3A%22gwt-gradle-plugin%22).
 
     buildscript {
         repositories {
             mavenCentral()
         }
         dependencies {
-            classpath 'org.wisepersist:gwt-gradle-plugin:1.1.13'
+            classpath 'org.docstr:gwt-gradle-plugin:1.1.13'
         }
     }
 
@@ -25,7 +25,7 @@ If you want to use the latest snapshot version, you can also use the following r
 			mavenCentral()
 		}
 		dependencies {
-			classpath 'org.wisepersist:gwt-gradle-plugin:1.1.16-SNAPSHOT'
+			classpath 'org.docstr:gwt-gradle-plugin:1.1.16-SNAPSHOT'
 		}
 	}
 

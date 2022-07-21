@@ -30,8 +30,8 @@ gwt {
   minHeapSize = "512M"
   maxHeapSize = "1024M"
 
-  modules 'org.wisepersist.gradle.plugins.gwt.example.Example'
-  devModules 'org.wisepersist.gradle.plugins.gwt.example.ExampleDev'
+  modules 'org.docstr.gradle.plugins.gwt.example.Example'
+  devModules 'org.docstr.gradle.plugins.gwt.example.ExampleDev'
 
   maxHeapSize = "1024M"
 

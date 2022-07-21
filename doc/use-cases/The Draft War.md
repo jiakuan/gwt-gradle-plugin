@@ -14,8 +14,8 @@ To make this feature really useful, you can specify a second set of GWT modules 
 
 ```
 gwt {
-    modules 'org.wisepersist.gradle.plugins.gwt.example.Example'
-    devModules 'org.wisepersist.gradle.plugins.gwt.example.ExampleDev'
+    modules 'org.docstr.gradle.plugins.gwt.example.Example'
+    devModules 'org.docstr.gradle.plugins.gwt.example.ExampleDev'
 }
 ```
 
@@ -25,7 +25,7 @@ A development *.gwt.xml typically looks like this:
 
 ```
 <module rename-to="app">
-    <inherits name="org.wisepersist.gradle.plugins.gwt.example.Example" />
+    <inherits name="org.docstr.gradle.plugins.gwt.example.Example" />
     <collapse-all-properties />
 </module>
 ```
