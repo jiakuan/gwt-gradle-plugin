@@ -5,7 +5,7 @@ help:
 
 clean:
 	rm -rf build
-	./gradlew clean
+	./gradlew clean && cd examples && ./gradlew clean
 
 .PHONY: build
 build:
