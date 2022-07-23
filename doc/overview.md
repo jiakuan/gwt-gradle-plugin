@@ -1,4 +1,4 @@
-## Overview
+# Overview
 
 This plugin makes it easy to build projects using GWT. It provides several tasks to support the development and configures several aspects of your project to work with GWT automatically.
 
@@ -25,7 +25,7 @@ The following example shows the code to set up gwt-gradle-plugin for a GWT web a
             mavenCentral()
         }
         dependencies {
-            classpath 'org.docstr:gwt-gradle-plugin:1.1.15'
+            classpath 'org.docstr:gwt-gradle-plugin:1.1.19'
         }
     }
 

@@ -11,23 +11,23 @@ As it is not a core Gradle plugin, you have to ensure, that Gradle knows how to 
             mavenCentral()
         }
         dependencies {
-            classpath 'org.docstr:gwt-gradle-plugin:1.1.13'
+            classpath 'org.docstr:gwt-gradle-plugin:1.1.19'
         }
     }
 
 If you want to use the latest snapshot version, you can also use the following repository that only contains the snapshot plugin:
 
-	buildscript {
-		repositories {
-			maven {
-				url "https://oss.sonatype.org/content/repositories/snapshots/"
-			}
-			mavenCentral()
-		}
-		dependencies {
-			classpath 'org.docstr:gwt-gradle-plugin:1.1.16-SNAPSHOT'
-		}
-	}
+    buildscript {
+        repositories {
+            maven {
+                url "https://oss.sonatype.org/content/repositories/snapshots/"
+            }
+            mavenCentral()
+        }
+        dependencies {
+            classpath 'org.docstr:gwt-gradle-plugin:1.1.20-SNAPSHOT'
+        }
+    }
 
 ## Basic web application setup
 
