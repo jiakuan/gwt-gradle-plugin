@@ -16,11 +16,14 @@ plugins {
   id 'signing'
   id 'eclipse'
 
-  id 'net.researchgate.release' version '2.8.1'
+  // https://plugins.gradle.org/plugin/net.researchgate.release
+  id 'net.researchgate.release' version '3.0.0'
 
   // For publishing the plugin to the Gradle Plugin Portal
   id 'java-gradle-plugin'
-  id "com.gradle.plugin-publish" version "0.12.0"
+
+  // https://plugins.gradle.org/plugin/com.gradle.plugin-publish
+  id "com.gradle.plugin-publish" version "1.0.0"
 }
 
 group = 'org.docstr'

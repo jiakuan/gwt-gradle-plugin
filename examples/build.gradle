@@ -5,13 +5,13 @@ buildscript {
   }
 }
 
-//plugins {
-//  id 'java'
-//
-//  // https://github.com/jiakuan/gwt-gradle-plugin
-//  // https://plugins.gradle.org/plugin/org.docstr.gwt
-//  id "org.docstr.gwt" version "1.1.10" apply false
-//}
+plugins {
+  id 'java'
+
+  // https://github.com/jiakuan/gwt-gradle
+  // https://plugins.gradle.org/plugin/org.docstr.gwt
+  id "org.docstr.gwt" version "1.1.20-alpha" apply false
+}
 
 subprojects {
   apply plugin: 'java'
@@ -37,6 +37,6 @@ subprojects {
   targetCompatibility = 1.8
 
   dependencies {
-    implementation 'com.google.gwt:gwt-user:2.9.0'
+    implementation 'com.google.gwt:gwt-user:2.10.0'
   }
 }

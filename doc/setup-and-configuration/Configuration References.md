@@ -8,7 +8,7 @@ An example of both kinds of properties looks this way:
 
 ```
 gwt {
-    gwtVersion='2.9.0'
+    gwtVersion='2.10.0'
     minHeapSize = "512M"
     maxHeapSize = "1024M"
     logLevel = 'INFO'
