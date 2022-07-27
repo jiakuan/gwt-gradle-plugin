@@ -20,7 +20,7 @@ If you want to use the latest snapshot version, you can also use the following r
     buildscript {
         repositories {
             maven {
-                url "https://oss.sonatype.org/content/repositories/snapshots/"
+                url "https://s01.oss.sonatype.org/content/repositories/snapshots/"
             }
             mavenCentral()
         }
