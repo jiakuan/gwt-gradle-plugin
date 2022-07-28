@@ -27,7 +27,7 @@ publish-snapshot:
 publish:
 	git checkout tags/${LATEST_TAG}
 	./gradlew build publishMavenJavaPublicationToMavenLocal publishMavenJavaPublicationToMavenRepository
-	git checkout master
+	git checkout main
 
 publish-plugins-snapshot:
 	./gradlew publishPlugins
@@ -35,7 +35,7 @@ publish-plugins-snapshot:
 publish-plugins:
 	git checkout tags/${LATEST_TAG}
 	./gradlew publishPlugins
-	git checkout master
+	git checkout main
 
 .PHONY: doc
 doc: build
