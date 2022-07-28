@@ -23,9 +23,12 @@ The following example shows the code to set up gwt-gradle-plugin for a GWT web a
     buildscript {
         repositories {
             mavenCentral()
+            maven {
+                url "https://plugins.gradle.org/m2/"
+            }
         }
         dependencies {
-            classpath 'org.docstr:gwt-gradle-plugin:1.1.19'
+            classpath 'org.docstr:gwt-gradle-plugin:1.1.21'
         }
     }
 

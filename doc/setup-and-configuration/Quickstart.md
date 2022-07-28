@@ -9,9 +9,12 @@ As it is not a core Gradle plugin, you have to ensure, that Gradle knows how to 
     buildscript {
         repositories {
             mavenCentral()
+            maven {
+                url "https://plugins.gradle.org/m2/"
+            }
         }
         dependencies {
-            classpath 'org.docstr:gwt-gradle-plugin:1.1.19'
+            classpath 'org.docstr:gwt-gradle-plugin:1.1.21'
         }
     }
 
@@ -25,7 +28,7 @@ If you want to use the latest snapshot version, you can also use the following r
             mavenCentral()
         }
         dependencies {
-            classpath 'org.docstr:gwt-gradle-plugin:1.1.20-SNAPSHOT'
+            classpath 'org.docstr:gwt-gradle-plugin:1.1.22-SNAPSHOT'
         }
     }
 
