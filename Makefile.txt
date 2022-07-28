@@ -12,4 +12,5 @@ publish-snapshot  Publish the snapshot version to Maven central
 publish           Publish the latest release version to Maven central
 publish-plugins-snapshot  Publish the snapshot version to Gradle Plugin Portal
 publish-plugins   Publish the latest release to the Gradle Plugin Portal
+doc               Generate Javadoc and copy to 'doc' folder
 

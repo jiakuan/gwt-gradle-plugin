@@ -12,13 +12,13 @@ For more information, please see the new documentation site I created: [http://g
 
 ## Usage
 
-GWT Gradle Plugin is available in the [Gradle Plugin Portal](https://plugins.gradle.org/plugin/org.wisepersist.gwt).
+GWT Gradle Plugin is available in the [Gradle Plugin Portal](https://plugins.gradle.org/plugin/org.docstr.gwt).
 
 Using the plugins DSL:
 
 ```
 plugins {
-  id "org.wisepersist.gwt" version "1.1.16"
+  id "org.docstr.gwt" version "1.1.20"
 }
 ```
 
@@ -32,14 +32,14 @@ buildscript {
     }
   }
   dependencies {
-    classpath "org.wisepersist:gwt-gradle-plugin:1.1.16"
+    classpath "org.docstr:gwt-gradle-plugin:1.1.20"
   }
 }
 
-apply plugin: "org.wisepersist.gwt"
+apply plugin: "org.docstr.gwt"
 ```
 
-GWT Gradle Plugin is also available in [Maven central repository](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.wisepersist%22AND%20a%3A%22gwt-gradle-plugin%22).
+GWT Gradle Plugin is also available in [Maven central repository](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.docstr%22AND%20a%3A%22gwt-gradle-plugin%22).
 
 The following example shows the code to set up gwt-gradle-plugin for a GWT web application project using Maven/Gradle standard layout.
 
@@ -48,7 +48,7 @@ The following example shows the code to set up gwt-gradle-plugin for a GWT web a
             mavenCentral()
         }
         dependencies {
-            classpath 'org.wisepersist:gwt-gradle-plugin:1.1.16'
+            classpath 'org.docstr:gwt-gradle-plugin:1.1.20'
         }
     }
 
@@ -56,7 +56,7 @@ The following example shows the code to set up gwt-gradle-plugin for a GWT web a
     apply plugin: 'gwt'
 
     gwt {
-        gwtVersion='2.9.0'
+        gwtVersion='2.10.0'
         modules '<YOUR-GWT-MODULE>'
     }
 
@@ -80,13 +80,3 @@ If you are on Windows, you can use gradle wrapper to build.
 ```
 gradlew.bat clean build
 ```
-
-## Gradle 6.6+
-
-Starting from `gwt-gradle-plugin:1.1.4+`, you can use GWT `2.9.0` with Gradle `6.6+`.
-
-## Gradle 5.2+
-
-If you are using Gradle 5.2+, please use `gwt-gradle-plugin:1.0.8+`, which is compatible with Gradle 4.6+.
-
-For Gradle <=4.5, please use `gwt-gradle-plugin:1.0.6`.

@@ -16,14 +16,17 @@ plugins {
   id 'signing'
   id 'eclipse'
 
-  id 'net.researchgate.release' version '2.8.1'
+  // https://plugins.gradle.org/plugin/net.researchgate.release
+  id 'net.researchgate.release' version '3.0.0'
 
   // For publishing the plugin to the Gradle Plugin Portal
   id 'java-gradle-plugin'
-  id "com.gradle.plugin-publish" version "0.12.0"
+
+  // https://plugins.gradle.org/plugin/com.gradle.plugin-publish
+  id "com.gradle.plugin-publish" version "1.0.0"
 }
 
-group = 'org.wisepersist'
+group = 'org.docstr'
 version = "$version"
 
 sourceCompatibility = 1.8
@@ -53,10 +56,10 @@ pluginBundle {
 gradlePlugin {
   plugins {
     gwtGradlePlugin {
-      id = 'org.wisepersist.gwt'
+      id = 'org.docstr.gwt'
       displayName = 'GWT Gradle Plugin'
       description = 'Gradle plugin to support GWT related tasks.'
-      implementationClass = 'org.wisepersist.gradle.plugins.gwt.GwtPlugin'
+      implementationClass = 'org.docstr.gradle.plugins.gwt.GwtPlugin'
     }
   }
 }
@@ -152,8 +155,8 @@ publishing {
   }
   repositories {
     maven {
-      def releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
-      def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
+      def releasesRepoUrl = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+      def snapshotsRepoUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
       url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
       credentials {
         username = ossrU

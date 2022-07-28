@@ -1,6 +1,6 @@
 ## How to run Super Dev Mode?
 
-Be aware that the Super Dev Mode is only available GWT 2.5+. Additionally be aware that Super Dev Mode requires specific browsers to work!
+Be aware that the Super Dev Mode is only available in GWT 2.5+. Additionally be aware that Super Dev Mode requires specific browsers to work!
 
 This chapter does not describe the usage of “Super Dev Mode” in detail. Please refer to the official documentation to learn how to use it. Be aware that you need to adjust your *gwt.xml” file or provide a special one for development.
 
