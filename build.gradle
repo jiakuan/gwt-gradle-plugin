@@ -50,7 +50,7 @@ sourceSets.test.java.outputDir = new File(buildDir, "classes/test")
 pluginBundle {
   website = 'http://gwt-gradle-plugin.documentnode.io'
   vcsUrl = 'https://github.com/jiakuan/gwt-gradle-plugin'
-  tags = ['gwt', 'gradle', 'gwt-gradle']
+  tags = ['gwt', 'gwt-gradle']
 }
 
 gradlePlugin {
