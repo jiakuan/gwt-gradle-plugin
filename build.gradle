@@ -61,6 +61,24 @@ gradlePlugin {
       description = 'Gradle plugin to support GWT related tasks.'
       implementationClass = 'org.docstr.gradle.plugins.gwt.GwtPlugin'
     }
+    gwtBaseGradlePlugin {
+      id = 'org.docstr.gwt.base'
+      displayName = 'GWT Base Gradle Plugin'
+      description = 'Gradle plugin to support GWT related tasks.'
+      implementationClass = 'org.docstr.gradle.plugins.gwt.GwtBasePlugin'
+    }
+    gwtCompilerGradlePlugin {
+      id = 'org.docstr.gwt.compiler'
+      displayName = 'GWT Compiler Gradle Plugin'
+      description = 'Gradle plugin to support GWT related tasks.'
+      implementationClass = 'org.docstr.gradle.plugins.gwt.GwtCompilerPlugin'
+    }
+    gwtWarGradlePlugin {
+      id = 'org.docstr.gwt.war'
+      displayName = 'GWT War Gradle Plugin'
+      description = 'Gradle plugin to support GWT related tasks.'
+      implementationClass = 'org.docstr.gradle.plugins.gwt.GwtWarPlugin'
+    }
   }
 }
 
