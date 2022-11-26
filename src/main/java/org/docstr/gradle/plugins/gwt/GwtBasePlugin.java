@@ -59,6 +59,8 @@ public class GwtBasePlugin implements Plugin<Project> {
   public static final String GWT_ELEMENTAL = "gwt-elemental";
   public static final String GWT_SERVLET = "gwt-servlet";
 
+  private static final String IMPLEMENTATION_CONFIGURATION = "implementation";
+
   private static final Logger logger = Logging.getLogger(GwtBasePlugin.class);
   private Project project;
   private GwtPluginExtension extension;
@@ -89,24 +91,19 @@ public class GwtBasePlugin implements Plugin<Project> {
         .setDescription("Classpath for GWT SDK libraries (gwt-dev, gwt-user)");
     allGwtConfigurations = project.files(gwtConfiguration, gwtSdkConfiguration);
 
-    addToMainSourceSetClasspath(allGwtConfigurations);
-
-    final SourceSet testSourceSet = getTestSourceSet();
-    testSourceSet.setCompileClasspath(
-        testSourceSet.getCompileClasspath().plus(allGwtConfigurations));
+    project.getConfigurations().getByName(IMPLEMENTATION_CONFIGURATION).extendsFrom(gwtConfiguration, gwtSdkConfiguration);
 
     project.afterEvaluate(p -> {
-      FileCollection runtimeClasspath = allGwtConfigurations.plus(testSourceSet
-          .getRuntimeClasspath());
-      if (extension.getTest().isHasGwtTests()) {
-        runtimeClasspath = project.files(
-            getMainSourceSet().getAllJava().getSrcDirs().toArray())
-            .plus(project.files(testSourceSet.getAllJava()
-                .getSrcDirs().toArray())).plus(runtimeClasspath);
+      final SourceSet testSourceSet = getTestSourceSet();
+      testSourceSet.setRuntimeClasspath(
+          testSourceSet.getRuntimeClasspath()
+              .plus(project.files(getMainSourceSet().getAllJava().getSrcDirs().toArray()))
+              .plus(project.files(getTestSourceSet().getAllJava().getSrcDirs().toArray()))
+      );
 
+      if (extension.getTest().isHasGwtTests()) {
         configureTestTasks(extension);
       }
-      testSourceSet.setRuntimeClasspath(runtimeClasspath);
 
       final GwtVersion parsedGwtVersion = GwtVersion.parse(extension.getGwtVersion());
 
@@ -226,7 +223,9 @@ public class GwtBasePlugin implements Plugin<Project> {
           (Callable<FileCollection>) () -> extension.getSrc());
       conventionMapping.map("classpath",
           (Callable<FileCollection>) () -> mainSourceSet.getCompileClasspath()
-              .plus(project.files(mainSourceSet.getOutput().getClassesDirs())));
+              .plus(project.files(mainSourceSet.getOutput().getClassesDirs()))
+              .plus(project.files(gwtConfiguration))
+              .plus(project.files(gwtSdkConfiguration)));
       conventionMapping.map("minHeapSize",
           (Callable<String>) () -> extension.getMinHeapSize());
       conventionMapping.map("maxHeapSize",
@@ -322,12 +321,6 @@ public class GwtBasePlugin implements Plugin<Project> {
 
   private JavaPluginConvention getJavaConvention() {
     return project.getConvention().getPlugin(JavaPluginConvention.class);
-  }
-
-  private void addToMainSourceSetClasspath(FileCollection fileCollection) {
-    final SourceSet mainSourceSet = getMainSourceSet();
-    mainSourceSet.setCompileClasspath(
-        getMainSourceSet().getCompileClasspath().plus(fileCollection));
   }
 
   GwtPluginExtension getExtension() {
