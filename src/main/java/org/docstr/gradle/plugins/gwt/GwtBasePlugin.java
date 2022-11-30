@@ -59,7 +59,7 @@ public class GwtBasePlugin implements Plugin<Project> {
   public static final String GWT_ELEMENTAL = "gwt-elemental";
   public static final String GWT_SERVLET = "gwt-servlet";
 
-  private static final String IMPLEMENTATION_CONFIGURATION = "implementation";
+  private static final String TARGET_CONFIGURATION = "compileOnly";
 
   private static final Logger logger = Logging.getLogger(GwtBasePlugin.class);
   private Project project;
@@ -91,7 +91,7 @@ public class GwtBasePlugin implements Plugin<Project> {
         .setDescription("Classpath for GWT SDK libraries (gwt-dev, gwt-user)");
     allGwtConfigurations = project.files(gwtConfiguration, gwtSdkConfiguration);
 
-    project.getConfigurations().getByName(IMPLEMENTATION_CONFIGURATION).extendsFrom(gwtConfiguration, gwtSdkConfiguration);
+    project.getConfigurations().getByName(TARGET_CONFIGURATION).extendsFrom(gwtConfiguration, gwtSdkConfiguration);
 
     project.afterEvaluate(p -> {
       final SourceSet testSourceSet = getTestSourceSet();
