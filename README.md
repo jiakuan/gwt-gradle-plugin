@@ -18,7 +18,7 @@ Using the plugins DSL:
 
 ```
 plugins {
-  id "org.docstr.gwt" version "1.1.21"
+  id "org.docstr.gwt" version "1.1.24"
 }
 ```
 
@@ -32,7 +32,7 @@ buildscript {
     }
   }
   dependencies {
-    classpath "org.docstr:gwt-gradle-plugin:1.1.21"
+    classpath "org.docstr:gwt-gradle-plugin:1.1.24"
   }
 }
 
@@ -51,7 +51,7 @@ The following example shows the code to set up gwt-gradle-plugin for a GWT web a
             }
         }
         dependencies {
-            classpath 'org.docstr:gwt-gradle-plugin:1.1.21'
+            classpath 'org.docstr:gwt-gradle-plugin:1.1.24'
         }
     }
 
