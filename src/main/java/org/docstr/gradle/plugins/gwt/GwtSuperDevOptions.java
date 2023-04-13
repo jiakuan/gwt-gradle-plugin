@@ -119,4 +119,8 @@ public interface GwtSuperDevOptions {
    * @param closureFormattedOutput The closure formatted output.
    */
   void setClosureFormattedOutput(Boolean closureFormattedOutput);
+
+  Style getStyle();
+
+  void setStyle(Style style);
 }
