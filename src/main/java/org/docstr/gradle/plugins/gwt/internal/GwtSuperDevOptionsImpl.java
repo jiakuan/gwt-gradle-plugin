@@ -15,8 +15,10 @@
  */
 package org.docstr.gradle.plugins.gwt.internal;
 
-import java.io.File;
 import org.docstr.gradle.plugins.gwt.GwtSuperDevOptions;
+import org.docstr.gradle.plugins.gwt.Style;
+
+import java.io.File;
 
 /**
  * Default implementation of {@link GwtSuperDevOptions}.
@@ -36,6 +38,7 @@ public class GwtSuperDevOptionsImpl implements GwtSuperDevOptions {
   private File launcherDir;
   // -X[no]closureFormattedOutput
   private Boolean closureFormattedOutput;
+  private Style style;
 
   /** {@inheritDoc} */
   @Override
@@ -167,5 +170,17 @@ public class GwtSuperDevOptionsImpl implements GwtSuperDevOptions {
   @Override
   public void setClosureFormattedOutput(Boolean closureFormattedOutput) {
     this.closureFormattedOutput = closureFormattedOutput;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public Style getStyle() {
+    return style;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void setStyle(Style style) {
+    this.style = style;
   }
 }

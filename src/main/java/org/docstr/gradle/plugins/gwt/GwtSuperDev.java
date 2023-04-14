@@ -15,17 +15,13 @@
  */
 package org.docstr.gradle.plugins.gwt;
 
-import java.io.File;
-import java.util.concurrent.Callable;
+import org.docstr.gradle.plugins.gwt.internal.GwtSuperDevOptionsImpl;
 import org.gradle.api.internal.ConventionMapping;
 import org.gradle.api.internal.IConventionAware;
-import org.gradle.api.tasks.Input;
-import org.gradle.api.tasks.InputDirectory;
-import org.gradle.api.tasks.Internal;
-import org.gradle.api.tasks.Optional;
-import org.gradle.api.tasks.PathSensitive;
-import org.gradle.api.tasks.PathSensitivity;
-import org.docstr.gradle.plugins.gwt.internal.GwtSuperDevOptionsImpl;
+import org.gradle.api.tasks.*;
+
+import java.io.File;
+import java.util.concurrent.Callable;
 
 /**
  * Task to run the GWT Super Dev Mode.
@@ -61,6 +57,7 @@ public class GwtSuperDev extends AbstractGwtActionTask implements
     argIfSet("-compileTestRecompiles", getCompileTestRecompiles());
     argIfSet("-launcherDir", getLauncherDir());
     argIfSet("-logLevel", getLogLevel());
+    argIfSet("-style", getStyle());
     argOnOff(getClosureFormattedOutput(), "-XclosureFormattedOutput",
         "-XnoclosureFormattedOutput");
   }
@@ -245,5 +242,19 @@ public class GwtSuperDev extends AbstractGwtActionTask implements
   @Override
   public void setClosureFormattedOutput(Boolean closureFormattedOutput) {
     options.setClosureFormattedOutput(closureFormattedOutput);
+  }
+
+  /** {@inheritDoc} */
+  @Optional
+  @Input
+  @Override
+  public Style getStyle() {
+    return options.getStyle();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void setStyle(Style style) {
+    options.setStyle(style);
   }
 }
