@@ -1,6 +1,6 @@
 ﻿# GWT Gradle Plugin
 
-[![Build Status](https://travis-ci.org/jiakuan/gwt-gradle-plugin.svg?branch=master)](https://travis-ci.org/jiakuan/gwt-gradle-plugin)
+[![Build Status](https://github.com/jiakuan/gwt-gradle-plugin/actions/workflows/gradle.yml/badge.svg)](https://github.com/jiakuan/gwt-gradle-plugin/actions)
 
 This plugin makes it easy to build projects using [GWT](http://www.gwtproject.org/). It provides several tasks to support the development and configures several aspects of your project to work with GWT automatically.
 
