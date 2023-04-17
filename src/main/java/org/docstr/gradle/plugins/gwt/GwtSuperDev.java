@@ -82,6 +82,8 @@ public class GwtSuperDev extends AbstractGwtActionTask implements
         (Callable<Integer>) () -> options.getCompileTestRecompiles());
     conventionMapping.map("launcherDir",
         (Callable<File>) () -> options.getLauncherDir());
+    conventionMapping.map("style",
+        (Callable<Style>) () -> options.getStyle());
     conventionMapping
         .map("closureFormattedOutput", options::getClosureFormattedOutput);
   }
