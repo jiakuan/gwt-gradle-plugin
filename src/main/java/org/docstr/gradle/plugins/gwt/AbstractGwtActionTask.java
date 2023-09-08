@@ -24,6 +24,7 @@ import org.gradle.api.InvalidUserDataException;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
+import org.gradle.api.plugins.JavaPluginExtension;
 import org.gradle.api.tasks.Classpath;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFiles;
@@ -31,7 +32,10 @@ import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.PathSensitive;
 import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.TaskAction;
+import org.gradle.jvm.toolchain.JavaLauncher;
+import org.gradle.jvm.toolchain.JavaToolchainService;
 import org.gradle.process.ExecResult;
+import org.gradle.process.JavaExecSpec;
 import org.docstr.gradle.plugins.gwt.internal.GwtVersion;
 
 /**
@@ -76,6 +80,8 @@ public abstract class AbstractGwtActionTask extends DefaultTask {
 
   private MethodNameDisplayMode methodNameDisplayMode;
 
+  private boolean useToolchain;
+
   public AbstractGwtActionTask(String main) {
     this.main = main;
   }
@@ -118,6 +124,9 @@ public abstract class AbstractGwtActionTask extends DefaultTask {
             javaExecSpec.environment("CLASSPATH", classpath.getAsPath());
           } else {
             javaExecSpec.setClasspath(classpath);
+          }
+          if (useToolchain) {
+              setExecutableFromToolchain(javaExecSpec);
           }
 
           argIfSet("-XjsInteropMode", getJsInteropMode());
@@ -329,6 +338,15 @@ public abstract class AbstractGwtActionTask extends DefaultTask {
     return debug;
   }
 
+  @Input
+  public boolean isUseToolchain() {
+    return useToolchain;
+  }
+
+  public void setUseToolchain(boolean useToolchain) {
+    this.useToolchain = useToolchain;
+  }
+
   /**
    * If set to true this enables debugging for the spawned java process.
    *
@@ -407,5 +425,14 @@ public abstract class AbstractGwtActionTask extends DefaultTask {
   public void setMethodNameDisplayMode(
       MethodNameDisplayMode methodNameDisplayMode) {
     this.methodNameDisplayMode = methodNameDisplayMode;
+  }
+
+  private void setExecutableFromToolchain(JavaExecSpec javaExecSpec) {
+    JavaPluginExtension extension = getProject().getExtensions()
+            .getByType(JavaPluginExtension.class);
+    JavaLauncher javaLauncher = getProject().getExtensions().getByType(JavaToolchainService.class)
+            .launcherFor(extension.getToolchain()).get();
+    String defaultLauncher = javaLauncher.getExecutablePath().toString();
+    javaExecSpec.setExecutable(defaultLauncher);
   }
 }
