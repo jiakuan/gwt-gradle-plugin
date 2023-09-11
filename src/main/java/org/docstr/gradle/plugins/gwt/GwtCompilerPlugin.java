@@ -51,7 +51,7 @@ public class GwtCompilerPlugin implements Plugin<Project> {
               project.getTasks().named(JavaPlugin.PROCESS_RESOURCES_TASK_NAME));
     });
 
-    project.getTasks().register(TASK_CHECK, task -> {
+    project.getTasks().register(TASK_CHECK, GwtCheck.class, task -> {
       task.setDescription("Runs the GWT compiler to validate the relevant sources");
       task.dependsOn(project.getTasks().named(JavaPlugin.COMPILE_JAVA_TASK_NAME),
               project.getTasks().named(JavaPlugin.PROCESS_RESOURCES_TASK_NAME));
