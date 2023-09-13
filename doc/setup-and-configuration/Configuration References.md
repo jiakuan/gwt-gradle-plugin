@@ -106,10 +106,10 @@ gwt {
 
 In case you are specifying a [Java toolchain](https://docs.gradle.org/current/userguide/toolchains.html)
 to compile your Java files with a higher version of Java than the one running Gradle, GWT compilation might fail.
-To avoid this you can align the Java versions use for Java and GWT compilation using
+To avoid this you can align the Java versions used for Java and GWT compilation using
 
 ```
-gwt {
+compileGwt {
     useToolchain = true
 }
 ```
