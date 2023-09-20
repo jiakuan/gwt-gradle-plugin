@@ -1,0 +1,39 @@
+{
+  "output_dir": "../../dn-hosting-sites/gwt-gradle.docstr.org",
+  "favicon_source": "/images/logo.png",
+  "base_url": "https://gwt-gradle.docstr.org/",
+  "resources": {
+    "includes": [
+    ],
+    "excludes": [
+      "\\..+ignore",
+      "^\\..+",
+      ".+\\.ai"
+    ],
+    "max_img_size": [
+      {
+        "pattern": ".*hero.*",
+        "max_width": 2560,
+        "max_height": 1440
+      },
+      {
+        "pattern": ".*",
+        "max_width": 1920,
+        "max_height": 1920
+      }
+    ]
+  },
+  "documents": {
+    "author": "Jake W.",
+    "avatar_url": "/images/logo.png",
+    "extensions": [
+      "md"
+    ],
+    "includes": [
+    ],
+    "excludes": [
+      "\\..+ignore",
+      "^\\..+"
+    ]
+  }
+}
