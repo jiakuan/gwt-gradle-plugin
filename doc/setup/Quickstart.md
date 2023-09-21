@@ -4,7 +4,36 @@ This chapter will guide you through the first steps to configure gwt-gradle-plug
 
 ## Plugin dependency
 
-As it is not a core Gradle plugin, you have to ensure, that Gradle knows how to get the plugin. To do this, add the following lines to your build.gradle, as GWT Gradle Plugin is available in [Maven central repository](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.docstr%22AND%20a%3A%22gwt-gradle-plugin%22).
+GWT Gradle Plugin is available in the [Gradle Plugin Portal](https://plugins.gradle.org/plugin/org.docstr.gwt).
+
+Using the plugins DSL:
+
+```
+plugins {
+  id "org.docstr.gwt" version "1.1.28"
+}
+```
+
+Using legacy plugin application:
+
+```
+buildscript {
+  repositories {
+    maven {
+      url "https://plugins.gradle.org/m2/"
+    }
+  }
+  dependencies {
+    classpath "org.docstr:gwt-gradle-plugin:1.1.28"
+  }
+}
+
+apply plugin: "org.docstr.gwt"
+```
+
+GWT Gradle Plugin is also available in [Maven central repository](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.docstr%22%20AND%20a%3A%22gwt-gradle-plugin%22).
+
+The following example shows the code to set up gwt-gradle-plugin for a GWT web application project using Maven/Gradle standard layout.
 
     buildscript {
         repositories {
@@ -14,23 +43,10 @@ As it is not a core Gradle plugin, you have to ensure, that Gradle knows how to 
             }
         }
         dependencies {
-            classpath 'org.docstr:gwt-gradle-plugin:1.1.21'
+            classpath 'org.docstr:gwt-gradle-plugin:1.1.28'
         }
     }
 
-If you want to use the latest snapshot version, you can also use the following repository that only contains the snapshot plugin:
-
-    buildscript {
-        repositories {
-            maven {
-                url "https://s01.oss.sonatype.org/content/repositories/snapshots/"
-            }
-            mavenCentral()
-        }
-        dependencies {
-            classpath 'org.docstr:gwt-gradle-plugin:1.1.22-SNAPSHOT'
-        }
-    }
 
 ## Basic web application setup
 

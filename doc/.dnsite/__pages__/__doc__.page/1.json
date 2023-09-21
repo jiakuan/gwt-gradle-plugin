@@ -15,12 +15,16 @@
     {
       "text": "Configuration",
       "url": "/setup/Configuration References"
+    },
+    {
+      "text": "Project Types",
+      "url": "/setup/Project Types"
     }
   ],
   "right_menu_items": [
     {
       "text": "Javadoc",
-      "url": "/javadoc"
+      "url": "/javadoc/"
     }
   ],
   "user_actions": {

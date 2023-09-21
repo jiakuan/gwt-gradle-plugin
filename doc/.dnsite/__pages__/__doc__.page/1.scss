@@ -26,6 +26,11 @@
 
       .menu ul li a {
         color: #444444;
+
+        &.active {
+          color: #718c30;
+          border-bottom-color: #718c30;
+        }
       }
     }
   }

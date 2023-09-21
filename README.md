@@ -6,9 +6,9 @@ This plugin makes it easy to build projects using [GWT](http://www.gwtproject.or
 
 It was originally [created by Steffen Schaefer](https://github.com/steffenschaefer/gwt-gradle-plugin). Really appreciate his effort on making this great plugin.
 
-In last two years, there were no updates in the original git repo, so I plan to continue the maintenance in this fork.
+In last two years, there were no updates in the original git repo, so we plan to continue the maintenance in this fork.
 
-For more information, please see the new documentation site I created: [http://gwt-gradle-plugin.documentnode.io](http://gwt-gradle-plugin.documentnode.io)
+For more information, please see the latest documentation site: [http://gwt-gradle.docstr.org](http://gwt-gradle.docstr.org)
 
 ## Usage
 
@@ -18,7 +18,7 @@ Using the plugins DSL:
 
 ```
 plugins {
-  id "org.docstr.gwt" version "1.1.25"
+  id "org.docstr.gwt" version "1.1.28"
 }
 ```
 
@@ -32,14 +32,14 @@ buildscript {
     }
   }
   dependencies {
-    classpath "org.docstr:gwt-gradle-plugin:1.1.25"
+    classpath "org.docstr:gwt-gradle-plugin:1.1.28"
   }
 }
 
 apply plugin: "org.docstr.gwt"
 ```
 
-GWT Gradle Plugin is also available in [Maven central repository](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.docstr%22AND%20a%3A%22gwt-gradle-plugin%22).
+GWT Gradle Plugin is also available in [Maven central repository](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.docstr%22%20AND%20a%3A%22gwt-gradle-plugin%22).
 
 The following example shows the code to set up gwt-gradle-plugin for a GWT web application project using Maven/Gradle standard layout.
 
@@ -51,7 +51,7 @@ The following example shows the code to set up gwt-gradle-plugin for a GWT web a
             }
         }
         dependencies {
-            classpath 'org.docstr:gwt-gradle-plugin:1.1.25'
+            classpath 'org.docstr:gwt-gradle-plugin:1.1.28'
         }
     }
 
@@ -68,7 +68,7 @@ This will configure your GWT web project to execute the GWT compiler and include
 To build the *.war file including your compiled GWT modules, simply call "gradle build".
 If you want to start the GWT development mode simply call "gradle gwtDev".
 
-To learn about different scenarios or more specific configuration needs, please refer to the [Documentation](http://gwt-gradle-plugin.documentnode.io).
+To learn about different scenarios or more specific configuration needs, please refer to the [Documentation](http://gwt-gradle.docstr.org).
 
 ## How to build
 

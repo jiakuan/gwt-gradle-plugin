@@ -45,7 +45,7 @@ This will configure your GWT web project to execute the GWT compiler and include
 To build the *.war file including your compiled GWT modules, simply call "gradle build".
 If you want to start the GWT development mode simply call "gradle gwtDev".
 
-To learn about different scenarios or more specific configuration needs, please refer to the [Documentation](http://gwt-gradle-plugin.documentnode.io).
+To learn about different scenarios or more specific configuration needs, please refer to the [Documentation](http://gwt-gradle.docstr.org).
 
 
 ## How to contribute
