@@ -1,0 +1,36 @@
+{
+  "logo_img_url": "/images/logo-text.svg",
+  "logo_img_alt": "GWT Gradle Plugin",
+  "left_menu_data_url": "",
+  "left_menu_template": "",
+  "left_menu_items": [
+    {
+      "text": "Overview",
+      "url": "/overview"
+    },
+    {
+      "text": "Quickstart",
+      "url": "/setup/Quickstart"
+    },
+    {
+      "text": "Configuration",
+      "url": "/setup/Configuration References"
+    }
+  ],
+  "right_menu_items": [
+    {
+      "text": "Javadoc",
+      "url": "/javadoc"
+    }
+  ],
+  "user_actions": {
+    "buttons": [
+      {
+        "text": "Source Code",
+        "url": "https://github.com/jiakuan/gwt-gradle-plugin"
+      }
+    ],
+    "user": null,
+    "cart": null
+  }
+}
