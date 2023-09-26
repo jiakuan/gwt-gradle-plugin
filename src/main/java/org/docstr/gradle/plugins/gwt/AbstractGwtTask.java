@@ -52,6 +52,7 @@ public abstract class AbstractGwtTask extends AbstractGwtActionTask {
     }
   }
 
+  @Optional
   @OutputDirectory
   public File getWar() {
     return war;
