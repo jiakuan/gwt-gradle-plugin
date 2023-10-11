@@ -16,6 +16,7 @@
 package org.docstr.gradle.plugins.gwt;
 
 import java.io.File;
+import java.util.List;
 import java.util.concurrent.Callable;
 import org.gradle.api.internal.ConventionMapping;
 import org.gradle.api.internal.IConventionAware;
@@ -93,5 +94,6 @@ public class GwtCompile extends AbstractGwtCompile {
         (Callable<File>) () -> options.getSaveSourceOutput());
     conventionMapping
         .map("closureFormattedOutput", options::getClosureFormattedOutput);
+    conventionMapping.map("setProperties", options::getSetProperties);
   }
 }

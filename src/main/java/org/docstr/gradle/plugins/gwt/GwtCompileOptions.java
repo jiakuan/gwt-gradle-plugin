@@ -16,6 +16,7 @@
 package org.docstr.gradle.plugins.gwt;
 
 import java.io.File;
+import java.util.List;
 
 
 /**
@@ -236,4 +237,14 @@ public interface GwtCompileOptions {
    * @param closureFormattedOutput The closure formatted output.
    */
   void setClosureFormattedOutput(Boolean closureFormattedOutput);
+
+  /**
+   * Set the values of a property in the form of propertyName=value1[,value2...].
+   * Example: -setProperties = ["user.agent=safari", "locale=default"]
+   * would add the parameters -setProperty user.agent=safari -setProperty locale=default
+   * @param properties The list of properties to be set
+   */
+  void setSetProperties(List<String> properties);
+
+  List<String> getSetProperties();
 }

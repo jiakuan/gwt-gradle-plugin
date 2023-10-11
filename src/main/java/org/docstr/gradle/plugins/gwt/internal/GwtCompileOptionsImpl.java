@@ -16,6 +16,8 @@
 package org.docstr.gradle.plugins.gwt.internal;
 
 import java.io.File;
+import java.util.Collections;
+import java.util.List;
 import org.docstr.gradle.plugins.gwt.GwtCompileOptions;
 import org.docstr.gradle.plugins.gwt.Namespace;
 import org.docstr.gradle.plugins.gwt.Style;
@@ -61,6 +63,7 @@ public class GwtCompileOptionsImpl implements GwtCompileOptions {
   private File saveSourceOutput;
   // -X[no]closureFormattedOutput
   private Boolean closureFormattedOutput;
+  private List<String> properties = Collections.emptyList();
 
   /** {@inheritDoc} */
   @Override
@@ -362,5 +365,17 @@ public class GwtCompileOptionsImpl implements GwtCompileOptions {
   @Override
   public void setClosureFormattedOutput(Boolean closureFormattedOutput) {
     this.closureFormattedOutput = closureFormattedOutput;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void setSetProperties(List<String> properties) {
+    this.properties = properties;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public List<String> getSetProperties() {
+    return this.properties;
   }
 }
