@@ -129,3 +129,15 @@ gwt {
 ```
 
 The available log levels are defined in the enum [LogLevel](../javadoc/org/docstr/gradle/plugins/gwt/LogLevel.html).
+
+### Using the setProperty Compiler Flag
+
+GWT allows you to set the value of a property using the `-setProperty` flag. This is accomplished here by:
+
+```
+gwt {
+    compiler {
+        setProperties = ["user.agent=safari", "locale=default"]
+    }
+}
+```
