@@ -16,6 +16,7 @@
 package org.docstr.gradle.plugins.gwt;
 
 import java.io.File;
+import java.util.List;
 import java.util.concurrent.Callable;
 import org.gradle.api.internal.IConventionAware;
 import org.gradle.api.tasks.Input;
@@ -51,6 +52,11 @@ public class AbstractGwtCompile extends AbstractGwtTask implements
     argIfEnabled(getDisableGeneratingOnShards(), "-XdisableGeneratingOnShards");
 
     argIfSet("-optimize", getOptimize());
+
+    for (String property: getSetProperties()) {
+      args("-setProperty", property);
+    }
+
     argIfEnabled(getDisableAggressiveOptimization(),
         "-XdisableAggressiveOptimization");
     argIfEnabled(getDisableClassMetadata(), "-XdisableClassMetadata");
@@ -432,5 +438,19 @@ public class AbstractGwtCompile extends AbstractGwtTask implements
   @Override
   public void setClosureFormattedOutput(Boolean closureFormattedOutput) {
     options.setClosureFormattedOutput(closureFormattedOutput);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void setSetProperties(List<String> properties) {
+    options.setSetProperties(properties);
+  }
+
+  /** {@inheritDoc} */
+  @Optional
+  @Input
+  @Override
+  public List<String> getSetProperties() {
+    return options.getSetProperties();
   }
 }
