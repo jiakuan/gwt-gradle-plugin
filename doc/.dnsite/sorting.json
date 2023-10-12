@@ -10,6 +10,7 @@
     "use-cases/Working with Intellij IDEA.md",
     "use-cases/Working with Eclipse.md",
     "technical-details",
-    "version-history.md"
+    "version-history.md",
+    "javadoc"
   ]
 }
