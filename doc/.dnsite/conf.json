@@ -1,5 +1,6 @@
 {
   "output_dir": "../../dn-hosting-sites/gwt-gradle.docstr.org/.output",
+  "block_libs": [],
   "favicon_source": "/images/logo.png",
   "base_url": "https://gwt-gradle.docstr.org/",
   "resources": {
