@@ -8,12 +8,12 @@ targetCompatibility = '1.6'
 repositories { mavenCentral() }
 
 dependencies {
-	testImplementation 'com.google.gwt:gwt-dev:2.10.0'
+	testImplementation 'org.gwtproject:gwt-dev:2.11.0'
 	testImplementation group: 'junit', name: 'junit', version: '[4.11,5.0['
 }
 
 gwt {
-	gwtVersion='2.10.0'
+	gwtVersion='2.11.0'
 	minHeapSize = "512M"
 	maxHeapSize = "1024M"
 }

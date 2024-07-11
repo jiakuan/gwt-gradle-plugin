@@ -37,6 +37,6 @@ subprojects {
   targetCompatibility = 1.8
 
   dependencies {
-    implementation 'com.google.gwt:gwt-user:2.10.0'
+    implementation 'org.gwtproject:gwt-user:2.11.0'
   }
 }
