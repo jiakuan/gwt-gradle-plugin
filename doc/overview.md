@@ -28,7 +28,7 @@ The following example shows the code to set up gwt-gradle-plugin for a GWT web a
             }
         }
         dependencies {
-            classpath 'org.docstr:gwt-gradle-plugin:1.1.30'
+            classpath 'org.docstr:gwt-gradle-plugin:1.1.31'
         }
     }
 
