@@ -1,16 +1,10 @@
 
 Usage: make options...
 
-Option            Description
-------            -----------
-clean             Clean build directories of projects
-build             Build projects with tests and quality checking
-build-fast        Build projects without tests and quality checking
-examples          Build examples
-release           Release a new version for projects
-publish-snapshot  Publish the snapshot version to Maven central
-publish           Publish the latest release version to Maven central
-publish-plugins-snapshot  Publish the snapshot version to Gradle Plugin Portal
-publish-plugins   Publish the latest release to the Gradle Plugin Portal
-doc               Generate Javadoc and copy to 'doc' folder
+Option          Description
+------          -----------
+clean           Clean build directories of projects
+build           Build the project and run tests
+publish-local   Publish the plugin to local maven repository
+publish         Publish the plugin to gradle plugin portal
 

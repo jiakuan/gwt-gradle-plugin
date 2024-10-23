@@ -1,0 +1,133 @@
+/*
+ * For more details on writing Custom Plugins, please refer to
+ * https://docs.gradle.org/8.10.2/userguide/custom_plugins.html in the
+ * Gradle documentation.
+ */
+
+plugins {
+  // Apply the Java Gradle plugin development plugin to add support for
+  // developing Gradle plugins
+  id 'java-gradle-plugin'
+
+  id 'maven-publish'
+
+  alias(libs.plugins.plugin.publish)
+  alias(libs.plugins.lombok)
+}
+
+group = 'org.docstr.gwt'
+version = "$version"
+
+repositories {
+  // Use Maven Central for resolving dependencies.
+  mavenCentral()
+}
+
+dependencies {
+  implementation libs.gwt.user
+  implementation libs.gwt.dev
+
+  // Use JUnit Jupiter for testing.
+  testImplementation libs.junit.jupiter
+  testImplementation libs.assertj.core
+  testImplementation libs.commons.io
+  testImplementation libs.classgraph
+  testImplementation libs.slf4j.api
+  testImplementation libs.slf4j.jdk14
+  testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+gradlePlugin {
+  website = 'http://gwt-gradle.docstr.org'
+  vcsUrl = 'https://github.com/jiakuan/gwt-gradle-plugin'
+
+  // Define the plugin
+  plugins {
+    gwtPlugin {
+      id = 'org.docstr.gwt'
+      implementationClass = 'org.docstr.gwt.GwtPlugin'
+      displayName = 'GWT Gradle Plugin'
+      description = 'Gradle plugin to support GWT related tasks.'
+      tags.set(['gwt', 'gwt-gradle', 'gwt-gradle-plugin'])
+
+    }
+  }
+}
+
+publishing {
+  publications {
+    mavenJava(MavenPublication) {
+      from components.java
+      groupId = 'org.docstr.gwt'
+      artifactId = 'gwt-gradle-plugin'
+      version = project.version
+      pom {
+        name = 'GWT Gradle Plugin'
+        description = 'Gradle plugin to support GWT (http://www.gwtproject.org/) related tasks.'
+        url = 'https://github.com/jiakuan/gwt-gradle-plugin/'
+        packaging = 'jar'
+        licenses {
+          license {
+            name = 'The Apache License, Version 2.0'
+            url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+          }
+        }
+        developers {
+          developer {
+            id = 'jiakuan'
+            name = 'Jiakuan Wang'
+            email = 'jake@documentnode.io'
+            organization = 'Document Node'
+            organizationUrl = 'https://documentnode.io'
+          }
+        }
+
+        scm {
+          connection = 'scm:git:git@github.com:jiakuan/gwt-gradle-plugin.git'
+          developerConnection = 'scm:git:git@github.com:jiakuan/gwt-gradle-plugin.git'
+          url = 'git@github.com:jiakuan/gwt-gradle-plugin.git'
+        }
+      }
+    }
+  }
+  repositories {
+    mavenLocal()
+    //maven {
+    //  def releasesRepoUrl = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+    //  def snapshotsRepoUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+    //  url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+    //  credentials {
+    //    username = ossrU
+    //    password = ossrP
+    //  }
+    //}
+  }
+}
+
+// Add a source set for the functional test suite
+sourceSets {
+  functionalTest {
+  }
+}
+
+configurations.functionalTestImplementation.extendsFrom(configurations.testImplementation)
+configurations.functionalTestRuntimeOnly.extendsFrom(configurations.testRuntimeOnly)
+
+// Add a task to run the functional tests
+tasks.register('functionalTest', Test) {
+  testClassesDirs = sourceSets.functionalTest.output.classesDirs
+  classpath = sourceSets.functionalTest.runtimeClasspath
+  useJUnitPlatform()
+}
+
+gradlePlugin.testSourceSets.add(sourceSets.functionalTest)
+
+tasks.named('check') {
+  // Run the functional tests as part of `check`
+  dependsOn(tasks.functionalTest)
+}
+
+tasks.named('test') {
+  // Use JUnit Jupiter for unit tests.
+  useJUnitPlatform()
+}

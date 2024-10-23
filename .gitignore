@@ -1,19 +1,10 @@
-**/.idea/
-**/*.iml
-bin/
-.classpath
-.project
-.gradle/
-.settings/
-build/
-/repo/
-war/
-gwt-unitCache/
-*.md.html
-/doc/javadoc/
-/doc/__output__/
-/.dnconfig
-/eclipse.xml
-/doc/.dnconfig-shm
-/doc/.dnconfig-wal
+# Ignore Gradle project-specific cache directory
+.gradle
+
+# Ignore Gradle build output directory
+build
+
 **/.DS_Store
+plugin/src/functionalTest/resources/sample-gwt-project/gradle
+plugin/src/functionalTest/resources/sample-gwt-project/gradlew
+plugin/src/functionalTest/resources/sample-gwt-project/gradlew.bat

@@ -1,0 +1,27 @@
+plugins {
+  id 'java'
+  id('org.docstr.gwt')
+}
+
+group = 'com.example'
+version = '1.0.0'
+
+repositories {
+  mavenLocal()
+  mavenCentral()
+}
+
+dependencies {
+  // The GWT plugin will automatically add these dependencies
+  // implementation 'org.gwtproject:gwt-user:2.11.0'
+  // implementation 'org.gwtproject:gwt-dev:2.11.0'
+}
+
+gwt {
+  modules = ['com.example.MyModule']
+
+  compiler {
+    classMetadata = false
+    draftCompile = true
+  }
+}
