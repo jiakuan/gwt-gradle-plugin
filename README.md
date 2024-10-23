@@ -24,7 +24,7 @@ Add the following to your `build.gradle` file to use the plugin:
 
 ```
 plugins {
-  id "org.docstr.gwt version "2.0.0-alpha"
+  id "org.docstr.gwt version "2.0.1-alpha"
 }
 
 gwt {
@@ -42,7 +42,7 @@ buildscript {
     }
   }
   dependencies {
-    classpath("org.docstr.gwt:gwt-gradle-plugin:2.0.0-alpha")
+    classpath("org.docstr.gwt:gwt-gradle-plugin:2.0.1-alpha")
   }
 }
 
