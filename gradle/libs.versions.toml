@@ -12,7 +12,6 @@ assertj-core = "3.26.3"
 
 # https://plugins.gradle.org/plugin/io.freefair.lombok
 lombok-plugin = "8.10"
-
 # https://plugins.gradle.org/plugin/com.gradle.plugin-publish
 plugin-publish = "1.3.0"
 
