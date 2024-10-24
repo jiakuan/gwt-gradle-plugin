@@ -82,6 +82,10 @@ gwt {
   
   // Optional: Configures the GWT compiler
   compiler {
+    //
+    // All options in 'gwt' closure can be overridden here
+    //
+    
     // Optional: Enables Javascript output suitable for post-compilation by Closure Compiler (defaults to OFF)
     closureFormattedOutput = false
 
@@ -124,6 +128,10 @@ gwt {
   
   // Optional: Configures the GWT development mode
   devMode {
+    //
+    // All options in 'gwt' closure can be overridden here
+    //
+    
     // Optional: Starts a servlet container serving the directory specified by the -war flag. (defaults to ON)
     startServer = true
 
