@@ -44,8 +44,12 @@ public class GwtPlugin implements Plugin<Project> {
     // Register the GWT extension
     GwtPluginExtension extension = project.getExtensions()
         .create("gwt", GwtPluginExtension.class);
+
+    // Set default values for the extension
     extension.getWar().convention(project.getLayout().getBuildDirectory()
         .dir("gwt"));
+    extension.getDeploy().convention(project.getLayout().getBuildDirectory()
+        .dir("gwt/deploy"));
     return extension;
   }
 
