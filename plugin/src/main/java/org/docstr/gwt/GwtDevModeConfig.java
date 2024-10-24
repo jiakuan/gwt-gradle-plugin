@@ -35,6 +35,17 @@ public class GwtDevModeConfig implements Action<GwtDevModeTask> {
 
   @Override
   public void execute(GwtDevModeTask task) {
+    if (extension.getDevMode().getMinHeapSize().isPresent()) {
+      task.setMinHeapSize(extension.getDevMode().getMinHeapSize().get());
+    } else {
+      task.setMinHeapSize(extension.getMinHeapSize().getOrElse("256M"));
+    }
+    if (extension.getDevMode().getMaxHeapSize().isPresent()) {
+      task.setMaxHeapSize(extension.getDevMode().getMaxHeapSize().get());
+    } else {
+      task.setMaxHeapSize(extension.getMaxHeapSize().getOrElse("512M"));
+    }
+
     task.getStartServer()
         .set(extension.getDevMode().getStartServer().getOrNull());
     task.getPort().set(extension.getDevMode().getPort().getOrNull());

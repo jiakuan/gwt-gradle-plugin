@@ -35,6 +35,17 @@ public class GwtCompileConfig implements Action<GwtCompileTask> {
 
   @Override
   public void execute(GwtCompileTask task) {
+    if (extension.getCompiler().getMinHeapSize().isPresent()) {
+      task.setMinHeapSize(extension.getCompiler().getMinHeapSize().get());
+    } else {
+      task.setMinHeapSize(extension.getMinHeapSize().getOrElse("256M"));
+    }
+    if (extension.getCompiler().getMaxHeapSize().isPresent()) {
+      task.setMaxHeapSize(extension.getCompiler().getMaxHeapSize().get());
+    } else {
+      task.setMaxHeapSize(extension.getMaxHeapSize().getOrElse("512M"));
+    }
+
     if (extension.getCompiler().getLogLevel().isPresent()) {
       task.getLogLevel().set(extension.getCompiler().getLogLevel().get());
     } else {

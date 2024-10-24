@@ -47,6 +47,8 @@ class GwtPluginTest {
     // Configure the gwt extension programmatically
     project.getExtensions().configure("gwt", ext -> {
       GwtPluginExtension extension = (GwtPluginExtension) ext;
+      extension.getMinHeapSize().set("111M");
+      extension.getMaxHeapSize().set("222M");
       extension.getLogLevel().set("SPAM");
       extension.getWorkDir().set(project.file("workDir"));
       extension.getGen().set(project.file("gen"));
@@ -76,6 +78,8 @@ class GwtPluginTest {
     TaskContainer tasks = project.getTasks();
     GwtCompileTask task = (GwtCompileTask) tasks.findByName("gwtCompile");
     assertThat(task).isNotNull();
+    assertThat(task.getMinHeapSize()).isEqualTo("111M");
+    assertThat(task.getMaxHeapSize()).isEqualTo("222M");
     assertThat(task.getLogLevel().get()).isEqualTo("SPAM");
     assertThat(task.getWorkDir().get().getAsFile()).isEqualTo(
         project.file("workDir"));
@@ -219,6 +223,8 @@ class GwtPluginTest {
     // Configure the gwt extension programmatically
     project.getExtensions().configure("gwt", ext -> {
       GwtPluginExtension extension = (GwtPluginExtension) ext;
+      extension.getMinHeapSize().set("111M");
+      extension.getMaxHeapSize().set("222M");
       extension.getLogLevel().set("SPAM");
       extension.getWorkDir().set(project.file("workDir"));
       extension.getGen().set(project.file("gen"));
@@ -248,6 +254,8 @@ class GwtPluginTest {
     TaskContainer tasks = project.getTasks();
     GwtDevModeTask task = (GwtDevModeTask) tasks.findByName("gwtDevMode");
     assertThat(task).isNotNull();
+    assertThat(task.getMinHeapSize()).isEqualTo("111M");
+    assertThat(task.getMaxHeapSize()).isEqualTo("222M");
     assertThat(task.getLogLevel().get()).isEqualTo("SPAM");
     assertThat(task.getWorkDir().get().getAsFile()).isEqualTo(
         project.file("workDir"));

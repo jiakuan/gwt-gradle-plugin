@@ -2,7 +2,10 @@
 
 [![Build Status](https://github.com/jiakuan/gwt-gradle-plugin/actions/workflows/gradle.yml/badge.svg)](https://github.com/jiakuan/gwt-gradle-plugin/actions)
 
-The **GWT Gradle Plugin** (v2) simplifies the configuration required to build projects with the [Google Web Toolkit (GWT)](http://www.gwtproject.org/). This version is a complete rewrite of the original plugin, offering a cleaner codebase and more intuitive configuration options.
+The **GWT Gradle Plugin** (v2) simplifies the configuration required to build
+projects with the [Google Web Toolkit (GWT)](http://www.gwtproject.org/). This
+version is a complete rewrite of the original plugin, offering a cleaner
+codebase and more intuitive configuration options.
 
 ## Key Features
 
@@ -15,8 +18,8 @@ The **GWT Gradle Plugin** (v2) simplifies the configuration required to build pr
 
 ## Usage
 
-The **GWT Gradle Plugin** is available on the [Gradle Plugin Portal](https://plugins.gradle.org/plugin/org.docstr.gwt).
-
+The **GWT Gradle Plugin** is available on
+the [Gradle Plugin Portal](https://plugins.gradle.org/plugin/org.docstr.gwt).
 
 To use this plugin, add the following to your `build.gradle` file:
 
@@ -57,15 +60,23 @@ gwt {
 
 ## Available Tasks
 
-When you apply the GWT Gradle Plugin, the following tasks are added to your project:
+When you apply the GWT Gradle Plugin, the following tasks are added to your
+project:
 
-- `gwtCompile`: Compiles your GWT modules.
-- `gwtDevMode`: Starts GWT Development Mode (Super Dev Mode is enabled by default).
+- `gwtCompile`: Compiles your GWT modules. It will be executed automatically
+  when you run `gradle build`.
+- `gwtDevMode`: Starts GWT Development Mode (Super Dev Mode is enabled by
+  default).
 
+For the full list of available options, refer to
+the [Configuration](doc/Configuration.md) documentation.
 
 ## Version 1 (v1) Plugin
 
-The original GWT Gradle Plugin (v1) source code is still available on the [v1 branch](https://github.com/jiakuan/gwt-gradle-plugin/tree/v1) of this repository. Documentation for v1 can be found at [http://gwt-gradle.docstr.org](http://gwt-gradle.docstr.org).
+The original GWT Gradle Plugin (v1) source code is still available on
+the [v1 branch](https://github.com/jiakuan/gwt-gradle-plugin/tree/v1) of this
+repository. Documentation for v1 can be found
+at [http://gwt-gradle.docstr.org](http://gwt-gradle.docstr.org).
 
 ## Building the Project
 

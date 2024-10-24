@@ -25,6 +25,18 @@ import org.gradle.api.provider.Property;
 public abstract class GwtBaseOptions {
 
   /**
+   * Minimum heap size for the JVM
+   * @return The minimum heap size
+   */
+  public abstract Property<String> getMinHeapSize();
+
+  /**
+   * Maximum heap size for the JVM
+   * @return The maximum heap size
+   */
+  public abstract Property<String> getMaxHeapSize();
+
+  /**
    * <code>-logLevel</code>
    * <p>The level of logging detail: ERROR, WARN, INFO, TRACE, DEBUG, SPAM
    * or ALL (defaults to INFO)
