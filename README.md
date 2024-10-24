@@ -10,7 +10,7 @@ The **GWT Gradle Plugin** (v2) simplifies the configuration required to build pr
 - **Simpler codebase** compared to the v1 plugin
 - No need to manually add core GWT dependencies like `gwt-user` and `gwt-dev`
 - **Configuration aligned with GWT compiler options** for ease of use
-- **Support for GWT 2.11.0** and the latest Gradle 8.10.2
+- **Support for GWT 2.11.0+** and the latest Gradle 8.10.2
 - Built-in tasks for GWT compilation and dev mode
 
 ## Usage
@@ -28,6 +28,8 @@ plugins {
 }
 
 gwt {
+  // Optional: Set the GWT version, defaults to 2.11.0
+  // gwtVersion = '2.11.0'
   modules ['<YOUR-GWT-MODULE>']
 }
 ```
