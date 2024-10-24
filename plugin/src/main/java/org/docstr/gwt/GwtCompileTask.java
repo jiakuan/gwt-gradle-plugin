@@ -15,6 +15,7 @@
  */
 package org.docstr.gwt;
 
+import java.util.ArrayList;
 import javax.inject.Inject;
 import org.gradle.api.GradleException;
 import org.gradle.api.file.DirectoryProperty;
@@ -403,6 +404,14 @@ public abstract class GwtCompileTask extends JavaExec {
         getProject().file("src/main/java"),
         getProject().getConfigurations().getByName("runtimeClasspath")
     ));
+
+    // Specify the GWT persistent unit cache directory
+    String unitCacheDir = getProject().getLayout().getBuildDirectory()
+        .dir("gwt-unitCache").get().getAsFile().getPath();
+    jvmArgs("-Dgwt.persistentunitcachedir=" + unitCacheDir);
+    getProject().getLogger()
+        .lifecycle("gwtCompile jvmArgs: {}",
+            getJvmArguments().getOrElse(new ArrayList<>()));
 
     if (getLogLevel().isPresent()) {
       args("-logLevel", getLogLevel().get());
