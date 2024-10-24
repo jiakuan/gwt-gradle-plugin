@@ -84,6 +84,11 @@ public class GwtDevModeConfig implements Action<GwtDevModeTask> {
     } else {
       task.getExtra().set(extension.getExtra().getOrNull());
     }
+    if (extension.getDevMode().getCacheDir().isPresent()) {
+      task.getCacheDir().set(extension.getDevMode().getCacheDir().get());
+    } else {
+      task.getCacheDir().set(extension.getCacheDir().getOrNull());
+    }
     task.getModulePathPrefix()
         .set(extension.getDevMode().getModulePathPrefix().getOrNull());
     if (extension.getDevMode().getWorkDir().isPresent()) {

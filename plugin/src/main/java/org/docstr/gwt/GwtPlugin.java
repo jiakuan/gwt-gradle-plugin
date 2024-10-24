@@ -50,6 +50,10 @@ public class GwtPlugin implements Plugin<Project> {
         .dir("gwt"));
     extension.getDeploy().convention(project.getLayout().getBuildDirectory()
         .dir("gwt/deploy"));
+    extension.getExtra().convention(project.getLayout().getBuildDirectory()
+        .dir("gwt/extra"));
+    extension.getCacheDir().convention(project.getLayout().getBuildDirectory()
+        .dir("gwt-unitCache"));
     return extension;
   }
 

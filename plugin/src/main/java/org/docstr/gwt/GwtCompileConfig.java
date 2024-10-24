@@ -150,6 +150,11 @@ public class GwtCompileConfig implements Action<GwtCompileTask> {
     } else {
       task.getExtra().set(extension.getExtra().getOrNull());
     }
+    if (extension.getCompiler().getCacheDir().isPresent()) {
+      task.getCacheDir().set(extension.getCompiler().getCacheDir().get());
+    } else {
+      task.getCacheDir().set(extension.getCacheDir().getOrNull());
+    }
     task.getSaveSourceOutput()
         .set(extension.getCompiler().getSaveSourceOutput().getOrNull());
     if (extension.getCompiler().getModules().isPresent()

@@ -86,6 +86,13 @@ public abstract class GwtBaseOptions {
   public abstract DirectoryProperty getExtra();
 
   /**
+   * <code>-Dgwt.persistentunitcachedir=[YourCacheDir]</code>
+   * The directory to use for the persistent unit cache
+   * @return The cache directory
+   */
+  public abstract DirectoryProperty getCacheDir();
+
+  /**
    * <code>-[no]generateJsInteropExports</code>
    * Generate exports for JsInterop purposes. If no
    * -includeJsInteropExport/-excludeJsInteropExport provided, generates

@@ -66,6 +66,7 @@ class GwtPluginTest {
       extension.getWar().set(project.file("war"));
       extension.getDeploy().set(project.file("deploy"));
       extension.getExtra().set(project.file("extra"));
+      extension.getCacheDir().set(project.file("cacheDir"));
       extension.getModules().set(List.of("com.example.MyModule"));
     });
 
@@ -100,6 +101,8 @@ class GwtPluginTest {
         project.file("deploy"));
     assertThat(task.getExtra().get().getAsFile()).isEqualTo(
         project.file("extra"));
+    assertThat(task.getCacheDir().get().getAsFile()).isEqualTo(
+        project.file("cacheDir"));
     assertThat(task.getModules().get())
         .containsExactly("com.example.MyModule");
   }
@@ -152,6 +155,7 @@ class GwtPluginTest {
       extension.getCompiler().getWar().set(project.file("war"));
       extension.getCompiler().getDeploy().set(project.file("deploy"));
       extension.getCompiler().getExtra().set(project.file("extra"));
+      extension.getCompiler().getCacheDir().set(project.file("cacheDir"));
       extension.getCompiler().getSaveSourceOutput()
           .set(project.file("saveSourceOutput"));
       extension.getCompiler().getModules().set(List.of("com.example.MyModule"));
@@ -198,6 +202,8 @@ class GwtPluginTest {
         project.file("deploy"));
     assertThat(task.getExtra().get().getAsFile()).isEqualTo(
         project.file("extra"));
+    assertThat(task.getCacheDir().get().getAsFile()).isEqualTo(
+        project.file("cacheDir"));
     assertThat(task.getSaveSourceOutput().get().getAsFile())
         .isEqualTo(project.file("saveSourceOutput"));
     assertThat(task.getModules().get())
@@ -242,6 +248,7 @@ class GwtPluginTest {
       extension.getWar().set(project.file("war"));
       extension.getDeploy().set(project.file("deploy"));
       extension.getExtra().set(project.file("extra"));
+      extension.getCacheDir().set(project.file("cacheDir"));
       extension.getModules().set(List.of("com.example.MyModule"));
     });
 
@@ -276,6 +283,8 @@ class GwtPluginTest {
         project.file("deploy"));
     assertThat(task.getExtra().get().getAsFile()).isEqualTo(
         project.file("extra"));
+    assertThat(task.getCacheDir().get().getAsFile()).isEqualTo(
+        project.file("cacheDir"));
     assertThat(task.getModules().get())
         .containsExactly("com.example.MyModule");
   }
@@ -312,6 +321,7 @@ class GwtPluginTest {
       extension.getDevMode().getWar().set(project.file("war"));
       extension.getDevMode().getDeploy().set(project.file("deploy"));
       extension.getDevMode().getExtra().set(project.file("extra"));
+      extension.getDevMode().getCacheDir().set(project.file("cacheDir"));
       extension.getDevMode().getModulePathPrefix().set("test-prefix");
       extension.getDevMode().getWorkDir().set(project.file("workDir"));
       extension.getDevMode().getMethodNameDisplayMode().set("FULL");
@@ -353,6 +363,8 @@ class GwtPluginTest {
         project.file("deploy"));
     assertThat(task.getExtra().get().getAsFile()).isEqualTo(
         project.file("extra"));
+    assertThat(task.getCacheDir().get().getAsFile()).isEqualTo(
+        project.file("cacheDir"));
     assertThat(task.getModulePathPrefix().get()).isEqualTo("test-prefix");
     assertThat(task.getWorkDir().get().getAsFile()).isEqualTo(
         project.file("workDir"));
