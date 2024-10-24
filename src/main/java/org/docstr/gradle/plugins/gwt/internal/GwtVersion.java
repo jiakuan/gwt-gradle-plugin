@@ -9,19 +9,27 @@ public final class GwtVersion {
 
   private static final String PARSING_ERROR_MESSAGE_FORMAT =
       "GWT version %s can not be parsed. Valid versions must have "
-          + "the format major.minor.patch where major and minor "
-          + "are positive integer numbers.";
+          + "the format major.minor.patch (where major and minor "
+          + "are positive integer numbers) or HEAD-* where * is an arbitrary string.";
 
   private final int major;
   private final int minor;
   private final String patch;
+  private final String name;
 
   private GwtVersion(final int major, final int minor, final String patch) {
     this.major = major;
     this.minor = minor;
     this.patch = patch;
+    this.name = null;
   }
 
+  private GwtVersion(String name) {
+    this.name = name;
+    this.major = Integer.MAX_VALUE;
+    this.minor = Integer.MAX_VALUE;
+    this.patch = "";
+  }
   /**
    * @param gwtVersion the gwt version string to be parsed
    * @return a newly created {@linkplain GwtVersion} instance representing
@@ -33,7 +41,10 @@ public final class GwtVersion {
         return null;
     }
     try {
-      final String[] versionParts = gwtVersion.split("\\.", 3);
+      final String[] versionParts = gwtVersion.split("[-\\.]", 3);
+      if (versionParts.length > 0 && "HEAD".equals(versionParts[0])) {
+        return new GwtVersion(gwtVersion);
+      }
       if (versionParts.length >= 3) {
         return new GwtVersion(Integer.parseUnsignedInt(versionParts[0]),
             Integer.parseUnsignedInt(versionParts[1]),
@@ -67,7 +78,7 @@ public final class GwtVersion {
    */
   @Override
   public String toString() {
-    return format("%d.%d.%s", major, minor, patch);
+    return name == null ? format("%d.%d.%s", major, minor, patch) : name;
   }
 
   public boolean isAtLeast(int majorMin, int minorMin) {

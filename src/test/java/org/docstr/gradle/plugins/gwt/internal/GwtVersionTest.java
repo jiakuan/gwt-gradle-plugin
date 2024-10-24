@@ -31,6 +31,14 @@ public class GwtVersionTest {
         Assert.assertTrue("Should be at least 2.5", v.isAtLeast(2, 5));
     }
 
+    @Test
+    public void comparisonHead() {
+        GwtVersion v = GwtVersion.parse("HEAD-SNAPSHOT");
+
+        Assert.assertTrue("Should be at least 3.0", v.isAtLeast(3, 0));
+        Assert.assertTrue("Should be at least 2.50", v.isAtLeast(2, 50));
+    }
+
     @Test(expected = IllegalArgumentException.class)
     public void invalid() {
         GwtVersion.parse("0");
