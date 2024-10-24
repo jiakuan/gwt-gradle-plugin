@@ -25,7 +25,7 @@ To use this plugin, add the following to your `build.gradle` file:
 
 Add the following to your `build.gradle` file to use the plugin:
 
-```
+```groovy
 plugins {
   id "org.docstr.gwt version "2.0.1-alpha"
 }
@@ -39,19 +39,19 @@ gwt {
 
 Alternatively, you can apply the plugin using the legacy method:
 
-```
+```groovy
 buildscript {
   repositories {
     maven {
-      url = uri("https://plugins.gradle.org/m2/")
+      url "https://plugins.gradle.org/m2/"
     }
   }
   dependencies {
-    classpath("org.docstr.gwt:gwt-gradle-plugin:2.0.1-alpha")
+    classpath "org.docstr.gwt:gwt-gradle-plugin:2.0.1-alpha"
   }
 }
 
-apply(plugin = "org.docstr.gwt")
+apply plugin: "org.docstr.gwt"
 
 gwt {
     modules ['<YOUR-GWT-MODULE>']
