@@ -20,7 +20,10 @@ want to compile. The plugin will take care of the rest.
 
 ## All configuration options
 
-The GWT Gradle Plugin provides full control over the GWT compilation process and the development mode. The configuration options are aligned with the GWT compiler options for ease of use. The following is a list of all available configuration options:
+The GWT Gradle Plugin provides full control over the GWT compilation process and
+the development mode. The configuration options are aligned with the GWT
+compiler options for ease of use. The following is a list of all available
+configuration options:
 
 ```
 gwt {
@@ -49,6 +52,9 @@ gwt {
 
   // Optional: The directory into which extra files, not intended for deployment, will be written
   extra = file('build/extra')
+  
+  // "-Dgwt.persistentunitcachedir=[YourCacheDir]" - The directory to use for the persistent unit cache
+  cacheDir = file('build/gwt-unitCache')
 
   // Optional: Generate exports for JsInterop purposes. If no -includeJsInteropExport/-excludeJsInteropExport provided, generates all exports. (defaults to OFF)
   generateJsInteropExports = false
@@ -83,7 +89,7 @@ gwt {
   // Optional: Configures the GWT compiler
   compiler {
     //
-    // All options in 'gwt' closure can be overridden here
+    // All options in 'gwt' closure (except 'gwtVersion') can be overridden here
     //
     
     // Optional: Enables Javascript output suitable for post-compilation by Closure Compiler (defaults to OFF)
@@ -129,7 +135,7 @@ gwt {
   // Optional: Configures the GWT development mode
   devMode {
     //
-    // All options in 'gwt' closure can be overridden here
+    // All options in 'gwt' closure (except 'gwtVersion') can be overridden here
     //
     
     // Optional: Starts a servlet container serving the directory specified by the -war flag. (defaults to ON)
