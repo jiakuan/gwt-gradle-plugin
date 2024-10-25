@@ -18,26 +18,31 @@ plugins {
 }
 
 scmVersion {
-  // This will append "-alpha" to your current version
-
   tag {
     // Optional, this sets a tag like 'v1.0.0'
     prefix = 'v'
   }
 
   hooks {
-    // First hook for updating the "id" version pattern
+    // Update the "id" version pattern
     pre("fileUpdate", [
-        file: "README.md",
-        pattern: { v, p -> /id "org\.docstr\.gwt version "([\d.a-zA-Z-]+)"/ },
-        replacement: { v, p -> "id \"org.docstr.gwt version \"${v}\"" }
+        file       : "README.md",
+        pattern    : { v, p -> /id "org\.docstr\.gwt version "([\d.a-zA-Z-]+)"/ },
+        replacement: { v, p -> "id \"org.docstr.gwt version \"${v}-alpha\"" }
     ])
 
-    // Second hook for updating the Maven coordinates version
+    // Update the "id" version pattern
     pre("fileUpdate", [
-        file: "README.md",
-        pattern: { v, p -> /org\.docstr\.gwt:gwt-gradle-plugin:([\d.a-zA-Z-]+)/ },
-        replacement: { v, p -> "org.docstr.gwt:gwt-gradle-plugin:${v}" }
+        file       : "doc/Configuration.md",
+        pattern    : { v, p -> /id "org\.docstr\.gwt version "([\d.a-zA-Z-]+)"/ },
+        replacement: { v, p -> "id \"org.docstr.gwt version \"${v}-alpha\"" }
+    ])
+
+    // Update the Maven coordinates version
+    pre("fileUpdate", [
+        file       : "README.md",
+        pattern    : { v, p -> /org\.docstr\.gwt:gwt-gradle-plugin:([\d.a-zA-Z-]+)/ },
+        replacement: { v, p -> "org.docstr.gwt:gwt-gradle-plugin:${v}-alpha" }
     ])
 
     // Pre-hook to create a commit after updating the file
@@ -45,7 +50,7 @@ scmVersion {
   }
 }
 
-version = scmVersion.version
+version = scmVersion.version + "-alpha"
 
 allprojects {
   group = 'org.docstr.gwt'
