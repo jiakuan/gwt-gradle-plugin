@@ -26,22 +26,18 @@ scmVersion {
   }
 
   hooks {
-    // Pre-hook for updating the README.md before committing
+    // First hook for updating the "id" version pattern
     pre("fileUpdate", [
-        file       : "README.md",
-        pattern    : { v, p ->
-          [
-              // Match both "id" version and Maven coordinates version
-              /id "org\.docstr\.gwt version "([\d.-]+)"/,
-              /org\.docstr\.gwt:gwt-gradle-plugin:([\d.-]+)(-alpha)?/
-          ]
-        },
-        replacement: { v, p ->
-          [
-              "id \"org.docstr.gwt version \"${v}\"",
-              "org.docstr.gwt:gwt-gradle-plugin:${v}-alpha"
-          ]
-        }
+        file: "README.md",
+        pattern: { v, p -> /id "org\.docstr\.gwt version "([\d.-]+)"/ },
+        replacement: { v, p -> "id \"org.docstr.gwt version \"${v}\"" }
+    ])
+
+    // Second hook for updating the Maven coordinates version
+    pre("fileUpdate", [
+        file: "README.md",
+        pattern: { v, p -> /org\.docstr\.gwt:gwt-gradle-plugin:([\d.-]+)(-alpha)?/ },
+        replacement: { v, p -> "org.docstr.gwt:gwt-gradle-plugin:${v}-alpha" }
     ])
 
     // Pre-hook to create a commit after updating the file
