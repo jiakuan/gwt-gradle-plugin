@@ -7,7 +7,7 @@ the minimal configuration required to use the plugin:
 
 ```groovy
 plugins {
-  id "org.docstr.gwt" version "2.0.7-alpha"
+  id "org.docstr.gwt" version "2.0.11-alpha"
 }
 
 gwt {

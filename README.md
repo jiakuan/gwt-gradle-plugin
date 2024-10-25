@@ -47,7 +47,7 @@ buildscript {
     }
   }
   dependencies {
-    classpath "org.docstr.gwt:gwt-gradle-plugin:2.0.10-alpha"
+    classpath "org.docstr.gwt:gwt-gradle-plugin:2.0.11-alpha"
   }
 }
 
