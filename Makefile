@@ -13,7 +13,6 @@ build:
 	${PROJECT_DIR}/gradlew build --warning-mode all
 
 release:
-	#./gradlew release -Prelease.useAutomaticVersion=true --warning-mode all
 	./gradlew release --warning-mode all
 
 publish-local: build

@@ -14,5 +14,44 @@
  * limitations under the License.
  */
 plugins {
-  alias(libs.plugins.release.plugin)
+  alias(libs.plugins.axion.release.plugin)
+}
+
+scmVersion {
+  // This will append "-alpha" to your current version
+
+  tag {
+    // Optional, this sets a tag like 'v1.0.0'
+    prefix = 'v'
+  }
+
+  hooks {
+    // Pre-hook for updating the README.md before committing
+    pre("fileUpdate", [
+        file       : "README.md",
+        pattern    : { v, p ->
+          [
+              // Match both "id" version and Maven coordinates version
+              /id "org\.docstr\.gwt version "([\d.-]+)"/,
+              /org\.docstr\.gwt:gwt-gradle-plugin:([\d.-]+)(-alpha)?/
+          ]
+        },
+        replacement: { v, p ->
+          [
+              "id \"org.docstr.gwt version \"${v}\"",
+              "org.docstr.gwt:gwt-gradle-plugin:${v}-alpha"
+          ]
+        }
+    ])
+
+    // Pre-hook to create a commit after updating the file
+    pre("commit") // This ensures the changes are committed after the update
+  }
+}
+
+version = scmVersion.version
+
+allprojects {
+  group = 'org.docstr.gwt'
+  project.version = rootProject.version
 }

@@ -15,9 +15,6 @@ plugins {
   alias(libs.plugins.lombok)
 }
 
-group = 'org.docstr.gwt'
-version = "$version"
-
 repositories {
   // Use Maven Central for resolving dependencies.
   mavenCentral()

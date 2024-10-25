@@ -25,7 +25,7 @@ To use this plugin, add the following to your `build.gradle` file:
 
 Add the following to your `build.gradle` file to use the plugin:
 
-```groovy
+```
 plugins {
   id "org.docstr.gwt version "2.0.2-alpha"
 }
@@ -39,7 +39,7 @@ gwt {
 
 Alternatively, you can apply the plugin using the legacy method:
 
-```groovy
+```
 buildscript {
   repositories {
     maven {

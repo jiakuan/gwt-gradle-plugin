@@ -14,9 +14,8 @@ assertj-core = "3.26.3"
 lombok-plugin = "8.10"
 # https://plugins.gradle.org/plugin/com.gradle.plugin-publish
 plugin-publish = "1.3.0"
-# https://github.com/researchgate/gradle-release
-# https://plugins.gradle.org/plugin/net.researchgate.release
-release-plugin = "3.0.2"
+# https://github.com/allegro/axion-release-plugin
+axion-release-plugin = "1.18.14"
 
 [libraries]
 gwt-user = { module = "org.gwtproject:gwt-user", version.ref = "gwt" }
@@ -32,4 +31,4 @@ assertj-core = { module = "org.assertj:assertj-core", version.ref = "assertj-cor
 [plugins]
 lombok = { id = "io.freefair.lombok", version.ref = "lombok-plugin" }
 plugin-publish = { id = "com.gradle.plugin-publish", version.ref = "plugin-publish" }
-release-plugin = { id = "net.researchgate.release", version.ref = "release-plugin" }
+axion-release-plugin = { id = "pl.allegro.tech.build.axion-release", version.ref = "axion-release-plugin" }
