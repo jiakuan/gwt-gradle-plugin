@@ -54,7 +54,7 @@ scmVersion {
   }
 }
 
-version = scmVersion.version
+version = scmVersion.version.replace("-SNAPSHOT", "")
 
 allprojects {
   group = 'org.docstr.gwt'
