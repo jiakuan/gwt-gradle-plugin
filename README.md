@@ -27,7 +27,7 @@ Add the following to your `build.gradle` file to use the plugin:
 
 ```groovy
 plugins {
-  id "org.docstr.gwt version "2.0.2-alpha"
+  id "org.docstr.gwt version "2.0.3-alpha"
 }
 
 gwt {
@@ -47,7 +47,7 @@ buildscript {
     }
   }
   dependencies {
-    classpath "org.docstr.gwt:gwt-gradle-plugin:2.0.2-alpha"
+    classpath "org.docstr.gwt:gwt-gradle-plugin:2.0.3-alpha"
   }
 }
 
