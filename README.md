@@ -96,3 +96,9 @@ Use the Gradle wrapper to clean and build the project:
 gradlew.bat clean build
 ```
 
+## Release Process
+
+- Build and test the plugin locally
+- Commit all changes to the `main` branch
+- Publish the plugin to the Gradle Plugin Portal with `make publish`
+- Create a new release on GitHub with `make release`

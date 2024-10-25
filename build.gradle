@@ -24,21 +24,21 @@ scmVersion {
   }
 
   hooks {
-    // Update the "id" version pattern
     pre("fileUpdate", [
         file       : "README.md",
         pattern    : { v, p -> /id "org\.docstr\.gwt version "([\d.a-zA-Z-]+)"/ },
         replacement: { v, p -> "id \"org.docstr.gwt version \"${v}-alpha\"" }
     ])
-
-    // Update the "id" version pattern
     pre("fileUpdate", [
         file       : "doc/Configuration.md",
         pattern    : { v, p -> /id "org\.docstr\.gwt version "([\d.a-zA-Z-]+)"/ },
         replacement: { v, p -> "id \"org.docstr.gwt version \"${v}-alpha\"" }
     ])
-
-    // Update the Maven coordinates version
+    post("fileUpdate", [
+        file       : "examples/basic-gwt-project/build.gradle",
+        pattern    : { v, p -> /id "org\.docstr\.gwt version "([\d.a-zA-Z-]+)"/ },
+        replacement: { v, p -> "id \"org.docstr.gwt version \"${v}-alpha\"" }
+    ])
     pre("fileUpdate", [
         file       : "README.md",
         pattern    : { v, p -> /org\.docstr\.gwt:gwt-gradle-plugin:([\d.a-zA-Z-]+)/ },
@@ -48,13 +48,6 @@ scmVersion {
     // Pre-hook to create a commit after updating the files
     pre("commit")
 
-    post("fileUpdate", [
-        file       : "examples/basic-gwt-project/build.gradle",
-        pattern    : { v, p -> /id "org\.docstr\.gwt version "([\d.a-zA-Z-]+)"/ },
-        replacement: { v, p -> "id \"org.docstr.gwt version \"${v}-alpha\"" }
-    ])
-    // Post-hook to create a commit after updating the files
-    post("commit")
   }
 }
 

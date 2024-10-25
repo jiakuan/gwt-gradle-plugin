@@ -12,6 +12,9 @@ clean:
 build:
 	${PROJECT_DIR}/gradlew build --warning-mode all
 
+version:
+	./gradlew currentVersion --warning-mode all
+
 release:
 	./gradlew release --warning-mode all
 

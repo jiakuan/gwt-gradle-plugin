@@ -5,6 +5,7 @@ Option          Description
 ------          -----------
 clean           Clean build directories of projects
 build           Build the project and run tests
+version         Display the current version of the plugin
 release         Create a new release version
 publish-local   Publish the plugin to local maven repository
 publish         Publish the plugin to gradle plugin portal
