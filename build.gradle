@@ -26,18 +26,18 @@ scmVersion {
   hooks {
     pre("fileUpdate", [
         file       : "README.md",
-        pattern    : { v, p -> /id "org\.docstr\.gwt version "([\d.a-zA-Z-]+)"/ },
-        replacement: { v, p -> "id \"org.docstr.gwt version \"${v}-alpha\"" }
+        pattern    : { v, p -> /id "org\.docstr\.gwt" version "([\d.a-zA-Z-]+)"/ },
+        replacement: { v, p -> "id \"org.docstr.gwt\" version \"${v}-alpha\"" }
     ])
     pre("fileUpdate", [
         file       : "doc/Configuration.md",
-        pattern    : { v, p -> /id "org\.docstr\.gwt version "([\d.a-zA-Z-]+)"/ },
-        replacement: { v, p -> "id \"org.docstr.gwt version \"${v}-alpha\"" }
+        pattern    : { v, p -> /id "org\.docstr\.gwt" version "([\d.a-zA-Z-]+)"/ },
+        replacement: { v, p -> "id \"org.docstr.gwt\" version \"${v}-alpha\"" }
     ])
     pre("fileUpdate", [
         file       : "examples/basic-gwt-project/build.gradle",
-        pattern    : { v, p -> /id "org\.docstr\.gwt version "([\d.a-zA-Z-]+)"/ },
-        replacement: { v, p -> "id \"org.docstr.gwt version \"${v}-alpha\"" }
+        pattern    : { v, p -> /id "org\.docstr\.gwt" version "([\d.a-zA-Z-]+)"/ },
+        replacement: { v, p -> "id \"org.docstr.gwt\" version \"${v}-alpha\"" }
     ])
     pre("fileUpdate", [
         file       : "README.md",

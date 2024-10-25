@@ -27,7 +27,7 @@ Add the following to your `build.gradle` file to use the plugin:
 
 ```
 plugins {
-  id "org.docstr.gwt version "2.0.10-alpha"
+  id "org.docstr.gwt version" "2.0.10-alpha"
 }
 
 gwt {
