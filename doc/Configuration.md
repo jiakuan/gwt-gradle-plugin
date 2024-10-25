@@ -7,7 +7,7 @@ the minimal configuration required to use the plugin:
 
 ```
 plugins {
-  id "org.docstr.gwt version "2.0.6-alpha"
+  id "org.docstr.gwt version "2.0.7-alpha"
 }
 
 gwt {
