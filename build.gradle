@@ -45,8 +45,16 @@ scmVersion {
         replacement: { v, p -> "org.docstr.gwt:gwt-gradle-plugin:${v}-alpha" }
     ])
 
-    // Pre-hook to create a commit after updating the file
-    pre("commit") // This ensures the changes are committed after the update
+    // Pre-hook to create a commit after updating the files
+    pre("commit")
+
+    post("fileUpdate", [
+        file       : "examples/basic-gwt-project/build.gradle",
+        pattern    : { v, p -> /id "org\.docstr\.gwt version "([\d.a-zA-Z-]+)"/ },
+        replacement: { v, p -> "id \"org.docstr.gwt version \"${v}-alpha\"" }
+    ])
+    // Post-hook to create a commit after updating the files
+    post("commit")
   }
 }
 
