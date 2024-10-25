@@ -55,5 +55,5 @@ version = scmVersion.version + "-alpha"
 
 allprojects {
   group = 'org.docstr.gwt'
-  project.version = rootProject.version
+  project.version = rootProject.version.replace("-SNAPSHOT", "")
 }
