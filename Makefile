@@ -12,6 +12,10 @@ clean:
 build:
 	${PROJECT_DIR}/gradlew build --warning-mode all
 
+release:
+	#./gradlew release -Prelease.useAutomaticVersion=true --warning-mode all
+	./gradlew release --warning-mode all
+
 publish-local: build
 	rm -rf $$HOME/.m2/repository/org/docstr/gwt
 	${PROJECT_DIR}/gradlew publishToMavenLocal --warning-mode all
