@@ -12,6 +12,13 @@ codebase and more intuitive configuration options.
 - **Minimal configuration** required to use the plugin
 - **Simpler codebase** compared to the v1 plugin
 - No need to manually add core GWT dependencies like `gwt-user` and `gwt-dev`
+- **Enhanced source tracking** for GWT Modules. This feature enables targeted
+  tracking of source code specifically related to GWT modules. Only the source
+  paths defined within each GWT module are monitored, ensuring that the
+  gwtCompile task is triggered only when relevant GWT source files are modified.
+  This refined tracking minimizes unnecessary recompilation by focusing solely
+  on changes within GWT-specific code, optimizing the build process for faster
+  iterations and more efficient resource usage.
 - **Configuration aligned with GWT compiler options** for ease of use
 - **Support for GWT 2.11.0+** and the latest Gradle 8.10.2
 - Built-in tasks for GWT compilation and dev mode
@@ -22,8 +29,6 @@ The **GWT Gradle Plugin** is available on
 the [Gradle Plugin Portal](https://plugins.gradle.org/plugin/org.docstr.gwt).
 
 To use this plugin, add the following to your `build.gradle` file:
-
-Add the following to your `build.gradle` file to use the plugin:
 
 ```
 plugins {

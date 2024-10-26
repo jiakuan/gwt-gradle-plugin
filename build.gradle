@@ -51,9 +51,10 @@ scmVersion {
   }
 }
 
-version = scmVersion.version + "-alpha"
+version = scmVersion.version.replace("-SNAPSHOT", "") + "-alpha"
+print("Current project version: " + project.version)
 
 allprojects {
   group = 'org.docstr.gwt'
-  project.version = rootProject.version.replace("-SNAPSHOT", "")
+  project.version = rootProject.version
 }
