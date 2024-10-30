@@ -83,6 +83,7 @@ public class GwtCompileConfig implements Action<GwtCompileTask> {
    */
   TreeSet<File> extractSourcePaths(File moduleFile) {
     TreeSet<File> sourcePaths = new TreeSet<>();
+    sourcePaths.add(moduleFile);
     try {
       DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
       DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();

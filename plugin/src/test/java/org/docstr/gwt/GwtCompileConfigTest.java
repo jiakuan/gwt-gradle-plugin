@@ -67,9 +67,14 @@ class GwtCompileConfigTest extends AbstractGwtTest {
     // Then
     assertThat(sourcePaths).isNotEmpty();
     assertThat(sourcePaths).allMatch(File::exists);
-    assertThat(sourcePaths).allMatch(File::isDirectory);
-    assertThat(sourcePaths).hasSize(1);
-    assertThat(sourcePaths.first().getName()).isEqualTo("client");
+
+    assertThat(sourcePaths.first()).isFile();
+    assertThat(sourcePaths.last()).isDirectory();
+
+    assertThat(sourcePaths).hasSize(2);
+    assertThat(sourcePaths.first().getAbsolutePath()).isEqualTo(
+        moduleFile.getAbsolutePath());
+    assertThat(sourcePaths.last().getName()).isEqualTo("client");
   }
 
   @Test
@@ -98,9 +103,16 @@ class GwtCompileConfigTest extends AbstractGwtTest {
     // Then
     assertThat(sourcePaths).isNotEmpty();
     assertThat(sourcePaths).allMatch(File::exists);
-    assertThat(sourcePaths).allMatch(File::isDirectory);
-    assertThat(sourcePaths).hasSize(2);
-    assertThat(sourcePaths.first().getName()).isEqualTo("client");
+
+    assertThat(sourcePaths.first()).isFile();
+    assertThat(sourcePaths.stream().toList().get(1)).isDirectory();
+    assertThat(sourcePaths.last()).isDirectory();
+
+    assertThat(sourcePaths).hasSize(3);
+    assertThat(sourcePaths.first().getAbsolutePath()).isEqualTo(
+        moduleFile.getAbsolutePath());
+    assertThat(sourcePaths.stream().toList().get(1).getName()).isEqualTo(
+        "client");
     assertThat(sourcePaths.last().getName()).isEqualTo("shared");
   }
 }
