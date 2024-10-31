@@ -26,6 +26,7 @@ import org.gradle.api.Action;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
+import org.gradle.api.logging.Logger;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetContainer;
 import org.w3c.dom.Document;
@@ -131,6 +132,7 @@ public class GwtCompileConfig implements Action<GwtCompileTask> {
   @Override
   public void execute(GwtCompileTask task) {
     Project project = task.getProject();
+    Logger log = project.getLogger();
 
     // Process each GWT module to find source paths
     Set<File> trackedPaths = new HashSet<>();

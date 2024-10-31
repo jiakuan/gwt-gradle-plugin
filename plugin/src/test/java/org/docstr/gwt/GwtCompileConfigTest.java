@@ -105,13 +105,15 @@ class GwtCompileConfigTest extends AbstractGwtTest {
     assertThat(sourcePaths).allMatch(File::exists);
 
     assertThat(sourcePaths.first()).isFile();
-    assertThat(sourcePaths.stream().toList().get(1)).isDirectory();
+    assertThat(
+        sourcePaths.stream().collect(Collectors.toList()).get(1)).isDirectory();
     assertThat(sourcePaths.last()).isDirectory();
 
     assertThat(sourcePaths).hasSize(3);
     assertThat(sourcePaths.first().getAbsolutePath()).isEqualTo(
         moduleFile.getAbsolutePath());
-    assertThat(sourcePaths.stream().toList().get(1).getName()).isEqualTo(
+    assertThat(sourcePaths.stream().collect(Collectors.toList()).get(1)
+        .getName()).isEqualTo(
         "client");
     assertThat(sourcePaths.last().getName()).isEqualTo("shared");
   }

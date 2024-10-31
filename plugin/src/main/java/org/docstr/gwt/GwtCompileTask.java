@@ -15,9 +15,7 @@
  */
 package org.docstr.gwt;
 
-import java.util.ArrayList;
 import javax.inject.Inject;
-import org.gradle.api.GradleException;
 import org.gradle.api.file.DirectoryProperty;
 import org.gradle.api.model.ObjectFactory;
 import org.gradle.api.provider.Property;
@@ -302,6 +300,8 @@ public abstract class GwtCompileTask extends GwtBaseTask {
           getSaveSourceOutput().get().getAsFile().getPath());
     }
 
+    getProject().getLogger()
+        .lifecycle("inputs: {}", getInputs().getFiles().getFiles());
     super.exec();
   }
 }
