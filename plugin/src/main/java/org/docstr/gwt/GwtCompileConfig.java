@@ -80,7 +80,10 @@ public class GwtCompileConfig implements Action<GwtCompileTask> {
   }
 
   /**
-   * Extracts <source> paths from the GWT module XML file.
+   * 1. Add the module file to the source paths.
+   * 2. Add the package directory for each entry-point to the source paths.
+   * 3. Extract the source paths from the GWT module XML file.
+   * 4. Extract the public paths from the GWT module XML file.
    */
   TreeSet<File> extractSourcePaths(File moduleFile) {
     TreeSet<File> sourcePaths = new TreeSet<>();
@@ -90,8 +93,6 @@ public class GwtCompileConfig implements Action<GwtCompileTask> {
       DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
       Document doc = dBuilder.parse(moduleFile);
 
-      // Add the package directory for each entry-point to the source paths
-      NodeList entryPointNodes = doc.getElementsByTagName("entry-point");
       File moduleParent = moduleFile.getParentFile();
       // Find the source root by searching 'src/main/java' in module parent
       int index = moduleParent.getAbsolutePath().replaceAll("\\\\", "/")
@@ -107,6 +108,8 @@ public class GwtCompileConfig implements Action<GwtCompileTask> {
             "Source root 'src/main/java' cannot be found: " + sourceRoot);
       }
 
+      // Add the package directory for each entry-point to the source paths
+      NodeList entryPointNodes = doc.getElementsByTagName("entry-point");
       for (int i = 0; i < entryPointNodes.getLength(); i++) {
         Element entryPointElement = (Element) entryPointNodes.item(i);
         String path = entryPointElement.getAttribute("class");
@@ -116,12 +119,22 @@ public class GwtCompileConfig implements Action<GwtCompileTask> {
         sourcePaths.add(packageDir);
       }
 
+      // Extract the source paths from the GWT module XML file
       NodeList sourceNodes = doc.getElementsByTagName("source");
       for (int i = 0; i < sourceNodes.getLength(); i++) {
         String path = sourceNodes.item(i).getAttributes().getNamedItem("path")
             .getNodeValue();
         File sourceDir = new File(moduleParent, path);
         sourcePaths.add(sourceDir);
+      }
+
+      // Extract the public paths from the GWT module XML file
+      NodeList publicNodes = doc.getElementsByTagName("public");
+      for (int i = 0; i < publicNodes.getLength(); i++) {
+        String path = publicNodes.item(i).getAttributes().getNamedItem("path")
+            .getNodeValue();
+        File publicDir = new File(moduleParent, path);
+        sourcePaths.add(publicDir);
       }
     } catch (Exception e) {
       log.error("Error reading GWT module file: {}", moduleFile, e);
