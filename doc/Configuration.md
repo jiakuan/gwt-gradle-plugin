@@ -27,7 +27,7 @@ configuration options:
 
 ```
 gwt {
-  // Optional: Set the GWT version, defaults to 2.11.0
+  // Optional: Set the GWT version, defaults to 2.12.0
   // gwtVersion = 'HEAD-SNAPSHOT'
 
   // Optional: Minimum heap size for the JVM

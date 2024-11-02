@@ -13,8 +13,8 @@ repositories {
 
 dependencies {
   // The GWT plugin will automatically add these dependencies
-  // implementation 'org.gwtproject:gwt-user:2.11.0'
-  // implementation 'org.gwtproject:gwt-dev:2.11.0'
+  // implementation 'org.gwtproject:gwt-user:2.12.0'
+  // implementation 'org.gwtproject:gwt-dev:2.12.0'
 }
 
 gwt {

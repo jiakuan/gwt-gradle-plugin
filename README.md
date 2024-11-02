@@ -20,7 +20,7 @@ codebase and more intuitive configuration options.
   on changes within GWT-specific code, optimizing the build process for faster
   iterations and more efficient resource usage.
 - **Configuration aligned with GWT compiler options** for ease of use
-- **Support for GWT 2.11.0+** and the latest Gradle 8.10.2
+- **Support for GWT 2.12.0+** and the latest Gradle 8.10.2
 - Built-in tasks for GWT compilation and dev mode
 
 ## Usage
@@ -36,8 +36,8 @@ plugins {
 }
 
 gwt {
-  // Optional: Set the GWT version, defaults to 2.11.0
-  // gwtVersion = '2.11.0'
+  // Optional: Set the GWT version, defaults to 2.12.0
+  // gwtVersion = '2.12.0'
   modules ['<YOUR-GWT-MODULE>']
 }
 ```

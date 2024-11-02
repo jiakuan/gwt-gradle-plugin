@@ -27,22 +27,22 @@ scmVersion {
     pre("fileUpdate", [
         file       : "README.md",
         pattern    : { v, p -> /id "org\.docstr\.gwt" version "([\d.a-zA-Z-]+)"/ },
-        replacement: { v, p -> "id \"org.docstr.gwt\" version \"${v}-alpha\"" }
+        replacement: { v, p -> "id \"org.docstr.gwt\" version \"${v}\"" }
     ])
     pre("fileUpdate", [
         file       : "doc/Configuration.md",
         pattern    : { v, p -> /id "org\.docstr\.gwt" version "([\d.a-zA-Z-]+)"/ },
-        replacement: { v, p -> "id \"org.docstr.gwt\" version \"${v}-alpha\"" }
+        replacement: { v, p -> "id \"org.docstr.gwt\" version \"${v}\"" }
     ])
     pre("fileUpdate", [
         file       : "examples/basic-gwt-project/build.gradle",
         pattern    : { v, p -> /id "org\.docstr\.gwt" version "([\d.a-zA-Z-]+)"/ },
-        replacement: { v, p -> "id \"org.docstr.gwt\" version \"${v}-alpha\"" }
+        replacement: { v, p -> "id \"org.docstr.gwt\" version \"${v}\"" }
     ])
     pre("fileUpdate", [
         file       : "README.md",
         pattern    : { v, p -> /org\.docstr\.gwt:gwt-gradle-plugin:([\d.a-zA-Z-]+)/ },
-        replacement: { v, p -> "org.docstr.gwt:gwt-gradle-plugin:${v}-alpha" }
+        replacement: { v, p -> "org.docstr.gwt:gwt-gradle-plugin:${v}" }
     ])
 
     // Pre-hook to create a commit after updating the files
@@ -51,7 +51,7 @@ scmVersion {
   }
 }
 
-version = scmVersion.version.replace("-SNAPSHOT", "") + "-alpha"
+version = scmVersion.version.replace("-SNAPSHOT", "")
 print("Current project version: " + project.version)
 
 allprojects {

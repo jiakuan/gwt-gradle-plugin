@@ -27,7 +27,7 @@ import org.gradle.api.tasks.TaskProvider;
  */
 public class GwtPlugin implements Plugin<Project> {
 
-  private static final String GWT_VERSION = "2.11.0";
+  private static final String GWT_VERSION = "2.12.0";
 
   public void apply(Project project) {
     // Ensure the Java plugin is applied if it hasn't been applied yet

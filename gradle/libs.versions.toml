@@ -2,7 +2,7 @@
 # https://docs.gradle.org/current/userguide/platforms.html#sub::toml-dependencies-format
 
 [versions]
-gwt = "2.11.0"
+gwt = "2.12.0"
 slf4j = "2.0.16"
 commons-io = "2.17.0"
 classgraph = "4.8.176"
