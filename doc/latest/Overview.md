@@ -1,4 +1,4 @@
-# GWT Gradle Plugin (v2)
+# Overview
 
 [![Build Status](https://github.com/jiakuan/gwt-gradle-plugin/actions/workflows/gradle.yml/badge.svg)](https://github.com/jiakuan/gwt-gradle-plugin/actions)
 
@@ -74,7 +74,7 @@ project:
   default).
 
 For the full list of available options, refer to
-the [Configuration](doc/Configuration.md) documentation.
+the [Configuration](Configuration.md) documentation.
 
 ## Version 1 (v1) Plugin
 

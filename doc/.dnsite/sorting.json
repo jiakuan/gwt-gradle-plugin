@@ -1,0 +1,18 @@
+{
+  "sorting": [
+    "latest/Quickstart.md",
+    "latest/Configuration.md",
+    "version-1.x/overview.md",
+    "version-1.x/setup",
+    "version-1.x/setup/Quickstart.md",
+    "version-1.x/setup/Project Types.md",
+    "version-1.x/setup/Configuration References.md",
+    "version-1.x/setup/GWT Dependencies.md",
+    "version-1.x/use-cases",
+    "version-1.x/use-cases/Working with Intellij IDEA.md",
+    "version-1.x/use-cases/Working with Eclipse.md",
+    "version-1.x/technical-details",
+    "version-1.x/version-history.md",
+    "javadoc"
+  ]
+}

@@ -44,10 +44,10 @@ gwt {
   // Optional: Debugging: causes normally-transient generated types to be saved in the specified directory
   gen = file('build/gen')
 
-  // Optional: The directory into which deployable output files will be written (defaults to 'war')
-  war = file('build/war')
+  // Optional: The directory into which deployable output files will be written (defaults to 'build/gwt')
+  war = file('build/gwt')
 
-  // Optional: The directory into which deployable but not servable output files will be written (defaults to 'WEB-INF/deploy' under the -war directory/jar, and may be the same as the -extra directory/jar)
+  // Optional: The directory into which deployable but not servable output files will be written (defaults to 'build/deploy')
   deploy = file('build/deploy')
 
   // Optional: The directory into which extra files, not intended for deployment, will be written

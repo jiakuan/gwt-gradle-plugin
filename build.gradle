@@ -30,6 +30,21 @@ scmVersion {
         replacement: { v, p -> "id \"org.docstr.gwt\" version \"${v}\"" }
     ])
     pre("fileUpdate", [
+        file       : "README.md",
+        pattern    : { v, p -> /org\.docstr\.gwt:gwt-gradle-plugin:([\d.a-zA-Z-]+)/ },
+        replacement: { v, p -> "org.docstr.gwt:gwt-gradle-plugin:${v}" }
+    ])
+    pre("fileUpdate", [
+        file       : "doc/Overview.md",
+        pattern    : { v, p -> /id "org\.docstr\.gwt" version "([\d.a-zA-Z-]+)"/ },
+        replacement: { v, p -> "id \"org.docstr.gwt\" version \"${v}\"" }
+    ])
+    pre("fileUpdate", [
+        file       : "doc/Overview.md",
+        pattern    : { v, p -> /org\.docstr\.gwt:gwt-gradle-plugin:([\d.a-zA-Z-]+)/ },
+        replacement: { v, p -> "org.docstr.gwt:gwt-gradle-plugin:${v}" }
+    ])
+    pre("fileUpdate", [
         file       : "doc/Configuration.md",
         pattern    : { v, p -> /id "org\.docstr\.gwt" version "([\d.a-zA-Z-]+)"/ },
         replacement: { v, p -> "id \"org.docstr.gwt\" version \"${v}\"" }
@@ -38,11 +53,6 @@ scmVersion {
         file       : "examples/basic-gwt-project/build.gradle",
         pattern    : { v, p -> /id "org\.docstr\.gwt" version "([\d.a-zA-Z-]+)"/ },
         replacement: { v, p -> "id \"org.docstr.gwt\" version \"${v}\"" }
-    ])
-    pre("fileUpdate", [
-        file       : "README.md",
-        pattern    : { v, p -> /org\.docstr\.gwt:gwt-gradle-plugin:([\d.a-zA-Z-]+)/ },
-        replacement: { v, p -> "org.docstr.gwt:gwt-gradle-plugin:${v}" }
     ])
 
     // Pre-hook to create a commit after updating the files

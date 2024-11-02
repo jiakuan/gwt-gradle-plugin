@@ -1,0 +1,37 @@
+.nav-menu {
+  background: #f0f0f0;
+  border-bottom: 1px solid #cccccc;
+
+  .content {
+    max-width: 100%;
+    padding: 0 25px;
+    @media screen and (max-width: 768px) {
+      padding: 0 15px;
+    }
+
+    .wrap {
+      .logo {
+        img {
+          width: 200px;
+        }
+
+        .toggle svg {
+          fill: #555555;
+        }
+
+        .toggle.opened svg {
+          fill: #222222;
+        }
+      }
+
+      .menu ul li a {
+        color: #444444;
+
+        &.active {
+          color: #718c30;
+          border-bottom-color: #718c30;
+        }
+      }
+    }
+  }
+}
