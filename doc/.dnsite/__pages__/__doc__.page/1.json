@@ -19,8 +19,8 @@
   ],
   "right_menu_items": [
     {
-      "text": "Javadoc",
-      "url": "/javadoc/index.html"
+      "text": "Examples",
+      "url": "https://github.com/jiakuan/gwt-gradle-plugin/tree/main/examples/basic-gwt-project"
     },
     {
       "text": "Source Code",
