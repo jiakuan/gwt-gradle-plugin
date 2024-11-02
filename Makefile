@@ -25,7 +25,5 @@ publish-local: build
 publish: build
 	${PROJECT_DIR}/gradlew publishPlugins --warning-mode all
 
-.PHONY: doc
-doc: build
-	rm -rf doc/javadoc/
-	cp -r plugin/build/docs/javadoc doc/
+site:
+	cd ${PROJECT_DIR}/doc && docstr site build && cd ${PROJECT_DIR}/../dn-hosting-sites && make deploy-gwtgradle
