@@ -35,17 +35,17 @@ scmVersion {
         replacement: { v, p -> "org.docstr.gwt:gwt-gradle-plugin:${v}" }
     ])
     pre("fileUpdate", [
-        file       : "doc/Overview.md",
+        file       : "doc/latest/Overview.md",
         pattern    : { v, p -> /id "org\.docstr\.gwt" version "([\d.a-zA-Z-]+)"/ },
         replacement: { v, p -> "id \"org.docstr.gwt\" version \"${v}\"" }
     ])
     pre("fileUpdate", [
-        file       : "doc/Overview.md",
+        file       : "doc/latest/Overview.md",
         pattern    : { v, p -> /org\.docstr\.gwt:gwt-gradle-plugin:([\d.a-zA-Z-]+)/ },
         replacement: { v, p -> "org.docstr.gwt:gwt-gradle-plugin:${v}" }
     ])
     pre("fileUpdate", [
-        file       : "doc/Configuration.md",
+        file       : "doc/latest/Configuration.md",
         pattern    : { v, p -> /id "org\.docstr\.gwt" version "([\d.a-zA-Z-]+)"/ },
         replacement: { v, p -> "id \"org.docstr.gwt\" version \"${v}\"" }
     ])
