@@ -7,6 +7,16 @@ projects with the [Google Web Toolkit (GWT)](http://www.gwtproject.org/). This
 version is a complete rewrite of the original plugin, offering a cleaner
 codebase and more intuitive configuration options.
 
+## Sponsors
+
+This project is sponsored by [Document Node](https://documentnode.io), a platform dedicated to empowering content creators with tools that streamline productivity, enhance collaboration, and simplify content management.
+
+Check out their latest Chrome extension, [MindPane](https://mindpane.net/), which transforms any web page into an interactive mind map, helping you quickly grasp the main structure of documents and navigate through topics with ease. ([Chrome Web Store](https://chrome.google.com/webstore/detail/ioimcileegaodabmbcnadppghhakneae))
+
+
+[![icon-128.png](../images/icon-128.png)](https://mindpane.net/) [![x-icon.png](../images/x-icon.png)](https://x.com/document_node)
+
+
 ## Key Features
 
 - **Minimal configuration** required to use the plugin
