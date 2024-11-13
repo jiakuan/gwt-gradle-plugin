@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -22,7 +22,7 @@ import org.gradle.api.provider.Property;
 /**
  * Base options for GWT compiler and dev mode
  */
-public abstract class GwtBaseOptions {
+public abstract class AbstractBaseOptions {
 
   /**
    * Minimum heap size for the JVM
@@ -56,6 +56,7 @@ public abstract class GwtBaseOptions {
    * <code>-gen</code>
    * <p>Debugging: causes normally-transient generated types to be saved
    * in the specified directory
+   *
    * @return The generated types directory
    */
   public abstract DirectoryProperty getGen();
@@ -64,6 +65,7 @@ public abstract class GwtBaseOptions {
    * <code>-war</code>
    * The directory into which deployable output files will be written
    * (defaults to 'war')
+   *
    * @return The war directory
    */
   public abstract DirectoryProperty getWar();
@@ -73,6 +75,7 @@ public abstract class GwtBaseOptions {
    * The directory into which deployable but not servable output files
    * will be written (defaults to 'WEB-INF/deploy' under the -war
    * directory/jar, and may be the same as the -extra directory/jar)
+   *
    * @return The deploy directory
    */
   public abstract DirectoryProperty getDeploy();
@@ -81,6 +84,7 @@ public abstract class GwtBaseOptions {
    * <code>-extra</code>
    * The directory into which extra files, not intended for
    * deployment, will be written
+   *
    * @return The extra directory
    */
   public abstract DirectoryProperty getExtra();
@@ -88,6 +92,7 @@ public abstract class GwtBaseOptions {
   /**
    * <code>-Dgwt.persistentunitcachedir=[YourCacheDir]</code>
    * The directory to use for the persistent unit cache
+   *
    * @return The cache directory
    */
   public abstract DirectoryProperty getCacheDir();

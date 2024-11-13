@@ -11,7 +11,7 @@ codebase and more intuitive configuration options.
 
 - **Minimal configuration** required to use the plugin
 - **Simpler codebase** compared to the v1 plugin
-- No need to manually add core GWT dependencies like `gwt-user` and `gwt-dev`
+- No need to manually add core GWT dependencies like `gwt-user`, `gwt-dev` and `gwt-codeserver`
 - **Enhanced source tracking** for GWT Modules. This feature enables targeted
   tracking of source code specifically related to GWT modules. Only the source
   paths defined within each GWT module are monitored, ensuring that the
@@ -20,7 +20,7 @@ codebase and more intuitive configuration options.
   on changes within GWT-specific code, optimizing the build process for faster
   iterations and more efficient resource usage.
 - **Configuration aligned with GWT compiler options** for ease of use
-- **Support for GWT 2.12.0+** and the latest Gradle 8.10.2
+- **Support for GWT 2.12+** and the latest Gradle 8.10.2
 - Built-in tasks for GWT compilation and dev mode
 
 ## Usage
@@ -36,8 +36,8 @@ plugins {
 }
 
 gwt {
-  // Optional: Set the GWT version, defaults to 2.12.0
-  // gwtVersion = '2.12.0'
+  // Optional: Set the GWT version, defaults to 2.12.1
+  // gwtVersion = '2.12.1'
   modules ['<YOUR-GWT-MODULE>']
 }
 ```

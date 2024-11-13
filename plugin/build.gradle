@@ -23,6 +23,7 @@ repositories {
 dependencies {
   implementation libs.gwt.user
   implementation libs.gwt.dev
+  implementation libs.gwt.codeserver
 
   // Use JUnit Jupiter for testing.
   testImplementation libs.junit.jupiter

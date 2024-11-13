@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -51,7 +51,7 @@ class GwtPluginTest {
       extension.getMaxHeapSize().set("222M");
       extension.getLogLevel().set("SPAM");
       extension.getWorkDir().set(project.file("workDir"));
-      extension.getGen().set(project.file("gen"));
+      extension.getCompiler().getGen().set(project.file("gen"));
       extension.getGenerateJsInteropExports().set(true);
       extension.getIncludeJsInteropExports()
           .set(List.of("com.example.MyIncludeExport"));
@@ -63,10 +63,10 @@ class GwtPluginTest {
       extension.getFailOnError().set(true);
       extension.getSourceLevel().set("17");
       extension.getIncremental().set(true);
-      extension.getWar().set(project.file("war"));
-      extension.getDeploy().set(project.file("deploy"));
-      extension.getExtra().set(project.file("extra"));
-      extension.getCacheDir().set(project.file("cacheDir"));
+      extension.getCompiler().getWar().set(project.file("war"));
+      extension.getCompiler().getDeploy().set(project.file("deploy"));
+      extension.getCompiler().getExtra().set(project.file("extra"));
+      extension.getCompiler().getCacheDir().set(project.file("cacheDir"));
       extension.getModules().set(List.of("com.example.MyModule"));
     });
 
@@ -233,7 +233,7 @@ class GwtPluginTest {
       extension.getMaxHeapSize().set("222M");
       extension.getLogLevel().set("SPAM");
       extension.getWorkDir().set(project.file("workDir"));
-      extension.getGen().set(project.file("gen"));
+      extension.getDevMode().getGen().set(project.file("gen"));
       extension.getGenerateJsInteropExports().set(true);
       extension.getIncludeJsInteropExports()
           .set(List.of("com.example.MyIncludeExport"));
@@ -245,10 +245,10 @@ class GwtPluginTest {
       extension.getFailOnError().set(true);
       extension.getSourceLevel().set("17");
       extension.getIncremental().set(true);
-      extension.getWar().set(project.file("war"));
-      extension.getDeploy().set(project.file("deploy"));
-      extension.getExtra().set(project.file("extra"));
-      extension.getCacheDir().set(project.file("cacheDir"));
+      extension.getDevMode().getWar().set(project.file("war"));
+      extension.getDevMode().getDeploy().set(project.file("deploy"));
+      extension.getDevMode().getExtra().set(project.file("extra"));
+      extension.getDevMode().getCacheDir().set(project.file("cacheDir"));
       extension.getModules().set(List.of("com.example.MyModule"));
     });
 
@@ -366,6 +366,154 @@ class GwtPluginTest {
     assertThat(task.getCacheDir().get().getAsFile()).isEqualTo(
         project.file("cacheDir"));
     assertThat(task.getModulePathPrefix().get()).isEqualTo("test-prefix");
+    assertThat(task.getWorkDir().get().getAsFile()).isEqualTo(
+        project.file("workDir"));
+    assertThat(task.getMethodNameDisplayMode().get()).isEqualTo("FULL");
+    assertThat(task.getSourceLevel().get()).isEqualTo("17");
+    assertThat(task.getGenerateJsInteropExports().get()).isTrue();
+    assertThat(task.getIncludeJsInteropExports().get())
+        .containsExactly("com.example.MyIncludeExport");
+    assertThat(task.getExcludeJsInteropExports().get())
+        .containsExactly("com.example.MyExcludeExport");
+    assertThat(task.getIncremental().get()).isTrue();
+    assertThat(task.getStyle().get()).isEqualTo("PRETTY");
+    assertThat(task.getFailOnError().get()).isTrue();
+    assertThat(task.getSetProperty().get()).containsExactly("name=value");
+    assertThat(task.getModules().get())
+        .containsExactly("com.example.MyModule");
+  }
+
+
+  @Test
+  void passArgumentsFromExtensionToGwtSuperDevTask() {
+    /*
+     * -------------------------------------------------------------------------
+     * Given
+     * -------------------------------------------------------------------------
+     */
+    // Create a test project and apply the plugin
+    Project project = ProjectBuilder.builder().build();
+
+    /*
+     * -------------------------------------------------------------------------
+     * When
+     * -------------------------------------------------------------------------
+     */
+    project.getPlugins().apply("org.docstr.gwt");
+    // Configure the gwt extension programmatically
+    project.getExtensions().configure("gwt", ext -> {
+      GwtPluginExtension extension = (GwtPluginExtension) ext;
+      extension.getMinHeapSize().set("111M");
+      extension.getMaxHeapSize().set("222M");
+      extension.getLogLevel().set("SPAM");
+      extension.getWorkDir().set(project.file("workDir"));
+      extension.getGenerateJsInteropExports().set(true);
+      extension.getIncludeJsInteropExports()
+          .set(List.of("com.example.MyIncludeExport"));
+      extension.getExcludeJsInteropExports()
+          .set(List.of("com.example.MyExcludeExport"));
+      extension.getMethodNameDisplayMode().set("FULL");
+      extension.getSetProperty().set(List.of("name=value"));
+      extension.getStyle().set("PRETTY");
+      extension.getFailOnError().set(true);
+      extension.getSourceLevel().set("17");
+      extension.getIncremental().set(true);
+      extension.getModules().set(List.of("com.example.MyModule"));
+    });
+
+    /*
+     * -------------------------------------------------------------------------
+     * Then
+     * -------------------------------------------------------------------------
+     */
+    // Verify the result
+    TaskContainer tasks = project.getTasks();
+    GwtSuperDevTask task = (GwtSuperDevTask) tasks.findByName("gwtSuperDev");
+    assertThat(task).isNotNull();
+    assertThat(task.getMinHeapSize()).isEqualTo("111M");
+    assertThat(task.getMaxHeapSize()).isEqualTo("222M");
+    assertThat(task.getLogLevel().get()).isEqualTo("SPAM");
+    assertThat(task.getWorkDir().get().getAsFile()).isEqualTo(
+        project.file("workDir"));
+    assertThat(task.getGenerateJsInteropExports().get()).isTrue();
+    assertThat(task.getIncludeJsInteropExports().get())
+        .containsExactly("com.example.MyIncludeExport");
+    assertThat(task.getExcludeJsInteropExports().get())
+        .containsExactly("com.example.MyExcludeExport");
+    assertThat(task.getMethodNameDisplayMode().get()).isEqualTo("FULL");
+    assertThat(task.getSetProperty().get()).containsExactly("name=value");
+    assertThat(task.getStyle().get()).isEqualTo("PRETTY");
+    assertThat(task.getFailOnError().get()).isTrue();
+    assertThat(task.getSourceLevel().get()).isEqualTo("17");
+    assertThat(task.getIncremental().get()).isTrue();
+    assertThat(task.getModules().get())
+        .containsExactly("com.example.MyModule");
+  }
+
+  @Test
+  void registerGwtSuperDevTask() {
+    /*
+     * -------------------------------------------------------------------------
+     * Given
+     * -------------------------------------------------------------------------
+     */
+    // Create a test project and apply the plugin
+    Project project = ProjectBuilder.builder().build();
+
+    /*
+     * -------------------------------------------------------------------------
+     * When
+     * -------------------------------------------------------------------------
+     */
+    project.getPlugins().apply("org.docstr.gwt");
+    // Configure the gwt extension programmatically
+    project.getExtensions().configure("gwt", ext -> {
+      GwtPluginExtension extension = (GwtPluginExtension) ext;
+      extension.getSuperDev().getAllowMissingSrc().set(true);
+      extension.getSuperDev().getCompileTest().set(true);
+      extension.getSuperDev().getCompileTestRecompiles().set(3);
+      extension.getSuperDev().getPrecompile().set(false);
+      extension.getSuperDev().getPort().set(8080);
+      extension.getSuperDev().getSrc().set(project.file("src"));
+      extension.getSuperDev().getLauncherDir().set(project.file("launcherDir"));
+      extension.getSuperDev().getClosureFormattedOutput().set(true);
+      extension.getSuperDev().getLogLevel().set("SPAM");
+      extension.getSuperDev().getBindAddress().set("test-address");
+      extension.getSuperDev().getWorkDir().set(project.file("workDir"));
+      extension.getSuperDev().getMethodNameDisplayMode().set("FULL");
+      extension.getSuperDev().getSourceLevel().set("17");
+      extension.getSuperDev().getGenerateJsInteropExports().set(true);
+      extension.getSuperDev().getIncludeJsInteropExports()
+          .set(List.of("com.example.MyIncludeExport"));
+      extension.getSuperDev().getExcludeJsInteropExports()
+          .set(List.of("com.example.MyExcludeExport"));
+      extension.getSuperDev().getIncremental().set(true);
+      extension.getSuperDev().getStyle().set("PRETTY");
+      extension.getSuperDev().getFailOnError().set(true);
+      extension.getSuperDev().getSetProperty().set(List.of("name=value"));
+      extension.getSuperDev().getModules().set(List.of("com.example.MyModule"));
+    });
+
+    /*
+     * -------------------------------------------------------------------------
+     * Then
+     * -------------------------------------------------------------------------
+     */
+    // Verify the result
+    TaskContainer tasks = project.getTasks();
+    GwtSuperDevTask task = (GwtSuperDevTask) tasks.findByName("gwtSuperDev");
+    assertThat(task).isNotNull();
+    assertThat(task.getAllowMissingSrc().get()).isTrue();
+    assertThat(task.getCompileTest().get()).isTrue();
+    assertThat(task.getCompileTestRecompiles().get()).isEqualTo(3);
+    assertThat(task.getPrecompile().get()).isFalse();
+    assertThat(task.getPort().get()).isEqualTo(8080);
+    assertThat(task.getSrc().get().getAsFile()).isEqualTo(project.file("src"));
+    assertThat(task.getLauncherDir().get().getAsFile()).isEqualTo(
+        project.file("launcherDir"));
+    assertThat(task.getClosureFormattedOutput().get()).isTrue();
+    assertThat(task.getLogLevel().get()).isEqualTo("SPAM");
+    assertThat(task.getBindAddress().get()).isEqualTo("test-address");
     assertThat(task.getWorkDir().get().getAsFile()).isEqualTo(
         project.file("workDir"));
     assertThat(task.getMethodNameDisplayMode().get()).isEqualTo("FULL");

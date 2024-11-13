@@ -27,7 +27,12 @@ import org.gradle.api.tasks.compile.JavaCompile;
 /**
  * Task for running the GWT development mode.
  */
-public abstract class GwtDevModeTask extends GwtBaseTask {
+public abstract class GwtDevModeTask extends AbstractBaseTask {
+
+  /**
+   * The main class for the GWT development mode.
+   */
+  public static final String DEV_MODE_CLASS = "com.google.gwt.dev.DevMode";
 
   @Input
   @Optional
@@ -59,6 +64,7 @@ public abstract class GwtDevModeTask extends GwtBaseTask {
 
   /**
    * Constructs a new GwtDevModeTask.
+   *
    * @param objects The object factory
    */
   @Inject
@@ -75,7 +81,7 @@ public abstract class GwtDevModeTask extends GwtBaseTask {
     this.modulePathPrefix = objects.property(String.class);
 
     // Set GWT compiler as the main class
-    getMainClass().set("com.google.gwt.dev.DevMode");
+    getMainClass().set(DEV_MODE_CLASS);
 
     // This task will depend on the compileJava task automatically
     dependsOn(getProject().getTasks().withType(JavaCompile.class));
@@ -84,6 +90,7 @@ public abstract class GwtDevModeTask extends GwtBaseTask {
   /**
    * Starts a servlet container serving the directory specified by
    * the -war flag. (defaults to ON)
+   *
    * @return The startServer property
    */
   public Property<Boolean> getStartServer() {
@@ -92,6 +99,7 @@ public abstract class GwtDevModeTask extends GwtBaseTask {
 
   /**
    * Specifies the TCP port for the embedded web server (defaults to 8888)
+   *
    * @return The port property
    */
   public Property<Integer> getPort() {
@@ -100,6 +108,7 @@ public abstract class GwtDevModeTask extends GwtBaseTask {
 
   /**
    * Logs to a file in the given directory, as well as graphically
+   *
    * @return The logdir property
    */
   public DirectoryProperty getLogdir() {
@@ -109,6 +118,7 @@ public abstract class GwtDevModeTask extends GwtBaseTask {
   /**
    * Specifies the bind address for the code server and web server
    * (defaults to 127.0.0.1)
+   *
    * @return The bind address
    */
   public Property<String> getBindAddress() {
@@ -118,6 +128,7 @@ public abstract class GwtDevModeTask extends GwtBaseTask {
   /**
    * Specifies the TCP port for the code server (defaults to 9997 for
    * classic Dev Mode or 9876 for Super Dev Mode)
+   *
    * @return The code server port
    */
   public Property<Integer> getCodeServerPort() {
@@ -126,6 +137,7 @@ public abstract class GwtDevModeTask extends GwtBaseTask {
 
   /**
    * Runs Super Dev Mode instead of classic Development Mode. (defaults to ON)
+   *
    * @return The superDevMode property
    */
   public Property<Boolean> getSuperDevMode() {
@@ -135,6 +147,7 @@ public abstract class GwtDevModeTask extends GwtBaseTask {
   /**
    * Specify a different embedded web server to run
    * (must implement ServletContainerLauncher)
+   *
    * @return The server property
    */
   public Property<String> getServer() {
@@ -143,6 +156,7 @@ public abstract class GwtDevModeTask extends GwtBaseTask {
 
   /**
    * Automatically launches the specified URL
+   *
    * @return The startup URL
    */
   public Property<String> getStartupUrl() {
@@ -151,6 +165,7 @@ public abstract class GwtDevModeTask extends GwtBaseTask {
 
   /**
    * The prefix to prepend to module path
+   *
    * @return The module path prefix
    */
   public Property<String> getModulePathPrefix() {

@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -27,7 +27,7 @@ import org.gradle.api.tasks.TaskProvider;
  */
 public class GwtPlugin implements Plugin<Project> {
 
-  private static final String GWT_VERSION = "2.12.0";
+  private static final String GWT_VERSION = "2.12.1";
 
   public void apply(Project project) {
     // Ensure the Java plugin is applied if it hasn't been applied yet
@@ -68,6 +68,8 @@ public class GwtPlugin implements Plugin<Project> {
           .add("implementation", "org.gwtproject:gwt-user:" + gwtVersion);
       project.getDependencies()
           .add("implementation", "org.gwtproject:gwt-dev:" + gwtVersion);
+      project.getDependencies()
+          .add("implementation", "org.gwtproject:gwt-codeserver:" + gwtVersion);
 
       SourceSetContainer sourceSets = project.getExtensions()
           .getByType(SourceSetContainer.class);
@@ -88,7 +90,6 @@ public class GwtPlugin implements Plugin<Project> {
     TaskProvider<GwtCompileTask> gwtCompileTask = project.getTasks()
         .register("gwtCompile", GwtCompileTask.class,
             new GwtCompileConfig(extension));
-
     // Ensure that gwtCompile runs automatically when build is executed
     project.getTasks().named("build")
         .configure(buildTask -> buildTask.dependsOn(gwtCompileTask));
@@ -99,6 +100,14 @@ public class GwtPlugin implements Plugin<Project> {
             new GwtDevModeConfig(extension));
     // Ensure that gwtDevMode always runs
     gwtDevModeTask.configure(
+        task -> task.getOutputs().upToDateWhen(t -> false));
+
+    // Register the GwtSuperDevTask task
+    TaskProvider<GwtSuperDevTask> gwtSuperDevTask = project.getTasks()
+        .register("gwtSuperDev", GwtSuperDevTask.class,
+            new GwtSuperDevConfig(extension));
+    // Ensure that gwtSuperDev always runs
+    gwtSuperDevTask.configure(
         task -> task.getOutputs().upToDateWhen(t -> false));
   }
 }

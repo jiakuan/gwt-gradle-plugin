@@ -27,7 +27,12 @@ import org.gradle.api.tasks.compile.JavaCompile;
 /**
  * Task for compiling GWT modules.
  */
-public abstract class GwtCompileTask extends GwtBaseTask {
+public abstract class GwtCompileTask extends AbstractBaseTask {
+
+  /**
+   * The main class for the GWT compiler.
+   */
+  public static final String COMPILER_CLASS = "com.google.gwt.dev.Compiler";
 
   @Input
   @Optional
@@ -92,7 +97,7 @@ public abstract class GwtCompileTask extends GwtBaseTask {
     this.saveSourceOutput = objects.directoryProperty();
 
     // Set GWT compiler as the main class
-    getMainClass().set("com.google.gwt.dev.Compiler");
+    getMainClass().set(COMPILER_CLASS);
 
     // This task will depend on the compileJava task automatically
     dependsOn(getProject().getTasks().withType(JavaCompile.class));

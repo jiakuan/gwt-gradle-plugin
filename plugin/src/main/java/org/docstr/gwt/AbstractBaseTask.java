@@ -1,5 +1,7 @@
 package org.docstr.gwt;
 
+import static org.docstr.gwt.GwtSuperDevTask.CODE_SERVER_CLASS;
+
 import java.util.ArrayList;
 import javax.inject.Inject;
 import org.gradle.api.GradleException;
@@ -15,11 +17,14 @@ import org.gradle.api.tasks.OutputDirectory;
 /**
  * Base class for several GWT related tasks that share specific parameters.
  */
-public abstract class GwtBaseTask extends JavaExec {
+public abstract class AbstractBaseTask extends JavaExec {
 
   @Input
   @Optional
   private final Property<String> logLevel;
+  @OutputDirectory
+  @Optional
+  private final DirectoryProperty workDir;
   @OutputDirectory
   @Optional
   private final DirectoryProperty gen;
@@ -32,9 +37,6 @@ public abstract class GwtBaseTask extends JavaExec {
   @OutputDirectory
   @Optional
   private final DirectoryProperty extra;
-  @OutputDirectory
-  @Optional
-  private final DirectoryProperty workDir;
   @OutputDirectory
   @Optional
   private final DirectoryProperty cacheDir;
@@ -74,13 +76,13 @@ public abstract class GwtBaseTask extends JavaExec {
    * @param objects The object factory
    */
   @Inject
-  public GwtBaseTask(ObjectFactory objects) {
+  public AbstractBaseTask(ObjectFactory objects) {
     logLevel = objects.property(String.class);
+    workDir = objects.directoryProperty();
     gen = objects.directoryProperty();
     war = objects.directoryProperty();
     deploy = objects.directoryProperty();
     extra = objects.directoryProperty();
-    workDir = objects.directoryProperty();
     cacheDir = objects.directoryProperty();
     sourceLevel = objects.property(String.class);
     methodNameDisplayMode = objects.property(String.class);
@@ -108,11 +110,15 @@ public abstract class GwtBaseTask extends JavaExec {
       args("-logLevel", getLogLevel().get());
     }
 
-    if (getGen().isPresent()) {
+    if (getWorkDir().isPresent()) {
+      args("-workDir", getWorkDir().get().getAsFile().getPath());
+    }
+
+    if (!isCodeServerTask() && getGen().isPresent()) {
       args("-gen", getGen().get().getAsFile().getPath());
     }
 
-    if (getWar().isPresent()) {
+    if (!isCodeServerTask() && getWar().isPresent()) {
       // Ensure the war directory exists
       if (!getWar().get().getAsFile().exists()) {
         boolean mkdirs = getWar().get().getAsFile().mkdirs();
@@ -124,19 +130,15 @@ public abstract class GwtBaseTask extends JavaExec {
       args("-war", getWar().get().getAsFile().getPath());
     }
 
-    if (getDeploy().isPresent()) {
+    if (!isCodeServerTask() && getDeploy().isPresent()) {
       args("-deploy", getDeploy().get().getAsFile().getPath());
     }
 
-    if (getExtra().isPresent()) {
+    if (!isCodeServerTask() && getExtra().isPresent()) {
       args("-extra", getExtra().get().getAsFile().getPath());
     }
 
-    if (getWorkDir().isPresent()) {
-      args("-workDir", getWorkDir().get().getAsFile().getPath());
-    }
-
-    if (getCacheDir().isPresent()) {
+    if (!isCodeServerTask() && getCacheDir().isPresent()) {
       jvmArgs("-Dgwt.persistentunitcachedir=" + getCacheDir().get().getAsFile()
           .getPath());
     }
@@ -203,6 +205,10 @@ public abstract class GwtBaseTask extends JavaExec {
     super.exec();
   }
 
+  private boolean isCodeServerTask() {
+    return CODE_SERVER_CLASS.equals(getMainClass().get());
+  }
+
   /**
    * The level of logging detail: ERROR, WARN, INFO, TRACE, DEBUG, SPAM or ALL
    * (defaults to INFO)
@@ -211,6 +217,16 @@ public abstract class GwtBaseTask extends JavaExec {
    */
   public final Property<String> getLogLevel() {
     return logLevel;
+  }
+
+  /**
+   * The compiler's working directory for internal use (must be writeable;
+   * defaults to a system temp dir)
+   *
+   * @return The working directory
+   */
+  public final DirectoryProperty getWorkDir() {
+    return workDir;
   }
 
   /**
@@ -252,16 +268,6 @@ public abstract class GwtBaseTask extends JavaExec {
    */
   public final DirectoryProperty getExtra() {
     return extra;
-  }
-
-  /**
-   * The compiler's working directory for internal use (must be writeable;
-   * defaults to a system temp dir)
-   *
-   * @return The working directory
-   */
-  public final DirectoryProperty getWorkDir() {
-    return workDir;
   }
 
   /**
