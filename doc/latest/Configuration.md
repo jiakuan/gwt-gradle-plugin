@@ -11,7 +11,7 @@ plugins {
 }
 
 gwt {
-  modules ['<YOUR-GWT-MODULE>']
+  modules['<YOUR-GWT-MODULE>']
 }
 ```
 
@@ -164,5 +164,38 @@ gwt {
 
     // Optional: The subdirectory inside the war dir where DevMode will create module directories. (defaults empty for top level)
     modulePathPrefix = ''
+  }
+  
+  superDev {
+    //
+    // All options in 'gwt' closure (except 'gwtVersion') can be overridden here
+    //
+    
+    // Optional: Allows -src flags to reference missing directories. (defaults to OFF)
+    allowMissingSrc = false
+    
+    // Optional: Exits after compiling the modules. The exit code will be 0 if the compile succeeded. (defaults to OFF)
+    compileTest = false
+    
+    // Optional: The number of times to recompile (after the first one) during a compile test.
+    compileTestRecompiles = false
+    
+    // Optional: Precompile modules. (defaults to ON)
+    precompile = true
+    
+    // Optional: The port where the code server will run.
+    port = 9876
+    
+    // Optional: A directory containing GWT source to be prepended to the classpath for compiling.
+    src = file('src/someDir')
+    
+    // Optional: An output directory where files for launching Super Dev Mode will be written. (Optional.)
+    launcherDir = file('build/superDev')
+    
+    // Optional: Specifies the bind address for the code server and web server (defaults to 127.0.0.1)
+    bindAddress = '127.0.0.1'
+    
+    // Optional: EXPERIMENTAL: Enables Javascript output suitable for post-compilation by Closure Compiler (defaults to OFF)
+    closureFormattedOutput = false
   }
 }
