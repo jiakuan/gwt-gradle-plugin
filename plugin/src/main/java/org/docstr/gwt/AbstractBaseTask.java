@@ -2,10 +2,13 @@ package org.docstr.gwt;
 
 import static org.docstr.gwt.GwtSuperDevTask.CODE_SERVER_CLASS;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Set;
 import javax.inject.Inject;
 import org.gradle.api.GradleException;
 import org.gradle.api.file.DirectoryProperty;
+import org.gradle.api.file.FileCollection;
 import org.gradle.api.model.ObjectFactory;
 import org.gradle.api.provider.ListProperty;
 import org.gradle.api.provider.Property;
@@ -13,6 +16,8 @@ import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputDirectory;
+import org.gradle.api.tasks.SourceSet;
+import org.gradle.api.tasks.SourceSetContainer;
 
 /**
  * Base class for several GWT related tasks that share specific parameters.
@@ -98,13 +103,27 @@ public abstract class AbstractBaseTask extends JavaExec {
 
   @Override
   public void exec() {
+    // Retrieve the main source set
+    SourceSetContainer sourceSets = getProject().getExtensions()
+        .getByType(SourceSetContainer.class);
+    SourceSet mainSourceSet = sourceSets.getByName(
+        SourceSet.MAIN_SOURCE_SET_NAME);
+
+    // Collect all source paths
+    Set<File> allMainSourcePaths = mainSourceSet.getAllSource().getSrcDirs();
+    FileCollection outputClasspath = mainSourceSet.getOutput().getClassesDirs()
+        .plus(getProject().files(mainSourceSet.getOutput().getResourcesDir()));
+
     // Ensure the classpath includes compiled classes, resources, and source files
     setClasspath(getProject().files(
-        getProject().getLayout().getBuildDirectory().dir("classes/java/main"),
-        getProject().getLayout().getBuildDirectory().dir("resources/main"),
-        getProject().file("src/main/java"),
+        allMainSourcePaths,
+        outputClasspath,
         getProject().getConfigurations().getByName("runtimeClasspath")
     ));
+
+    // Log the classpath
+    getClasspath().getFiles().forEach(file -> getProject().getLogger()
+        .debug("classpath: {}", file));
 
     if (getLogLevel().isPresent()) {
       args("-logLevel", getLogLevel().get());
