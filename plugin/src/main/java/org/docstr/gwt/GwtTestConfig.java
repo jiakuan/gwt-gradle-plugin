@@ -82,9 +82,11 @@ public class GwtTestConfig implements Action<Test> {
     test.setClasspath(project.files(
         mainSourcePaths,
         mainOutputClasspath,
+        mainSourceSet.getRuntimeClasspath(),
+
         testSourcePaths,
         testOutputClasspath,
-        project.getConfigurations().getByName("runtimeClasspath")
+        testSourceSet.getRuntimeClasspath()
     ));
 
     project.afterEvaluate(p -> {
