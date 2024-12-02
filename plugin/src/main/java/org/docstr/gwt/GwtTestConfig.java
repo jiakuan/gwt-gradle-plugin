@@ -93,7 +93,7 @@ public class GwtTestConfig implements Action<Test> {
       String gwtArgs = testOptions.getParameterString();
       test.systemProperty("gwt.args", gwtArgs);
       Logger log = project.getLogger();
-      log.lifecycle("Using gwt.args for test: " + gwtArgs);
+      log.info("Using gwt.args for test: {}", gwtArgs);
 
       DirectoryProperty cacheDirProperty = extension.getCacheDir();
       if (cacheDirProperty != null && cacheDirProperty.isPresent()) {
