@@ -1,6 +1,6 @@
 plugins {
   id 'java'
-  id "org.docstr.gwt" version "2.1.0"
+  id "org.docstr.gwt" version "2.1.1"
 }
 
 group = 'com.example'
@@ -16,6 +16,7 @@ dependencies {
   // implementation 'org.gwtproject:gwt-user:2.12.1'
   // implementation 'org.gwtproject:gwt-dev:2.12.1'
   // implementation 'org.gwtproject:gwt-codeserver:2.12.1'
+  testImplementation 'junit:junit:4.13.2'
 }
 
 gwt {
@@ -26,4 +27,15 @@ gwt {
     classMetadata = false
     draftCompile = true
   }
+}
+
+tasks.withType(Test) {
+  classpath += sourceSets.test.runtimeClasspath
+}
+
+test {
+  useJUnit()
+  //include '**/*GWTTestCase*.java'
+
+  systemProperty 'gwt.args', '-help'
 }

@@ -21,6 +21,7 @@ import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetContainer;
 import org.gradle.api.tasks.TaskProvider;
+import org.gradle.api.tasks.testing.Test;
 
 /**
  * A plugin that adds GWT support to a project.
@@ -29,18 +30,22 @@ public class GwtPlugin implements Plugin<Project> {
 
   private static final String GWT_VERSION = "2.12.1";
 
+  private Project project;
+
   public void apply(Project project) {
+    this.project = project;
+
     // Ensure the Java plugin is applied if it hasn't been applied yet
     if (!project.getPlugins().hasPlugin(JavaPlugin.class)) {
       project.getPlugins().apply(JavaPlugin.class);
     }
 
-    GwtPluginExtension extension = createGwtExtension(project);
-    configureGwtProject(project, extension);
-    createGwtTasks(project, extension);
+    GwtPluginExtension extension = createGwtExtension();
+    configureGwtProject(extension);
+    configureGwtTasks(extension);
   }
 
-  private static GwtPluginExtension createGwtExtension(Project project) {
+  private GwtPluginExtension createGwtExtension() {
     // Register the GWT extension
     GwtPluginExtension extension = project.getExtensions()
         .create("gwt", GwtPluginExtension.class);
@@ -57,8 +62,7 @@ public class GwtPlugin implements Plugin<Project> {
     return extension;
   }
 
-  private static void configureGwtProject(Project project,
-      GwtPluginExtension extension) {
+  private void configureGwtProject(GwtPluginExtension extension) {
     project.afterEvaluate(p -> {
       // default to GWT_VERSION if not set
       String gwtVersion = extension.getGwtVersion().getOrElse(GWT_VERSION);
@@ -77,15 +81,10 @@ public class GwtPlugin implements Plugin<Project> {
       SourceSet mainSourceSet = sourceSets.getByName(
           SourceSet.MAIN_SOURCE_SET_NAME);
       mainSourceSet.getResources().srcDir("src/main/java");
-      // Add 'src/test/java' as a resource directory for the test source set
-      SourceSet testSourceSet = sourceSets.getByName(
-          SourceSet.TEST_SOURCE_SET_NAME);
-      testSourceSet.getResources().srcDir("src/test/java");
     });
   }
 
-  private static void createGwtTasks(
-      Project project, GwtPluginExtension extension) {
+  private void configureGwtTasks(GwtPluginExtension extension) {
     // Register the GwtCompile task
     TaskProvider<GwtCompileTask> gwtCompileTask = project.getTasks()
         .register("gwtCompile", GwtCompileTask.class,
@@ -109,5 +108,9 @@ public class GwtPlugin implements Plugin<Project> {
     // Ensure that gwtSuperDev always runs
     gwtSuperDevTask.configure(
         task -> task.getOutputs().upToDateWhen(t -> false));
+
+    // Register the test task with GWT support
+    project.getTasks()
+        .withType(Test.class, new GwtTestConfig(project, extension));
   }
 }

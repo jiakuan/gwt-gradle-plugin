@@ -3,12 +3,13 @@ package org.docstr.gwt;
 import static org.docstr.gwt.GwtSuperDevTask.CODE_SERVER_CLASS;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import javax.inject.Inject;
 import org.gradle.api.GradleException;
 import org.gradle.api.file.DirectoryProperty;
 import org.gradle.api.file.FileCollection;
+import org.gradle.api.logging.Logger;
 import org.gradle.api.model.ObjectFactory;
 import org.gradle.api.provider.ListProperty;
 import org.gradle.api.provider.Property;
@@ -122,8 +123,8 @@ public abstract class AbstractBaseTask extends JavaExec {
     ));
 
     // Log the classpath
-    getClasspath().getFiles().forEach(file -> getProject().getLogger()
-        .debug("classpath: {}", file));
+    Logger log = getProject().getLogger();
+    getClasspath().getFiles().forEach(file -> log.debug("classpath: {}", file));
 
     if (getLogLevel().isPresent()) {
       args("-logLevel", getLogLevel().get());
@@ -215,12 +216,10 @@ public abstract class AbstractBaseTask extends JavaExec {
 
     getModules().get().forEach(module -> args(module));
 
-    getProject().getLogger()
-        .lifecycle("jvmArgs: {}",
-            getJvmArguments().getOrElse(new ArrayList<>()));
-    getProject().getLogger()
-        .lifecycle("args: {}", getArgs());
-
+    //log.lifecycle("classpath: " + getClasspath().getAsPath());
+    log.lifecycle("jvmArgs: {}", getJvmArguments().getOrElse(List.of()));
+    log.lifecycle("args: {}", getArgs());
+    //log.lifecycle("main: {}", getMainClass().get());
     super.exec();
   }
 

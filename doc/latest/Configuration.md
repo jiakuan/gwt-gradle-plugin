@@ -198,4 +198,13 @@ gwt {
     // Optional: EXPERIMENTAL: Enables Javascript output suitable for post-compilation by Closure Compiler (defaults to OFF)
     closureFormattedOutput = false
   }
+  
+  // Optional: Configures the GWT test runner
+  gwtTest {
+    //
+    // All options in 'gwt' closure (except 'gwtVersion') can be overridden here
+    //
+    
+    // Please check `GwtTestOptions` for more options
+  }
 }
