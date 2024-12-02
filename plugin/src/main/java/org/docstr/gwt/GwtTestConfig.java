@@ -20,6 +20,12 @@ public class GwtTestConfig implements Action<Test> {
   private final Project project;
   private final GwtPluginExtension extension;
 
+  /**
+   * Constructor.
+   *
+   * @param project The project
+   * @param extension The GWT plugin extension
+   */
   public GwtTestConfig(Project project, GwtPluginExtension extension) {
     this.project = project;
     this.extension = extension;
