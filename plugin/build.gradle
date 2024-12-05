@@ -55,9 +55,12 @@ gradlePlugin {
 
 signing {
   sign publishing.publications
+}
 
-  // Disable signing in CI
+// Disable signing tasks in CI
+tasks.withType(Sign).configureEach {
   onlyIf {
+    // Skip signing if running in CI
     !System.getenv("CI")
   }
 }
