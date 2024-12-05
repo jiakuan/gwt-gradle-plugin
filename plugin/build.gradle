@@ -9,6 +9,7 @@ plugins {
   // developing Gradle plugins
   id 'java-gradle-plugin'
 
+  id 'signing'
   id 'maven-publish'
 
   alias(libs.plugins.plugin.publish)
@@ -52,6 +53,13 @@ gradlePlugin {
   }
 }
 
+signing {
+  sign publishing.publications
+}
+
+def ossrU = project.hasProperty("ossrhToken") ? ossrhToken : ""
+def ossrP = project.hasProperty("ossrhTokenPassword") ? ossrhTokenPassword : ""
+
 publishing {
   publications {
     mavenJava(MavenPublication) {
@@ -90,15 +98,15 @@ publishing {
   }
   repositories {
     mavenLocal()
-    //maven {
-    //  def releasesRepoUrl = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
-    //  def snapshotsRepoUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
-    //  url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
-    //  credentials {
-    //    username = ossrU
-    //    password = ossrP
-    //  }
-    //}
+    maven {
+      def releasesRepoUrl = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+      def snapshotsRepoUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+      url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+      credentials {
+        username = ossrU
+        password = ossrP
+      }
+    }
   }
 }
 
