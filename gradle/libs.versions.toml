@@ -32,4 +32,4 @@ assertj-core = { module = "org.assertj:assertj-core", version.ref = "assertj-cor
 [plugins]
 lombok = { id = "io.freefair.lombok", version.ref = "lombok-plugin" }
 plugin-publish = { id = "com.gradle.plugin-publish", version.ref = "plugin-publish" }
-axion-release-plugin = { id = "pl.allegro.tech.build.axion-release", version.ref = "axion-release-plugin" }
+axion-release = { id = "pl.allegro.tech.build.axion-release", version.ref = "axion-release-plugin" }
