@@ -55,6 +55,11 @@ gradlePlugin {
 
 signing {
   sign publishing.publications
+
+  // Disable signing in CI
+  onlyIf {
+    !System.getenv("CI")
+  }
 }
 
 def ossrU = project.hasProperty("ossrhToken") ? ossrhToken : ""
