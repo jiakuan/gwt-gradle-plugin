@@ -40,6 +40,7 @@ public abstract class GwtTestOptions extends AbstractBaseOptions {
     dirArgIfSet(builder, "-gen", getGen());
 
     argIfSet(builder, "-logLevel", getLogLevel());
+    argIfSet(builder, "-sourceLevel", getSourceLevel());
 
     argIfSet(builder, "-port", getPort());
     argIfSet(builder, "-whitelist", getWhitelist());

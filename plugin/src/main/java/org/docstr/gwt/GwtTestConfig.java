@@ -60,36 +60,36 @@ public class GwtTestConfig implements Action<Test> {
       testOptions.getCacheDir().set(extension.getCacheDir().getOrNull());
     }
 
-    // Retrieve the main source set
-    SourceSetContainer sourceSets = project.getExtensions()
-        .getByType(SourceSetContainer.class);
-
-    SourceSet mainSourceSet = sourceSets.getByName(
-        SourceSet.MAIN_SOURCE_SET_NAME);
-    Set<File> mainSourcePaths = mainSourceSet.getAllSource().getSrcDirs();
-    FileCollection mainOutputClasspath = mainSourceSet.getOutput()
-        .getClassesDirs()
-        .plus(project.files(mainSourceSet.getOutput().getResourcesDir()));
-
-    SourceSet testSourceSet = sourceSets.getByName(
-        SourceSet.TEST_SOURCE_SET_NAME);
-    Set<File> testSourcePaths = testSourceSet.getAllSource().getSrcDirs();
-    FileCollection testOutputClasspath = testSourceSet.getOutput()
-        .getClassesDirs()
-        .plus(project.files(testSourceSet.getOutput().getResourcesDir()));
-
-    // Ensure the classpath includes compiled classes, resources, and source files
-    test.setClasspath(project.files(
-        mainSourcePaths,
-        mainOutputClasspath,
-        mainSourceSet.getRuntimeClasspath(),
-
-        testSourcePaths,
-        testOutputClasspath,
-        testSourceSet.getRuntimeClasspath()
-    ));
-
     project.afterEvaluate(p -> {
+      // Retrieve the main source set
+      SourceSetContainer sourceSets = project.getExtensions()
+              .getByType(SourceSetContainer.class);
+
+      SourceSet mainSourceSet = sourceSets.getByName(
+              SourceSet.MAIN_SOURCE_SET_NAME);
+      Set<File> mainSourcePaths = mainSourceSet.getAllSource().getSrcDirs();
+      FileCollection mainOutputClasspath = mainSourceSet.getOutput()
+              .getClassesDirs()
+              .plus(project.files(mainSourceSet.getOutput().getResourcesDir()));
+
+      SourceSet testSourceSet = sourceSets.getByName(
+              SourceSet.TEST_SOURCE_SET_NAME);
+      Set<File> testSourcePaths = testSourceSet.getAllSource().getSrcDirs();
+      FileCollection testOutputClasspath = testSourceSet.getOutput()
+              .getClassesDirs()
+              .plus(project.files(testSourceSet.getOutput().getResourcesDir()));
+
+      // Ensure the classpath includes compiled classes, resources, and source files
+      test.setClasspath(project.files(
+              mainSourcePaths,
+              mainOutputClasspath,
+              mainSourceSet.getRuntimeClasspath(),
+
+              testSourcePaths,
+              testOutputClasspath,
+              testSourceSet.getRuntimeClasspath()
+      ));
+
       String gwtArgs = testOptions.getParameterString();
       test.systemProperty("gwt.args", gwtArgs);
       Logger log = project.getLogger();
