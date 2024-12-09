@@ -16,6 +16,7 @@
 package org.docstr.gwt;
 
 import java.io.File;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
@@ -93,7 +94,7 @@ public class GwtCompileConfig implements Action<GwtCompileTask> {
    * found in the XML.
    */
   TreeSet<File> extractSourcePaths(File moduleFile) {
-    TreeSet<File> sourcePaths = new TreeSet<>();
+    TreeSet<File> sourcePaths = new TreeSet<>(Comparator.comparing(File::getName));
     sourcePaths.add(moduleFile);
     try {
       DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
