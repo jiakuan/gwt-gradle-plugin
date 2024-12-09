@@ -1,4 +1,4 @@
-LATEST_TAG  ?= `git tag|sort -t. -k 1,1n -k 2,2n -k 3,3n -k 4,4n | tail -1`
+LATEST_TAG  ?= `git tag | grep -E '^v?[0-9]+(\.[0-9]+)*(-[a-zA-Z]+[0-9]*)?$' | sort -V | tail -1`
 PROJECT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 BUILD_DIR   := ${PROJECT_DIR}/build
 
