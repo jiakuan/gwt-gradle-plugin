@@ -113,5 +113,5 @@ gradlew.bat clean build
 
 - Build and test the plugin locally
 - Commit all changes to the `main` branch
-- Create a new release on GitHub with `make release`
 - Publish the plugin to the Gradle Plugin Portal with `make publish`
+- Create a new release on GitHub with `make release` after the plugin is published

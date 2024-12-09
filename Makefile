@@ -24,15 +24,11 @@ publish-local: build
 
 publish-maven: build
 	rm -rf $$HOME/.m2/repository/org/docstr/gwt
-	git checkout tags/${LATEST_TAG}
 	${PROJECT_DIR}/gradlew publishMavenJavaPublicationToMavenLocal publishMavenJavaPublicationToMavenRepository
-	git checkout main
 
 publish: build
 	rm -rf $$HOME/.m2/repository/org/docstr/gwt
-	git checkout tags/${LATEST_TAG}
 	${PROJECT_DIR}/gradlew publishPlugins --warning-mode all
-	git checkout main
 
 site:
 	cd ${PROJECT_DIR}/doc && docstr site build && cd ${PROJECT_DIR}/../dn-hosting-sites && make deploy-gwtgradle
