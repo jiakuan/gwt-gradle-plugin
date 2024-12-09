@@ -85,6 +85,12 @@ public class GwtCompileConfig implements Action<GwtCompileTask> {
    * 2. Add the package directory for each entry-point to the source paths.
    * 3. Extract the source paths from the GWT module XML file.
    * 4. Extract the public paths from the GWT module XML file.
+   * <br><br>
+   * As mentioned in <a href="https://www.gwtproject.org/doc/latest/DevGuideOrganizingProjects.html">https://www.gwtproject.org/doc/latest/DevGuideOrganizingProjects.html</a>
+   * if no source or public element is defined in a module XML file, the
+   * client and public subpackage is implicitly added to the source/public
+   * path as if <source path="client" /> or <public path="public"> had been
+   * found in the XML.
    */
   TreeSet<File> extractSourcePaths(File moduleFile) {
     TreeSet<File> sourcePaths = new TreeSet<>();
@@ -122,13 +128,15 @@ public class GwtCompileConfig implements Action<GwtCompileTask> {
 
       // Extract the source paths from the GWT module XML file
       NodeList sourceNodes = doc.getElementsByTagName("source");
-      if(sourceNodes.getLength() == 0) {
-        File sourceDir = new File(moduleParent, "client");
-        sourcePaths.add(sourceDir);
+      if (sourceNodes.getLength() == 0) {
+        File defaultClientDir = new File(moduleParent, "client");
+        if (defaultClientDir.exists()) {
+          sourcePaths.add(defaultClientDir);
+        }
       } else {
-        for(int i = 0; i < sourceNodes.getLength(); i++) {
+        for (int i = 0; i < sourceNodes.getLength(); i++) {
           String path = sourceNodes.item(i).getAttributes().getNamedItem("path")
-                  .getNodeValue();
+              .getNodeValue();
           File sourceDir = new File(moduleParent, path);
           sourcePaths.add(sourceDir);
         }
@@ -136,13 +144,15 @@ public class GwtCompileConfig implements Action<GwtCompileTask> {
 
       // Extract the public paths from the GWT module XML file
       NodeList publicNodes = doc.getElementsByTagName("public");
-      if(publicNodes.getLength() == 0) {
-        File sourceDir = new File(moduleParent, "public");
-        sourcePaths.add(sourceDir);
+      if (publicNodes.getLength() == 0) {
+        File defaultPublickDir = new File(moduleParent, "public");
+        if (defaultPublickDir.exists()) {
+          sourcePaths.add(defaultPublickDir);
+        }
       } else {
-        for(int i = 0; i < publicNodes.getLength(); i++) {
+        for (int i = 0; i < publicNodes.getLength(); i++) {
           String path = publicNodes.item(i).getAttributes().getNamedItem("path")
-                  .getNodeValue();
+              .getNodeValue();
           File publicDir = new File(moduleParent, path);
           sourcePaths.add(publicDir);
         }
