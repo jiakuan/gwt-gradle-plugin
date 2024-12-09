@@ -68,11 +68,12 @@ public class GwtCompileConfig implements Action<GwtCompileTask> {
   }
 
   static File findModuleFile(String moduleName, Set<File> sourceFiles) {
+    String moduleFileName = moduleName.replace('.', '/') + ".gwt.xml";
     for (File file : sourceFiles) {
       log.info("findModuleFile - file: {}, module: {}",
           file.getAbsolutePath(), moduleName);
       if (file.getAbsolutePath().replaceAll("\\\\", "/")
-          .endsWith(moduleName.replace('.', '/') + ".gwt.xml")) {
+          .endsWith(moduleFileName)) {
         return file;
       }
     }
@@ -121,20 +122,30 @@ public class GwtCompileConfig implements Action<GwtCompileTask> {
 
       // Extract the source paths from the GWT module XML file
       NodeList sourceNodes = doc.getElementsByTagName("source");
-      for (int i = 0; i < sourceNodes.getLength(); i++) {
-        String path = sourceNodes.item(i).getAttributes().getNamedItem("path")
-            .getNodeValue();
-        File sourceDir = new File(moduleParent, path);
+      if(sourceNodes.getLength() == 0) {
+        File sourceDir = new File(moduleParent, "client");
         sourcePaths.add(sourceDir);
+      } else {
+        for(int i = 0; i < sourceNodes.getLength(); i++) {
+          String path = sourceNodes.item(i).getAttributes().getNamedItem("path")
+                  .getNodeValue();
+          File sourceDir = new File(moduleParent, path);
+          sourcePaths.add(sourceDir);
+        }
       }
 
       // Extract the public paths from the GWT module XML file
       NodeList publicNodes = doc.getElementsByTagName("public");
-      for (int i = 0; i < publicNodes.getLength(); i++) {
-        String path = publicNodes.item(i).getAttributes().getNamedItem("path")
-            .getNodeValue();
-        File publicDir = new File(moduleParent, path);
-        sourcePaths.add(publicDir);
+      if(publicNodes.getLength() == 0) {
+        File sourceDir = new File(moduleParent, "public");
+        sourcePaths.add(sourceDir);
+      } else {
+        for(int i = 0; i < publicNodes.getLength(); i++) {
+          String path = publicNodes.item(i).getAttributes().getNamedItem("path")
+                  .getNodeValue();
+          File publicDir = new File(moduleParent, path);
+          sourcePaths.add(publicDir);
+        }
       }
     } catch (Exception e) {
       log.error("Error reading GWT module file: {}", moduleFile, e);
