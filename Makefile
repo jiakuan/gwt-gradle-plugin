@@ -30,6 +30,7 @@ publish-maven: build
 
 publish: build
 	rm -rf $$HOME/.m2/repository/org/docstr/gwt
+	git checkout tags/${LATEST_TAG}
 	${PROJECT_DIR}/gradlew publishPlugins --warning-mode all
 	git checkout main
 
