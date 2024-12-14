@@ -5,6 +5,8 @@ import java.util.Set;
 import org.docstr.gwt.options.GwtTestOptions;
 import org.gradle.api.Action;
 import org.gradle.api.Project;
+import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.file.DirectoryProperty;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.logging.Logger;
@@ -82,6 +84,13 @@ public class GwtTestConfig implements Action<Test> {
     FileCollection testOutputClasspath = testSourceSet.getOutput()
         .getClassesDirs()
         .plus(project.files(testSourceSet.getOutput().getResourcesDir()));
+
+    // Ensure the test *compile* classpath includes the GWT compiler
+    project.getConfigurations().getByName(test.getName() + "Implementation", c -> {
+      c.extendsFrom(
+              project.getConfigurations().getByName(GwtPlugin.GWT_DEV_RUNTIME_CLASSPATH_CONFIGURATION_NAME)
+      );
+    });
 
     // Ensure the classpath includes compiled classes, resources, and source files
     test.setClasspath(test.getClasspath().plus(project.files(

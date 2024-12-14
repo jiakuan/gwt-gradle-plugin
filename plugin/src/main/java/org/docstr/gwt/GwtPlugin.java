@@ -18,6 +18,9 @@ package org.docstr.gwt;
 import java.util.List;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
+import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.artifacts.ConfigurationContainer;
+import org.gradle.api.artifacts.dsl.DependencyHandler;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.provider.ListProperty;
 import org.gradle.api.tasks.SourceSet;
@@ -29,6 +32,15 @@ import org.gradle.api.tasks.testing.Test;
  * A plugin that adds GWT support to a project.
  */
 public class GwtPlugin implements Plugin<Project> {
+
+  /**
+   * Dependency Scope configuration, which extends from {@link JavaPlugin#IMPLEMENTATION_CONFIGURATION_NAME implementation} dependency scope configuration.
+   */
+  public static final String GWT_DEV_CONFIGURATION_NAME = "gwtDev";
+  /**
+   * Resolvable configuration, which extends from {@link #GWT_DEV_CONFIGURATION_NAME}.
+   */
+  public static final String GWT_DEV_RUNTIME_CLASSPATH_CONFIGURATION_NAME = "gwtDevRuntimeClasspath";
 
   private static final String GWT_VERSION = "2.12.1";
 
@@ -42,9 +54,47 @@ public class GwtPlugin implements Plugin<Project> {
       project.getPlugins().apply(JavaPlugin.class);
     }
 
+    configureConfigurations();
+
     GwtPluginExtension extension = createGwtExtension();
     configureGwtProject(extension);
     configureGwtTasks(extension);
+  }
+
+  private void configureConfigurations() {
+    createDependencyScopeAndResolvable(
+            JavaPlugin.IMPLEMENTATION_CONFIGURATION_NAME,
+            GWT_DEV_CONFIGURATION_NAME,
+            GWT_DEV_RUNTIME_CLASSPATH_CONFIGURATION_NAME);
+  }
+
+  private void createDependencyScopeAndResolvable(
+          String extendFromConfigurationName,
+          String dependencyScopeName,
+          String runtimeClasspathName) {
+    ConfigurationContainer configurations = project.getConfigurations();
+    Configuration extendedConfiguration = configurations.getByName(extendFromConfigurationName);
+
+    // Create a dependency scope that extends from the given dependency scope
+    Configuration dependencyScope = configurations.create(dependencyScopeName, it -> {
+      it.setCanBeResolved(false);
+      it.setCanBeConsumed(false);
+      it.extendsFrom(extendedConfiguration);
+    });
+    // Gradle 8.4 (incubating API; final in 9?) would allow us to do the same with:
+//    NamedDomainObjectProvider<DependencyScopeConfiguration> dependencyScope
+//            = configurations.dependencyScope(dependencyScopeName,
+//            it -> it.extendsFrom(extendedConfiguration));
+
+    // Create a resolvable configuration that extends from the created dependency scope
+    configurations.create(runtimeClasspathName, it -> {
+      it.setCanBeConsumed(false);
+      it.setCanBeResolved(true);
+      it.extendsFrom(dependencyScope);
+    });
+    // Gradle 8.4 (incubating API; final in 9?) would allow us to do the same with:
+//    configurations.resolvable(runtimeClasspathName,
+//            it -> it.extendsFrom(dependencyScope.get()));
   }
 
   private GwtPluginExtension createGwtExtension() {
@@ -72,16 +122,29 @@ public class GwtPlugin implements Plugin<Project> {
 
   private void configureGwtProject(GwtPluginExtension extension) {
     project.afterEvaluate(p -> {
+      DependencyHandler dependencies = project.getDependencies();
+
       // default to GWT_VERSION if not set
       String gwtVersion = extension.getGwtVersion().getOrElse(GWT_VERSION);
 
-      // Add GWT dependencies automatically based on the gwtVersion in the extension
-      project.getDependencies()
-          .add("implementation", "org.gwtproject:gwt-user:" + gwtVersion);
-      project.getDependencies()
-          .add("implementation", "org.gwtproject:gwt-dev:" + gwtVersion);
-      project.getDependencies()
-          .add("implementation", "org.gwtproject:gwt-codeserver:" + gwtVersion);
+      // default to Jakarta packages, unless explicitly set to false
+      Boolean useJakarta = extension.getJakarta().getOrElse(true);
+      String gwtServlet = useJakarta ? "org.gwtproject:gwt-servlet-jakarta" : "org.gwtproject:gwt-servlet";
+      String servletApi = useJakarta ? "jakarta.servlet:jakarta.servlet-api:6.1.0" : "javax.servlet:javax.servlet-api";
+
+      // Add GWT dependencies automatically based on the gwtVersion in the extension.
+      dependencies.add(
+              JavaPlugin.IMPLEMENTATION_CONFIGURATION_NAME,
+              dependencies.platform("org.gwtproject:gwt:" + gwtVersion));
+
+      // Assume that the servlet API is also provided by the servlet container.  Hence, the compileOnly here.
+      dependencies.add(JavaPlugin.COMPILE_ONLY_CONFIGURATION_NAME, servletApi);
+      dependencies.add(JavaPlugin.IMPLEMENTATION_CONFIGURATION_NAME, gwtServlet);
+
+      // gwtCompile and gwtDevMode requires gwt-dev (the compiler proper) and gwt-user (JRE emulation, Widgets, etc)
+      dependencies.add(GWT_DEV_CONFIGURATION_NAME, "org.gwtproject:gwt-dev");
+      dependencies.add(GWT_DEV_CONFIGURATION_NAME, "org.gwtproject:gwt-user");
+      dependencies.add(GWT_DEV_CONFIGURATION_NAME, "org.gwtproject:gwt-codeserver");
 
       SourceSetContainer sourceSets = project.getExtensions()
           .getByType(SourceSetContainer.class);
