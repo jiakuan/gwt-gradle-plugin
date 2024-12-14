@@ -93,4 +93,13 @@ public abstract class GwtPluginExtension extends AbstractBaseOptions {
   public void superDev(Action<? super SuperDevOptions> action) {
     action.execute(getSuperDev());
   }
+
+  /**
+   * Configure the gwt test options.
+   *
+   * @param action The action to configure the gwt options
+   */
+  public void gwtTest(Action<? super GwtTestOptions> action) {
+    action.execute(getGwtTest());
+  }
 }

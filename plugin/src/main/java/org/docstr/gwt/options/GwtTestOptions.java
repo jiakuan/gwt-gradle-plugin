@@ -18,6 +18,7 @@ package org.docstr.gwt.options;
 import java.io.File;
 import org.docstr.gwt.AbstractBaseOptions;
 import org.gradle.api.file.DirectoryProperty;
+import org.gradle.api.provider.ListProperty;
 import org.gradle.api.provider.Property;
 
 /**
@@ -235,4 +236,18 @@ public abstract class GwtTestOptions extends AbstractBaseOptions {
    * @return The user agents
    */
   public abstract Property<String> getUserAgents();
+
+  /**
+   * Names of the test tasks to configure for GWT.
+   * <p>
+   *     This defaults to an empty list.
+   *     For backwards compatibility, an empty list is interpreted to mean all tasks of type {@link org.gradle.api.tasks.testing.Test Test}.
+   * </p>
+   * <p>
+   *     To disable any test task configuration, this can be set to {@code null}.
+   * </p>
+   *
+   * @return The test task names.
+   */
+  public abstract ListProperty<String> getTestTasks();
 }
