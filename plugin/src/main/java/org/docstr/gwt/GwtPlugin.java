@@ -16,8 +16,12 @@
 package org.docstr.gwt;
 
 import java.util.List;
+import org.gradle.api.NamedDomainObjectProvider;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
+import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.artifacts.ConfigurationContainer;
+import org.gradle.api.artifacts.DependencyScopeConfiguration;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.provider.ListProperty;
 import org.gradle.api.tasks.SourceSet;
@@ -29,6 +33,15 @@ import org.gradle.api.tasks.testing.Test;
  * A plugin that adds GWT support to a project.
  */
 public class GwtPlugin implements Plugin<Project> {
+
+  /**
+   * Dependency Scope configuration, which extends from {@link JavaPlugin#IMPLEMENTATION_CONFIGURATION_NAME implementation} dependency scope configuration.
+   */
+  public static final String GWT_DEV_CONFIGURATION_NAME = "gwtDevelopment";
+  /**
+   * Resolvable configuration, which extends from {@link #GWT_DEV_CONFIGURATION_NAME}.
+   */
+  public static final String GWT_DEV_RUNTIME_CLASSPATH_CONFIGURATION_NAME = "gwtDevRuntimeClasspath";
 
   private static final String GWT_VERSION = "2.12.1";
 
@@ -42,9 +55,27 @@ public class GwtPlugin implements Plugin<Project> {
       project.getPlugins().apply(JavaPlugin.class);
     }
 
+    configureConfigurations();
+
     GwtPluginExtension extension = createGwtExtension();
     configureGwtProject(extension);
     configureGwtTasks(extension);
+  }
+
+  private void configureConfigurations() {
+    createDependencyScopeAndResolvable(
+            GWT_DEV_CONFIGURATION_NAME,
+            GWT_DEV_RUNTIME_CLASSPATH_CONFIGURATION_NAME);
+  }
+
+  private void createDependencyScopeAndResolvable(String dependencyScopeName, String runtimeClasspathName) {
+    ConfigurationContainer configurations = project.getConfigurations();
+    Configuration implementation = configurations.getByName(JavaPlugin.IMPLEMENTATION_CONFIGURATION_NAME);
+
+    NamedDomainObjectProvider<DependencyScopeConfiguration> dependencyScope
+            = configurations.dependencyScope(dependencyScopeName, it -> it.extendsFrom(implementation));
+
+    configurations.resolvable(runtimeClasspathName, it -> it.extendsFrom(dependencyScope.get()));
   }
 
   private GwtPluginExtension createGwtExtension() {
@@ -71,11 +102,11 @@ public class GwtPlugin implements Plugin<Project> {
 
       // Add GWT dependencies automatically based on the gwtVersion in the extension
       project.getDependencies()
-          .add("implementation", "org.gwtproject:gwt-user:" + gwtVersion);
+          .add(JavaPlugin.IMPLEMENTATION_CONFIGURATION_NAME, "org.gwtproject:gwt-user:" + gwtVersion);
       project.getDependencies()
-          .add("implementation", "org.gwtproject:gwt-dev:" + gwtVersion);
+          .add(GWT_DEV_CONFIGURATION_NAME, "org.gwtproject:gwt-dev:" + gwtVersion);
       project.getDependencies()
-          .add("implementation", "org.gwtproject:gwt-codeserver:" + gwtVersion);
+          .add(GWT_DEV_CONFIGURATION_NAME, "org.gwtproject:gwt-codeserver:" + gwtVersion);
 
       SourceSetContainer sourceSets = project.getExtensions()
           .getByType(SourceSetContainer.class);

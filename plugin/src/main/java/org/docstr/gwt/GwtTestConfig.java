@@ -86,7 +86,9 @@ public class GwtTestConfig implements Action<Test> {
 
             testSourcePaths,
             testOutputClasspath,
-            testSourceSet.getRuntimeClasspath()
+            testSourceSet.getRuntimeClasspath(),
+
+            project.getConfigurations().getByName(GwtPlugin.GWT_DEV_RUNTIME_CLASSPATH_CONFIGURATION_NAME)
     )));
 
     String gwtArgs = testOptions.getParameterString();
