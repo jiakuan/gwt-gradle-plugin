@@ -20,7 +20,7 @@ release:
 
 publish-local: build
 	rm -rf $$HOME/.m2/repository/org/docstr/gwt
-	${PROJECT_DIR}/gradlew publishToMavenLocal --warning-mode all
+	${PROJECT_DIR}/gradlew publishMavenJavaPublicationToMavenLocal --warning-mode all
 
 publish-maven: build
 	rm -rf $$HOME/.m2/repository/org/docstr/gwt

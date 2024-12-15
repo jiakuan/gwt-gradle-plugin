@@ -204,6 +204,9 @@ gwt {
     //
     // All options in 'gwt' closure (except 'gwtVersion') can be overridden here
     //
+	
+	// Optional: To specify which test tasks should have GWT test enabled, default to empty list, which is interpreted to mean all tasks of type {@link org.gradle.api.tasks.testing.Test Test}
+	testTasks = ["test", "gwtMockitoTest"]
     
     // Please check `GwtTestOptions` for more options
   }

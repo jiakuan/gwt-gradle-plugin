@@ -15,6 +15,7 @@
  */
 package org.docstr.gwt;
 
+import java.util.List;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.plugins.JavaPlugin;
@@ -23,8 +24,6 @@ import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetContainer;
 import org.gradle.api.tasks.TaskProvider;
 import org.gradle.api.tasks.testing.Test;
-
-import java.util.List;
 
 /**
  * A plugin that adds GWT support to a project.
@@ -112,14 +111,16 @@ public class GwtPlugin implements Plugin<Project> {
     gwtSuperDevTask.configure(
         task -> task.getOutputs().upToDateWhen(t -> false));
 
+    // Configure the GWT test tasks
     project.afterEvaluate(p -> {
       ListProperty<String> testTasks = extension.getGwtTest().getTestTasks();
-      if(testTasks.isPresent()) {
+      if (testTasks.isPresent()) {
         List<String> testTaskNames = testTasks.get();
         project.getTasks()
-                .withType(Test.class)
-                .matching(t -> testTaskNames.isEmpty() || testTaskNames.contains(t.getName()))
-                .configureEach(new GwtTestConfig(project, extension));
+            .withType(Test.class)
+            .matching(t -> testTaskNames.isEmpty() || testTaskNames.contains(
+                t.getName()))
+            .configureEach(new GwtTestConfig(project, extension));
       }
     });
   }

@@ -1,0 +1,96 @@
+plugins {
+	id 'war'
+	id 'org.docstr.gwt' version '2.1.5'
+	id 'com.github.sahara3.tomcat-runner' version '0.3.0'
+}
+
+repositories {
+	mavenCentral()
+}
+
+gwt {
+	modules = ['org.example.MyModule']
+
+	gwtTest {
+		// testTasks = null
+		testTasks = ['test', 'gwtMockitoTest']
+	}
+}
+
+tomcat {
+	version = '9.0.86'
+	port = 8080
+
+	webapp(project) {
+		contextPath = 'app'
+	}
+}
+
+
+
+tasks.register('gwtClientResources', Sync) {
+	from gwtCompile.war
+	into layout.buildDirectory.dir('tomcat/webapps/app')
+}
+tomcatRun {
+	dependsOn gwtClientResources
+}
+
+
+testing {
+	suites {
+		test {
+			// This is our old and sizable test suite. No GWT dependencies here.
+			dependencies {
+				implementation 'junit:junit:4.13.2'
+				implementation 'org.hamcrest:hamcrest:2.2'
+				implementation 'org.mockito:mockito-core:2.28.2'
+			}
+		}
+
+		gwtMockitoTest(JvmTestSuite) {
+			// These tests used to be part of the regular test suite above,
+			// but were separated because gwtmockito likely never gets upgraded.
+			// We do not want to keep the rest of the tests captive
+			// to the version of JUnit/Hamcrest/Mockito gwtmockito depends on.
+
+			// gwtmockito declares JUnit 4.12 dependency
+			useJUnit("4.12")
+			dependencies {
+				// This example is not really testing anything from this project,
+				// but for realism the project is added here.
+				implementation project()
+				implementation 'com.google.gwt.gwtmockito:gwtmockito:1.1.9', {
+					// gwtmockito declares dependency on GWT 2.8 from the old group ID.
+					// At out own risk, let's use newer GWT because that is what our app requires.
+					// If this ever stops working, we'll toss these tests.
+					exclude group: 'com.google.gwt'
+				}
+				implementation 'org.gwtproject:gwt-user:2.12.1'
+			}
+		}
+
+		test5(JvmTestSuite) {
+			// These are the JUnit tests we have rewritten
+			// from 'test' to JUnit 5/AssertJ. No GWT dependencies here.
+			dependencies {
+				implementation project()
+				implementation 'org.junit.jupiter:junit-jupiter-api:5.11.3'
+				implementation 'org.assertj:assertj-core:3.26.3'
+				implementation 'org.mockito:mockito-core:2.28.2'
+			}
+		}
+
+		integrationTest(JvmTestSuite) {
+			// These are the tests for our backend: how it interacts with databases and other servers.
+			// No GWT dependencies here.
+			dependencies {
+				implementation project()
+				implementation 'org.junit.jupiter:junit-jupiter-api:5.11.3'
+				implementation 'org.assertj:assertj-core:3.26.3'
+				implementation 'org.testcontainers:testcontainers:1.20.4'
+				implementation 'org.testcontainers:junit-jupiter:1.20.4'
+			}
+		}
+	}
+}
