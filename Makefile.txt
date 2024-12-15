@@ -8,6 +8,7 @@ build           Build the project and run tests
 version         Display the current version of the plugin
 release         Create a new release version
 publish-local   Publish the plugin to local maven repository
+publish-maven   Publish the plugin to maven central
 publish         Publish the plugin to gradle plugin portal
 site            Build the documentation site and deploy it
 
