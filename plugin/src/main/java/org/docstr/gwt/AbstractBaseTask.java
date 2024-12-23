@@ -116,11 +116,11 @@ public abstract class AbstractBaseTask extends JavaExec {
         .plus(getProject().files(mainSourceSet.getOutput().getResourcesDir()));
 
     // Ensure the classpath includes compiled classes, resources, and source files
-    setClasspath(getProject().files(
+    classpath(
         allMainSourcePaths,
         outputClasspath,
         getProject().getConfigurations().getByName("runtimeClasspath")
-    ));
+    );
 
     // Log the classpath
     Logger log = getProject().getLogger();
