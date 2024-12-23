@@ -79,15 +79,15 @@ public class GwtTestConfig implements Action<Test> {
         .plus(project.files(testSourceSet.getOutput().getResourcesDir()));
 
     // Ensure the classpath includes compiled classes, resources, and source files
-    test.setClasspath(project.files(
-        mainSourcePaths,
-        mainOutputClasspath,
-        mainSourceSet.getRuntimeClasspath(),
+    test.setClasspath(test.getClasspath().plus(project.files(
+            mainSourcePaths,
+            mainOutputClasspath,
+            mainSourceSet.getRuntimeClasspath(),
 
-        testSourcePaths,
-        testOutputClasspath,
-        testSourceSet.getRuntimeClasspath()
-    ));
+            testSourcePaths,
+            testOutputClasspath,
+            testSourceSet.getRuntimeClasspath()
+    )));
 
     String gwtArgs = testOptions.getParameterString();
     test.systemProperty("gwt.args", gwtArgs);
