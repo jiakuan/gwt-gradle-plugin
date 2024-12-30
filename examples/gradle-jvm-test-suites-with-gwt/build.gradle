@@ -12,8 +12,7 @@ gwt {
 	modules = ['org.example.MyModule']
 
 	gwtTest {
-		// testTasks = null
-		testTasks = ['test', 'gwtMockitoTest']
+		testTasks = ['gwtMockitoTest']
 	}
 }
 
