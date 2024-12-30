@@ -19,8 +19,7 @@ gwt {
 	}
 
 	gwtTest {
-		// testTasks = null
-		testTasks = ['test', 'gwtMockitoTest']
+		testTasks = ['gwtMockitoTest']
 	}
 }
 
