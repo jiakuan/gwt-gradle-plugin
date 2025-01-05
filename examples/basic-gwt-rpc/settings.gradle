@@ -1,0 +1,4 @@
+pluginManagement {
+    includeBuild '../..'
+}
+rootProject.name = 'basic-gwt-rpc'

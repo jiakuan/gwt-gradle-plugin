@@ -1,0 +1,28 @@
+= Small GWT App with RPC
+
+This is an example of a GWT application that is using
+
+ * GWT RPC
+ * single Gradle module (client, shared, and server in same source set)
+ * Jakarta Servlet API (instead of legacy servlet API)
+
+== Test Run
+
+  ./gradlew tomcatRun  # depends on gwtCompile
+
+Then open http://localhost:8080/app/. The application should work.
+
+If, while the `tomcatRun` is running, you also do
+
+  ./gradlew gwtSuperDev
+
+then you can modify the UI code and reload the app in the browser
+for the changes to take effect.
+
+== Build the WAR
+
+  ./gradlew war
+
+Inside the WAR file, the `WEB-INF/lib` contains only
+
+ * `gwt-servlet-jakarta.jar`
