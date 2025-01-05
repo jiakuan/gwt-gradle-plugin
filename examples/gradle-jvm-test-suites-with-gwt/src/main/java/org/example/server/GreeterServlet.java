@@ -1,6 +1,5 @@
 package org.example.server;
 
-import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import org.example.client.rpc.GreeterService;

@@ -9,6 +9,7 @@ import org.example.client.rpc.GreeterServiceAsync;
 
 public class MyEntryPoint implements EntryPoint {
 	public void onModuleLoad() {
+
 		GreeterServiceAsync greeter = GWT.create(GreeterService.class);
 
 		greeter.getGreeting("John", new AsyncCallback<String>() {
