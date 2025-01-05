@@ -1,6 +1,7 @@
 plugins {
 	id 'war'
-	id 'org.docstr.gwt' version '2.1.5'
+	id 'org.docstr.gwt' // version comes from included build
+	// https://plugins.gradle.org/plugin/com.github.sahara3.tomcat-runner
 	id 'com.github.sahara3.tomcat-runner' version '0.3.0'
 }
 
@@ -10,15 +11,22 @@ repositories {
 
 gwt {
 	modules = ['org.example.MyModule']
+	jakarta = false
+
+	superDev {
+		// Integrate gwtSuperDev with tomcat-runner plugin
+		launcherDir = layout.buildDirectory.dir('tomcat/webapps/app')
+	}
 
 	gwtTest {
-		// testTasks = null
-		testTasks = ['test', 'gwtMockitoTest']
+		testTasks = ['gwtMockitoTest']
 	}
 }
 
 tomcat {
-	version = '9.0.86'
+	// See https://tomcat.apache.org/whichversion.html
+	// for which version of Tomcat to use for which version of Servlet API
+	version = '9.0.98'
 	port = 8080
 
 	webapp(project) {
@@ -26,9 +34,8 @@ tomcat {
 	}
 }
 
-
-
-tasks.register('gwtClientResources', Sync) {
+// Integrate tomcat-runner plugin with gwtCompile
+final gwtClientResources = tasks.register('gwtClientResources', Sync) {
 	from gwtCompile.war
 	into layout.buildDirectory.dir('tomcat/webapps/app')
 }
@@ -93,4 +100,13 @@ testing {
 			}
 		}
 	}
+}
+// Additional test suites, apart from the default suite called "test",
+// are not added to the check.  Let's do that.
+tasks.named('check') {
+	dependsOn(
+			testing.suites.gwtMockitoTest,
+			testing.suites.test5,
+			testing.suites.integrationTest
+	)
 }
