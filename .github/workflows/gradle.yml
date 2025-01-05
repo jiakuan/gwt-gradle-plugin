@@ -27,5 +27,5 @@ jobs:
       run: ./gradlew build publishToMavenLocal
     - name: Build examples with Gradle
       run: cd ./examples/basic-gwt-project && ./gradlew build 
-        && cd ../gradle-jvm-test-suites-with-gwt 
-        && ./gradlew test gwtMockitoTest test5 integrationTest
+        && cd ../gradle-jvm-test-suites-with-gwt && ./gradlew build
+        && cd ../basic-gwt-rpc && ./gradlew build
