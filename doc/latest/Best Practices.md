@@ -33,7 +33,13 @@ If needed, you only need to deploy (and their transitive dependencies):
 
 ### Single Project Setup
 
-If you create a gradle project with just a single module that combines GWT and web application then you have the above problem, because now you only have a single classpath for GWT compilation and for your web application. E.g. your build.gradle file looks like:
+It’s convenient to have a single project setup when using GWT RPC and/or RequestFactory, because you can place shared interfaces and code in a common package for both the client and backend.
+
+If you create a Gradle project with a single module that combines GWT and the web application, make sure that all development dependencies are excluded from the runtime classpath.
+
+> TODO: show how to correctly configure gwt to avoid  transitive dependencies being included in the runtime classpath
+
+~~you have the above problem, because now you only have a single classpath for GWT compilation and for your web application. E.g. your build.gradle file looks like:~~
 
 ``` 
 plugins {
@@ -42,7 +48,7 @@ plugins {
 }
 ```
 
-In that case you would need a dedicated configuration, e.g. named gwt, put all GWT dependencies into that gwt configuration and use the configuration to populate the classpath of any GWT related task (SuperDevMode, DevMode, GWT compile). 
+~~In that case you would need a dedicated configuration, e.g. named gwt, put all GWT dependencies into that gwt configuration and use the configuration to populate the classpath of any GWT related task (SuperDevMode, DevMode, GWT compile).~~
 
 ### Multi-Module Project
 
