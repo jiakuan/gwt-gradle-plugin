@@ -1,0 +1,40 @@
+plugins {
+    id 'war'
+    id 'org.docstr.gwt' // version comes from included build
+    // https://plugins.gradle.org/plugin/com.github.sahara3.tomcat-runner
+    id 'com.github.sahara3.tomcat-runner' version '0.3.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+gwt {
+    modules = ['org.example.MyModule']
+    sourceLevel = '17'
+
+    superDev {
+        // Integrate gwtSuperDev with tomcat-runner plugin
+        launcherDir = layout.buildDirectory.dir('tomcat/webapps/app')
+    }
+}
+
+tomcat {
+    // See https://tomcat.apache.org/whichversion.html
+    // for which version of Tomcat to use for which version of Servlet API
+    version = '11.0.2'
+    port = 8080
+
+    webapp(project) {
+        contextPath = 'app'
+    }
+}
+
+// Integrate tomcat-runner plugin with gwtCompile
+final gwtClientResources = tasks.register('gwtClientResources', Sync) {
+    from gwtCompile.war
+    into layout.buildDirectory.dir('tomcat/webapps/app')
+}
+tomcatRun {
+    dependsOn gwtClientResources
+}

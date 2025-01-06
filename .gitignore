@@ -9,3 +9,6 @@ plugin/src/test/resources/sample-gwt-project/gradle
 plugin/src/test/resources/sample-gwt-project/gradlew
 plugin/src/test/resources/sample-gwt-project/gradlew.bat
 /doc/javadoc/
+
+# Ignore Jetbains Tools
+.idea
