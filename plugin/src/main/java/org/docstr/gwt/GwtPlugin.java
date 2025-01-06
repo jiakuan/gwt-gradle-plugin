@@ -54,13 +54,15 @@ public class GwtPlugin implements Plugin<Project> {
 
     // Set default values for the extension
     extension.getWar().convention(project.getLayout().getBuildDirectory()
-        .dir("gwt"));
+        .dir("gwt/war"));
     extension.getDeploy().convention(project.getLayout().getBuildDirectory()
         .dir("gwt/deploy"));
+    extension.getGen().convention(project.getLayout().getBuildDirectory()
+        .dir("gwt/gen"));
     extension.getExtra().convention(project.getLayout().getBuildDirectory()
         .dir("gwt/extra"));
     extension.getCacheDir().convention(project.getLayout().getBuildDirectory()
-        .dir("gwt-unitCache"));
+        .dir("gwt/gwt-unitCache"));
     return extension;
   }
 
