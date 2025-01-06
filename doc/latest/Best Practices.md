@@ -184,7 +184,7 @@ war {
 
 With the above the final war file will never have any GWT libaries packaged because it only depends on the GWT JS output. An alternative to using Gradle configurations is to use Gradle variants but I think configurations are a bit easier to setup and are good enough in this situation here.
 
-If you are not building a war file or using other backend technology instead of Java, you can configure the JS output directory directly pointing to your frontend folder:
+If you’re not building a WAR file or are using a backend technology other than Java, you can configure the JavaScript output directory to point directly to your frontend folder.
 
 ```
 gwt {
