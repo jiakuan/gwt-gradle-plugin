@@ -240,14 +240,22 @@ public abstract class GwtTestOptions extends AbstractBaseOptions {
   /**
    * Names of the test tasks to configure for GWT.
    * <p>
-   *     This defaults to an empty list.
-   *     For backwards compatibility, an empty list is interpreted to mean all tasks of type {@link org.gradle.api.tasks.testing.Test Test}.
+   * This defaults to an empty list.
+   * For backwards compatibility, an empty list is interpreted to mean all tasks of type {@link org.gradle.api.tasks.testing.Test Test}.
    * </p>
    * <p>
-   *     To disable any test task configuration, this can be set to {@code null}.
+   * To disable any test task configuration, this can be set to {@code null}.
    * </p>
    *
    * @return The test task names.
    */
   public abstract ListProperty<String> getTestTasks();
+
+  /**
+   * Whether to show standard output in test logs.
+   * Defaults to false.
+   *
+   * @return The show standard streams property
+   */
+  public abstract Property<Boolean> getShowStandardStreams();
 }

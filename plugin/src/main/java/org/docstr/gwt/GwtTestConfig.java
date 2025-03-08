@@ -33,7 +33,11 @@ public class GwtTestConfig implements Action<Test> {
 
   @Override
   public void execute(Test test) {
-    test.getTestLogging().setShowStandardStreams(true);
+    // Make standard output display configurable
+    test.testLogging(testLogging -> {
+      // Only show standard streams if specifically enabled
+      testLogging.setShowStandardStreams(extension.getGwtTest().getShowStandardStreams().getOrElse(false));
+    });
 
     if (extension.getDevMode().getMinHeapSize().isPresent()) {
       test.setMinHeapSize(extension.getDevMode().getMinHeapSize().get());

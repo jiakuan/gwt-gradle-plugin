@@ -63,6 +63,10 @@ public class GwtPlugin implements Plugin<Project> {
         .dir("gwt/extra"));
     extension.getCacheDir().convention(project.getLayout().getBuildDirectory()
         .dir("gwt/gwt-unitCache"));
+
+    // Set default values for test options
+    extension.getGwtTest().getShowStandardStreams().convention(false);
+
     return extension;
   }
 
