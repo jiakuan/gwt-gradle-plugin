@@ -36,7 +36,8 @@ public class GwtTestConfig implements Action<Test> {
     // Make standard output display configurable
     test.testLogging(testLogging -> {
       // Only show standard streams if specifically enabled
-      testLogging.setShowStandardStreams(extension.getGwtTest().getShowStandardStreams().getOrElse(false));
+      testLogging.setShowStandardStreams(
+          extension.getGwtTest().getShowStandardStreams().getOrElse(false));
     });
 
     if (extension.getDevMode().getMinHeapSize().isPresent()) {
@@ -84,13 +85,13 @@ public class GwtTestConfig implements Action<Test> {
 
     // Ensure the classpath includes compiled classes, resources, and source files
     test.setClasspath(test.getClasspath().plus(project.files(
-            mainSourcePaths,
-            mainOutputClasspath,
-            mainSourceSet.getRuntimeClasspath(),
+        mainSourcePaths,
+        mainOutputClasspath,
+        mainSourceSet.getRuntimeClasspath(),
 
-            testSourcePaths,
-            testOutputClasspath,
-            testSourceSet.getRuntimeClasspath()
+        testSourcePaths,
+        testOutputClasspath,
+        testSourceSet.getRuntimeClasspath()
     )));
 
     String gwtArgs = testOptions.getParameterString();

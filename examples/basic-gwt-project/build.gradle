@@ -1,6 +1,6 @@
 plugins {
   id 'java'
-  id "org.docstr.gwt" version "2.1.6"
+  id "org.docstr.gwt" version "2.1.7"
 }
 
 group = 'com.example'
@@ -29,6 +29,8 @@ gwt {
   }
 
   gwtTest {
+    showStandardStreams = true
+
     // testTasks = null
     testTasks = ['test']
   }
