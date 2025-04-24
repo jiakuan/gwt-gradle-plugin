@@ -119,7 +119,7 @@ public abstract class AbstractBaseTask extends JavaExec {
     classpath(
         allMainSourcePaths,
         outputClasspath,
-        getProject().getConfigurations().getByName("runtimeClasspath")
+        getProject().getConfigurations().getByName(GwtPlugin.GWT_DEV_RUNTIME_CLASSPATH_CONFIGURATION_NAME)
     );
 
     // Log the classpath

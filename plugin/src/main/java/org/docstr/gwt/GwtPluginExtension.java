@@ -36,6 +36,14 @@ public abstract class GwtPluginExtension extends AbstractBaseOptions {
   public abstract Property<String> getGwtVersion();
 
   /**
+   * The default is to use the Jakarta servlet packages.
+   * Set this to {@code false} if the legacy Java EE servlet packages should be used.
+   *
+   * @return Whether to use Jakarta or legacy servlet packages
+   */
+  public abstract Property<Boolean> getJakarta();
+
+  /**
    * Nested extension for compiler options
    *
    * @return The compiler options
