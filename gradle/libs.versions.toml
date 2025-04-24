@@ -7,7 +7,8 @@ slf4j = "2.0.16"
 commons-io = "2.17.0"
 classgraph = "4.8.176"
 
-junit-jupiter = "5.10.3"
+# https://central.sonatype.com/artifact/org.junit.jupiter/junit-jupiter
+junit-jupiter = "5.11.4"
 assertj-core = "3.26.3"
 
 # https://plugins.gradle.org/plugin/io.freefair.lombok

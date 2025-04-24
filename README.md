@@ -28,7 +28,7 @@ Check out their latest Chrome extension, [MindPane](https://mindpane.net/), whic
   on changes within GWT-specific code, optimizing the build process for faster
   iterations and more efficient resource usage.
 - **Configuration aligned with GWT compiler options** for ease of use
-- **Support for GWT 2.12+** and the latest Gradle 8.11
+- **Support for GWT 2.12+** and the latest Gradle 8.13 (minimum Gradle version is 8.1)
 - Built-in tasks for GWT compilation and dev mode
 
 ## Usage
