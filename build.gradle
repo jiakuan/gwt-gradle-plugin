@@ -67,11 +67,10 @@ scmVersion {
 
     // Pre-hook to create a commit after updating the files
     pre("commit")
-
   }
 }
 
-version = scmVersion.version.replace("-SNAPSHOT", "")
+//version = scmVersion.version.replace("-SNAPSHOT", "")
 print("Current project version: " + project.version)
 
 allprojects {

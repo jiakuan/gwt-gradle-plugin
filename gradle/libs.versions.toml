@@ -16,7 +16,7 @@ lombok-plugin = "8.10"
 # https://plugins.gradle.org/plugin/com.gradle.plugin-publish
 plugin-publish = "1.3.0"
 # https://github.com/allegro/axion-release-plugin
-axion-release-plugin = "1.18.14"
+axion-release-plugin = "1.18.18"
 
 [libraries]
 gwt-user = { module = "org.gwtproject:gwt-user", version.ref = "gwt" }
