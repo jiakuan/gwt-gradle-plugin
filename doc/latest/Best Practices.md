@@ -12,14 +12,14 @@ This page is dedicated to documenting the latest best practices.
 
 ### Dev Dependencies
 
-During development you need
+During development, you need
 
 - `gwt-user.jar` (JRE emulation, Widgets, etc)
 - `gwt-dev.jar` (compiler, dev mode)
-- `gwt-codeserver.jar` (Jetty based server that calls GWT compiler and serves the compile output. Depends on gwt-dev.jar)
-- Any 3rd party GWT library (e.g. GWT UI Frameworks, elemental2)
+- `gwt-codeserver.jar` (Jetty-based server that calls GWT compiler and serves the compiler output. It depends on gwt-dev.jar)
+- Any third party GWT library (e.g., GWT UI Frameworks, elemental2)
 
-Non of these should ever be deployed in a `*.war` file.
+None of these should ever be deployed in a `*.war` file.
 
 ### Runtime Dependencies
 
@@ -33,28 +33,17 @@ If needed, you only need to deploy (and their transitive dependencies):
 
 ### Single Project Setup
 
-It’s convenient to have a single project setup when using GWT RPC and/or RequestFactory, because you can place shared interfaces and code in a common package for both the client and backend.
+It’s convenient to have a single project setup when using GWT RPC and/or `RequestFactory` because you can place shared interfaces and code in a common package for both the client and backend.
 
 If you create a Gradle project with a single module that combines GWT and the web application, make sure that all development dependencies are excluded from the runtime classpath.
 
-> TODO: show how to correctly configure gwt to avoid  transitive dependencies being included in the runtime classpath
-
-~~you have the above problem, because now you only have a single classpath for GWT compilation and for your web application. E.g. your build.gradle file looks like:~~
-
-``` 
-plugins {
-  id 'war'
-  id 'org.docstr.gwt'
-}
-```
-
-~~In that case you would need a dedicated configuration, e.g. named gwt, put all GWT dependencies into that gwt configuration and use the configuration to populate the classpath of any GWT related task (SuperDevMode, DevMode, GWT compile).~~
+Please see [examples/basic-gwt-rpc](../examples/basic-gwt-rpc) for a single module setup.
 
 ### Multi-Module Project
 
-A better setup is to split that single gradle module into two gradle modules, e.g. gwt-ui and webapp, and then include the various GWT compiler outputs of gwt-ui in the war task of the webapp module. Then you automatically have two dedicated classpaths and you can put all GWT related dependencies in the gwt-ui module in scope implementation.
+An alternative setup is to split that single Gradle module into two Gradle modules, e.g., gwt-ui and webapp, and then include the various GWT compiler outputs of gwt-ui in the war task of the webapp module. Then you automatically have two dedicated classpath, and you can put all GWT-related dependencies in the gwt-ui module in scope implementation.
 
-Once you have two gradle modules you need to figure out a way to share the gwt compiler outputs of gwt-ui module with the webapp modules war task. To do so you should use configurations, see below.
+Once you have two gradle modules, you need to figure out a way to share the gwt compiler outputs of the gwt-ui module with the webapp modules war task. To do so you should use configurations, see below.
 
 multi-module-project/settings.gradle:
 
@@ -182,7 +171,7 @@ war {
 }
 ```
 
-With the above the final war file will never have any GWT libaries packaged because it only depends on the GWT JS output. An alternative to using Gradle configurations is to use Gradle variants but I think configurations are a bit easier to setup and are good enough in this situation here.
+With the above, the final war file will never have any GWT libraries packaged because it only depends on the GWT JS output. An alternative to using Gradle configurations is to use Gradle variants, but I think configurations are a bit easier to set up and are good enough in this situation here.
 
 If you’re not building a WAR file or are using a backend technology other than Java, you can configure the JavaScript output directory to point directly to your frontend folder.
 
