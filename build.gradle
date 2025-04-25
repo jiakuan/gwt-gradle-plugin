@@ -70,7 +70,7 @@ scmVersion {
   }
 }
 
-//version = scmVersion.version.replace("-SNAPSHOT", "")
+version = scmVersion.version
 print("Current project version: " + project.version)
 
 allprojects {
