@@ -12,6 +12,12 @@ clean:
 build:
 	${PROJECT_DIR}/gradlew build --warning-mode all
 
+.PHONY: examples
+examples:
+	cd ${PROJECT_DIR}/examples/basic-gwt-project && ./gradlew build && \
+	cd ../gradle-jvm-test-suites-with-gwt && ./gradlew build && \
+	cd ../basic-gwt-rpc && ./gradlew build
+
 version:
 	./gradlew currentVersion --warning-mode all
 
