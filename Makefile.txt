@@ -5,6 +5,7 @@ Option          Description
 ------          -----------
 clean           Clean build directories of projects
 build           Build the project and run tests
+examples        Build the example projects
 version         Display the current version of the plugin
 release         Create a new release version
 publish-local   Publish the plugin to local maven repository
