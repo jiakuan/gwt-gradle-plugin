@@ -23,6 +23,12 @@ scmVersion {
     prefix = 'v'
   }
 
+  repository {
+    type = "git"
+    customKeyFile = file("${System.properties['user.home']}/.ssh/id_rsa")
+    customKeyPassword = ''
+  }
+
   hooks {
     pre("fileUpdate", [
         file       : "README.md",
