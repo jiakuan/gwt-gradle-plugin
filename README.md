@@ -80,6 +80,7 @@ project:
   when you run `gradle build`.
 - `gwtDevMode`: Starts GWT Development Mode (Super Dev Mode is enabled by
   default).
+- `gwtSuperDev`: Starts GWT Super Dev Mode
 
 For the full list of available options, refer to
 the [Configuration](doc/Configuration.md) documentation.
