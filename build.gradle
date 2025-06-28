@@ -25,8 +25,11 @@ scmVersion {
 
   repository {
     type = "git"
-    customKeyFile = file("${System.properties['user.home']}/.ssh/id_rsa")
-    customKeyPassword = ''
+    def sshKeyFile = file("${System.properties['user.home']}/.ssh/id_rsa")
+    if (sshKeyFile.exists()) {
+      customKeyFile = sshKeyFile
+      customKeyPassword = ''
+    }
   }
 
   hooks {
