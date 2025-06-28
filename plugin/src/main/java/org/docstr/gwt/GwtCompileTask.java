@@ -100,7 +100,9 @@ public abstract class GwtCompileTask extends AbstractBaseTask {
     getMainClass().set(COMPILER_CLASS);
 
     // This task will depend on the compileJava task automatically
-    dependsOn(getProject().getTasks().withType(JavaCompile.class));
+    dependsOn(getProject().getTasks().withType(JavaCompile.class)
+        .matching(task ->
+            !task.getName().toLowerCase().contains("test")));
   }
 
   /**
