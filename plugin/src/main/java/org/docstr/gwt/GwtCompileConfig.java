@@ -16,12 +16,18 @@
 package org.docstr.gwt;
 
 import java.io.File;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.TreeSet;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.FactoryConfigurationError;
+import javax.xml.parsers.ParserConfigurationException;
+
 import lombok.extern.slf4j.Slf4j;
 import org.gradle.api.Action;
 import org.gradle.api.GradleException;
@@ -30,9 +36,9 @@ import org.gradle.api.file.FileCollection;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetContainer;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 
 /**
  * Configures the GWT compiler task.
@@ -41,6 +47,8 @@ import org.w3c.dom.NodeList;
 public class GwtCompileConfig implements Action<GwtCompileTask> {
 
   private final GwtPluginExtension extension;
+  private final DocumentBuilderFactory dbFactory;
+  private final DocumentBuilder dBuilder;
 
   /**
    * Constructor.
@@ -49,29 +57,62 @@ public class GwtCompileConfig implements Action<GwtCompileTask> {
    */
   public GwtCompileConfig(GwtPluginExtension extension) {
     this.extension = extension;
+
+    try {
+      dbFactory = DocumentBuilderFactory.newInstance();
+      dBuilder = dbFactory.newDocumentBuilder();
+
+      // Create a fix for DTD loading. Google provides an http: -> https redirect on DTDs, however
+      // Http(s)URLConnection will not follow across protocols. It will follow within the same protocol.
+      // Therefore, markup all DTD URLs to https proactively.
+      dBuilder.setEntityResolver((publicId, systemId) -> {
+        try {
+          return new InputSource(new URI(systemId.replace("http://", "https://")).toURL().openStream());
+        } catch (URISyntaxException e) {
+            throw new IOException("Unable change DTD URL", e);
+        }
+      });
+    } catch (FactoryConfigurationError | ParserConfigurationException e) {
+      throw new GradleException("Unable to create XML parser", e);
+    }
   }
 
   /**
-   * Locate the GWT module XML file by module name.
+   * Locate all GWT modules in the source set (both src/main/java and src/main/resources).
+   * @param project The project being operated on
+   * @return A map containing all the modules found with a
    */
-  File findModuleFile(Project project, String moduleName) {
+  Collection<Module> findAllModules(Project project) {
     SourceSetContainer sourceSets = project.getExtensions()
-        .getByType(SourceSetContainer.class);
+            .getByType(SourceSetContainer.class);
     SourceSet mainSourceSet = sourceSets.getByName(
-        SourceSet.MAIN_SOURCE_SET_NAME);
-    Set<File> sourceFiles = mainSourceSet.getAllSource().getFiles();
+            SourceSet.MAIN_SOURCE_SET_NAME);
 
-    File file = findModuleFile(moduleName, sourceFiles);
-    if (file != null) {
-      return file;
-    }
-    return null;
+    // Need to scan both java and resources as GWT can appear in both.
+    Set<Module> modules = new HashSet<>();
+    mainSourceSet.getAllSource()
+            .matching(pf -> pf.include("**/*.gwt.xml"))
+            .visit(v -> {
+              if (v.getRelativePath().isFile()) {
+                var module = new Module(
+                        v.getFile().toPath(),
+                        Path.of(v.getRelativePath().getPathString()),
+                        mainSourceSet
+                );
+                modules.add(module);
+                log.debug("Found module: {}",
+                          module.name());
+              }
+            });
+
+    return modules;
   }
+
 
   static File findModuleFile(String moduleName, Set<File> sourceFiles) {
     String moduleFileName = moduleName.replace('.', '/') + ".gwt.xml";
     for (File file : sourceFiles) {
-      log.info("findModuleFile - file: {}, module: {}",
+      log.info("findModuleFile - path: {}, module: {}",
           file.getAbsolutePath(), moduleName);
       if (file.getAbsolutePath().replaceAll("\\\\", "/")
           .endsWith(moduleFileName)) {
@@ -82,39 +123,25 @@ public class GwtCompileConfig implements Action<GwtCompileTask> {
   }
 
   /**
-   * 1. Add the module file to the source paths.
+   * 1. Add the module path to the source paths.
    * 2. Add the package directory for each entry-point to the source paths.
-   * 3. Extract the source paths from the GWT module XML file.
-   * 4. Extract the public paths from the GWT module XML file.
+   * 3. Extract the source paths from the GWT module XML path.
+   * 4. Extract the public paths from the GWT module XML path.
    * <br><br>
    * As mentioned in <a href="https://www.gwtproject.org/doc/latest/DevGuideOrganizingProjects.html">https://www.gwtproject.org/doc/latest/DevGuideOrganizingProjects.html</a>
-   * if no source or public element is defined in a module XML file, the
+   * if no source or public element is defined in a module XML path, the
    * client and public subpackage is implicitly added to the source/public
    * path as if <source path="client" /> or <public path="public"> had been
    * found in the XML.
    */
-  TreeSet<File> extractSourcePaths(File moduleFile) {
-    TreeSet<File> sourcePaths = new TreeSet<>(Comparator.comparing(File::getName));
-    sourcePaths.add(moduleFile);
-    try {
-      DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-      DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-      Document doc = dBuilder.parse(moduleFile);
-
-      File moduleParent = moduleFile.getParentFile();
-      // Find the source root by searching 'src/main/java' in module parent
-      int index = moduleParent.getAbsolutePath().replaceAll("\\\\", "/")
-          .indexOf("src/main/java");
-      File sourceRoot = null;
-      if (index > 0) {
-        sourceRoot = new File(
-            moduleParent.getAbsolutePath().substring(0, index),
-            "src/main/java");
-      }
-      if (sourceRoot == null || !sourceRoot.exists()) {
-        throw new GradleException(
-            "Source root 'src/main/java' cannot be found: " + sourceRoot);
-      }
+  TreeSet<Path> extractSourcePaths(Module module) {
+    TreeSet<Path> sourcePaths = new TreeSet<>();
+    sourcePaths.add(module.path);
+    try (InputStream moduleInputStream = Files.newInputStream(module.path)) {
+      // Using InputStream to allow character set detection by the XML declaration.
+      var doc = dBuilder.parse(new InputSource(moduleInputStream));
+      var moduleParent = module.path.getParent();
+      var sourceRoot = module.sourceDirectorySetRootPath();
 
       // Add the package directory for each entry-point to the source paths
       NodeList entryPointNodes = doc.getElementsByTagName("entry-point");
@@ -123,43 +150,43 @@ public class GwtCompileConfig implements Action<GwtCompileTask> {
         String path = entryPointElement.getAttribute("class");
         String packageName = path.substring(0, path.lastIndexOf('.'));
         String packagePath = packageName.replace('.', '/');
-        File packageDir = new File(sourceRoot, packagePath);
+        var packageDir = sourceRoot.resolve(packagePath);
         sourcePaths.add(packageDir);
       }
 
-      // Extract the source paths from the GWT module XML file
+      // Extract the source paths from the GWT module XML path
       NodeList sourceNodes = doc.getElementsByTagName("source");
       if (sourceNodes.getLength() == 0) {
-        File defaultClientDir = new File(moduleParent, "client");
-        if (defaultClientDir.exists()) {
+        var defaultClientDir = moduleParent.resolve("client");
+        if (Files.isDirectory(defaultClientDir)) {
           sourcePaths.add(defaultClientDir);
         }
       } else {
         for (int i = 0; i < sourceNodes.getLength(); i++) {
           String path = sourceNodes.item(i).getAttributes().getNamedItem("path")
               .getNodeValue();
-          File sourceDir = new File(moduleParent, path);
+          var sourceDir = moduleParent.resolve(path);
           sourcePaths.add(sourceDir);
         }
       }
 
-      // Extract the public paths from the GWT module XML file
+      // Extract the public paths from the GWT module XML path
       NodeList publicNodes = doc.getElementsByTagName("public");
       if (publicNodes.getLength() == 0) {
-        File defaultPublickDir = new File(moduleParent, "public");
-        if (defaultPublickDir.exists()) {
-          sourcePaths.add(defaultPublickDir);
+        var defaultPublicDir = moduleParent.resolve("public");
+        if (Files.isDirectory(defaultPublicDir)) {
+          sourcePaths.add(defaultPublicDir);
         }
       } else {
         for (int i = 0; i < publicNodes.getLength(); i++) {
           String path = publicNodes.item(i).getAttributes().getNamedItem("path")
               .getNodeValue();
-          File publicDir = new File(moduleParent, path);
+          var publicDir = moduleParent.resolve(path);
           sourcePaths.add(publicDir);
         }
       }
     } catch (Exception e) {
-      log.error("Error reading GWT module file: {}", moduleFile, e);
+      log.error("Error reading GWT module path: '{}'", module.path, e);
     }
     return sourcePaths;
   }
@@ -170,17 +197,19 @@ public class GwtCompileConfig implements Action<GwtCompileTask> {
     Logger log = project.getLogger();
 
     // Process each GWT module to find source paths
-    Set<File> trackedPaths = new HashSet<>();
-    for (String module : extension.getModules().get()) {
-      log.info("gwtCompile - Processing GWT module: {}", module);
-      File moduleFile = findModuleFile(project, module);
-      log.info("gwtCompile - Found module file: {}", moduleFile);
-      if (moduleFile != null) {
-        trackedPaths.addAll(extractSourcePaths(moduleFile));
+    Set<Path> trackedPaths = new HashSet<>();
+    var allModules = findAllModules(project);
+    var moduleNames = extension.getModules().get();
+
+    for (var module: allModules) {
+      if (!moduleNames.contains(module.name())) {
+        continue;
       }
+      log.info("gwtCompile - Processing GWT module: '{}' ({})", module.name(), module.path);
+      trackedPaths.addAll(extractSourcePaths(module));
     }
 
-    // Create a file collection for tracking
+    // Create a path collection for tracking
     FileCollection trackedFiles = project.files(trackedPaths.toArray());
     log.info("gwtCompile - Tracking GWT source files: {}",
         trackedFiles.getFiles());
@@ -319,6 +348,32 @@ public class GwtCompileConfig implements Action<GwtCompileTask> {
     if (task.getModules().get().isEmpty()) {
       throw new GradleException(
           "gwtCompile failed: 'modules' property is required. Please specify at least one GWT module in the gwt { ... } block.");
+    }
+  }
+
+  /**
+   * A representation of a path.
+   */
+  record Module(Path path, Path relativePath, SourceSet sourceSet) {
+    String name() {
+      return relativePath.toString()
+              .replace("/", ".")
+              .replace("\\", ".")
+              .replace(".gwt.xml", "");
+    }
+    Path sourceDirectorySetRootPath() {
+      // Sanity check. Should always be the case as both objects came from the source set
+      if (!path.endsWith(relativePath)) {
+        throw new GradleException("Invalid module. Path '" + path + "' does not end with relative part '" + relativePath +"'");
+      }
+      var rootPath = path.getRoot().resolve(path.subpath(0, path.getNameCount() - relativePath().getNameCount()));
+      var rootFile = rootPath.toFile();
+
+      // Check the root path is in the list of source directories for the SourceSet
+      if (!sourceSet.getAllSource().getSrcDirs().contains(rootFile)) {
+        throw new GradleException("Invalid module. Root path '" + rootPath + "' is not a value source set root");
+      }
+      return rootPath;
     }
   }
 }

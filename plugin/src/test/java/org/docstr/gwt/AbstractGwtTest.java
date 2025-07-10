@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2024 Document Node Pty Ltd
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.docstr.gwt;
 
 import static org.apache.commons.lang3.StringUtils.containsIgnoreCase;
@@ -13,6 +28,10 @@ import java.io.Writer;
 import java.util.List;
 import java.util.logging.LogManager;
 import lombok.extern.slf4j.Slf4j;
+import org.gradle.api.Project;
+import org.gradle.api.tasks.SourceSet;
+import org.gradle.api.tasks.SourceSetContainer;
+import org.gradle.testfixtures.ProjectBuilder;
 import org.junit.jupiter.api.io.TempDir;
 
 @Slf4j
@@ -44,7 +63,7 @@ public abstract class AbstractGwtTest {
             || containsIgnoreCase(resourcePath, "/.gradle/")
             || containsIgnoreCase(resourcePath, "/gradle/")
             || containsIgnoreCase(resourcePath, "gradlew")) {
-          // log.warn("Skipping file: {}", resourcePath);
+          // log.warn("Skipping path: {}", resourcePath);
           continue;
         }
         String fileName = resourcePath.replace("sample-gwt-project/", "");
@@ -56,9 +75,26 @@ public abstract class AbstractGwtTest {
         }
         try (Writer writer = new FileWriter(file)) {
           writer.write(resource.getContentAsString());
-          log.warn("Wrote file: {}", file);
+          log.warn("Wrote path: {}", file);
         }
       }
     }
+  }
+
+  protected Project setupProject() {
+    Project project = ProjectBuilder.builder().build();
+    project.getPlugins().apply("org.docstr.gwt");
+    project.getExtensions().configure("gwt", ext -> {
+    });
+
+    // Load the temp directory onto the standard sourceset locations
+    SourceSetContainer sourceSets = project.getExtensions()
+            .getByType(SourceSetContainer.class);
+    SourceSet mainSourceSet = sourceSets.getByName(
+            SourceSet.MAIN_SOURCE_SET_NAME);
+
+    mainSourceSet.getJava().srcDir(projectDir.toPath().resolve("src/main/java"));
+    mainSourceSet.getResources().srcDir(projectDir.toPath().resolve("src/main/resources"));
+    return project;
   }
 }

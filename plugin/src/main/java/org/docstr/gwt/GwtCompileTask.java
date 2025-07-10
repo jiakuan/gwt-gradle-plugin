@@ -308,7 +308,7 @@ public abstract class GwtCompileTask extends AbstractBaseTask {
     }
 
     getProject().getLogger()
-        .lifecycle("inputs: {}", getInputs().getFiles().getFiles());
+        .info("inputs: {}", getInputs().getFiles().getAsPath());
     super.exec();
   }
 }
