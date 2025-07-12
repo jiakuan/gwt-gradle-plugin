@@ -371,7 +371,7 @@ public class GwtCompileConfig implements Action<GwtCompileTask> {
 
       // Check the root path is in the list of source directories for the SourceSet
       if (!sourceSet.getAllSource().getSrcDirs().contains(rootFile)) {
-        throw new GradleException("Invalid module. Root path '" + rootPath + "' is not a value source set root");
+        throw new GradleException("Invalid module. Root path '" + rootPath + "' is not a valid source set root");
       }
       return rootPath;
     }
