@@ -69,7 +69,7 @@ public class GwtCompileConfig implements Action<GwtCompileTask> {
         try {
           return new InputSource(new URI(systemId.replace("http://", "https://")).toURL().openStream());
         } catch (URISyntaxException e) {
-            throw new IOException("Unable change DTD URL", e);
+            throw new IOException("Unable to change DTD URL", e);
         }
       });
     } catch (FactoryConfigurationError | ParserConfigurationException e) {
