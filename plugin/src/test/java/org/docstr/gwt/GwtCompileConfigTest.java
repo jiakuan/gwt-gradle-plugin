@@ -16,7 +16,6 @@
 package org.docstr.gwt;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.from;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatNoException;
 
 import java.io.File;
