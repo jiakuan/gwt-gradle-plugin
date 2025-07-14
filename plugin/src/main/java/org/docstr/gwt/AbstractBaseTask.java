@@ -5,6 +5,7 @@ import static org.docstr.gwt.GwtSuperDevTask.CODE_SERVER_CLASS;
 import java.io.File;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 import javax.inject.Inject;
 import org.gradle.api.GradleException;
 import org.gradle.api.file.DirectoryProperty;
@@ -214,12 +215,13 @@ public abstract class AbstractBaseTask extends JavaExec {
       }
     }
 
-    getModules().get().forEach(module -> args(module));
+    getModules().get().forEach(this::args);
 
-    //log.lifecycle("classpath: " + getClasspath().getAsPath());
-    log.lifecycle("jvmArgs: {}", getJvmArguments().getOrElse(List.of()));
-    log.lifecycle("args: {}", getArgs());
-    //log.lifecycle("main: {}", getMainClass().get());
+    // Logging just below visibility. Can turn up access to this package, or log the JavaExec task.
+    log.info("classpath: {}", getClasspath().getAsPath());
+    log.info("allJvmArgs: {}", getAllJvmArgs().stream().map(arg -> "\"" + arg + "\"").collect(Collectors.joining(", ")));
+    log.info("main: {}", getMainClass().get());
+    log.info("args: {}", getArgs().stream().map(arg -> "\"" + arg + "\"").collect(Collectors.joining(", ")));
     super.exec();
   }
 
