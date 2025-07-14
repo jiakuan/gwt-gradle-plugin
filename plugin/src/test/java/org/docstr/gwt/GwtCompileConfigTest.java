@@ -144,7 +144,7 @@ class GwtCompileConfigTest extends AbstractGwtTest {
     List<Path> pathList = sourcePaths.stream().toList();
     assertThat(sourcePaths.first())
             .isRegularFile()
-            .isEqualTo(pathList.getFirst())
+            .isEqualTo(pathList.get(0))
             .isEqualTo(module.path());
     assertThat(pathList.get(1))
             .isDirectory()
@@ -153,7 +153,7 @@ class GwtCompileConfigTest extends AbstractGwtTest {
             });
     assertThat(sourcePaths.last())
             .isDirectory()
-            .isEqualTo(pathList.getLast())
+            .isEqualTo(pathList.get(pathList.size()-1))
             .satisfies(p -> {
               assertThat(p.getFileName().toString()).isEqualTo("shared");
             });
@@ -186,7 +186,7 @@ class GwtCompileConfigTest extends AbstractGwtTest {
     List<Path> pathList = sourcePaths.stream().toList();
     assertThat(sourcePaths.first())
             .isRegularFile()
-            .isEqualTo(pathList.getFirst())
+            .isEqualTo(pathList.get(0))
             .isEqualTo(module.path());
     assertThat(pathList.get(1))
             .isDirectory()
@@ -200,7 +200,7 @@ class GwtCompileConfigTest extends AbstractGwtTest {
             });
     assertThat(sourcePaths.last())
             .isDirectory()
-            .isEqualTo(pathList.getLast())
+            .isEqualTo(pathList.get(pathList.size()-1))
             .satisfies(p -> {
               assertThat(p.getFileName().toString()).isEqualTo("shared");
             });

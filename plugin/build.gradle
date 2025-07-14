@@ -12,6 +12,8 @@ plugins {
   id 'signing'
   id 'maven-publish'
 
+  id 'conventions'
+
   alias(libs.plugins.plugin.publish)
   alias(libs.plugins.lombok)
 }

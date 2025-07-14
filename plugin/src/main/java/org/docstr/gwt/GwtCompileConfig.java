@@ -80,7 +80,7 @@ public class GwtCompileConfig implements Action<GwtCompileTask> {
   /**
    * Locate all GWT modules in the source set (both src/main/java and src/main/resources).
    * @param project The project being operated on
-   * @return A map containing all the modules found with a
+   * @return A set of GWT modules found within the sources (both src/main/(java|kotlin|...) and src/main/resources)
    */
   Collection<Module> findAllModules(Project project) {
     SourceSetContainer sourceSets = project.getExtensions()
@@ -106,20 +106,6 @@ public class GwtCompileConfig implements Action<GwtCompileTask> {
             });
 
     return modules;
-  }
-
-
-  static File findModuleFile(String moduleName, Set<File> sourceFiles) {
-    String moduleFileName = moduleName.replace('.', '/') + ".gwt.xml";
-    for (File file : sourceFiles) {
-      log.info("findModuleFile - path: {}, module: {}",
-          file.getAbsolutePath(), moduleName);
-      if (file.getAbsolutePath().replaceAll("\\\\", "/")
-          .endsWith(moduleFileName)) {
-        return file;
-      }
-    }
-    return null;
   }
 
   /**
