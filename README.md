@@ -40,7 +40,7 @@ To use this plugin, add the following to your `build.gradle` file:
 
 ```
 plugins {
-  id "org.docstr.gwt" version "2.2.3"
+  id "org.docstr.gwt" version "2.2.4"
 }
 
 gwt {
@@ -60,7 +60,7 @@ buildscript {
     }
   }
   dependencies {
-    classpath "org.docstr.gwt:gwt-gradle-plugin:2.2.3"
+    classpath "org.docstr.gwt:gwt-gradle-plugin:2.2.4"
   }
 }
 
