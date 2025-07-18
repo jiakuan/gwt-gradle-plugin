@@ -5,6 +5,7 @@
 gwt = "2.12.1"
 slf4j = "2.0.16"
 commons-io = "2.17.0"
+commons-lang = "3.18.0"
 classgraph = "4.8.176"
 
 # https://central.sonatype.com/artifact/org.junit.jupiter/junit-jupiter
@@ -25,6 +26,7 @@ gwt-codeserver = { module = "org.gwtproject:gwt-codeserver", version.ref = "gwt"
 slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
 slf4j-jdk14 = { module = "org.slf4j:slf4j-jdk14", version.ref = "slf4j" }
 commons-io = { module = "commons-io:commons-io", version.ref = "commons-io" }
+commons-lang = { module = "org.apache.commons:commons-lang3", version.ref = "commons-lang" }
 classgraph = { module = "io.github.classgraph:classgraph", version.ref = "classgraph" }
 
 junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit-jupiter" }

@@ -18,8 +18,15 @@ package org.docstr.gwt;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
+import java.util.stream.StreamSupport;
+
 import org.gradle.api.Project;
+import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.internal.project.ProjectInternal;
+import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.TaskContainer;
+import org.gradle.internal.component.external.model.DefaultModuleComponentIdentifier;
+import org.gradle.internal.component.external.model.ModuleComponentArtifactIdentifier;
 import org.gradle.testfixtures.ProjectBuilder;
 import org.junit.jupiter.api.Test;
 
@@ -208,6 +215,81 @@ class GwtPluginTest {
         .isEqualTo(project.file("saveSourceOutput"));
     assertThat(task.getModules().get())
         .containsExactly("com.example.MyModule");
+  }
+
+  @Test
+  void evaluateGwtCompileTask() {
+    /*
+     * -------------------------------------------------------------------------
+     * Given
+     * -------------------------------------------------------------------------
+     */
+    // Create a test project and apply the plugin
+    Project project = ProjectBuilder.builder().build();
+
+    /*
+     * -------------------------------------------------------------------------
+     * When
+     * -------------------------------------------------------------------------
+     */
+    project.getPlugins().apply("org.docstr.gwt");
+    // Configure the gwt extension programmatically
+    project.getExtensions().configure("gwt", ext -> {
+      GwtPluginExtension extension = (GwtPluginExtension) ext;
+      extension.getCompiler().getLogLevel().set("SPAM");
+      extension.getCompiler().getWorkDir().set(project.file("workDir"));
+      extension.getCompiler().getClosureFormattedOutput().set(true);
+      extension.getCompiler().getCompileReport().set(true);
+      extension.getCompiler().getStrict().set(true);
+      extension.getCompiler().getClassMetadata().set(false);
+      extension.getCompiler().getDraftCompile().set(true);
+      extension.getCompiler().getCheckAssertions().set(true);
+      extension.getCompiler().getFragmentCount().set(42);
+      extension.getCompiler().getGen().set(project.file("gen"));
+      extension.getCompiler().getGenerateJsInteropExports().set(true);
+      extension.getCompiler().getIncludeJsInteropExports()
+              .set(List.of("com.example.MyIncludeExport"));
+      extension.getCompiler().getExcludeJsInteropExports()
+              .set(List.of("com.example.MyExcludeExport"));
+      extension.getCompiler().getMethodNameDisplayMode().set("FULL");
+      extension.getCompiler().getNamespace().set("com.example.MyNamespace");
+      extension.getCompiler().getOptimize().set(12);
+      extension.getCompiler().getSaveSource().set(true);
+      extension.getCompiler().getSetProperty().set(List.of("name=value"));
+      extension.getCompiler().getStyle().set("PRETTY");
+      extension.getCompiler().getFailOnError().set(true);
+      extension.getCompiler().getValidateOnly().set(true);
+      extension.getCompiler().getSourceLevel().set("17");
+      extension.getCompiler().getLocalWorkers().set(4);
+      extension.getCompiler().getIncremental().set(true);
+      extension.getCompiler().getWar().set(project.file("war"));
+      extension.getCompiler().getDeploy().set(project.file("deploy"));
+      extension.getCompiler().getExtra().set(project.file("extra"));
+      extension.getCompiler().getCacheDir().set(project.file("cacheDir"));
+      extension.getCompiler().getSaveSourceOutput()
+              .set(project.file("saveSourceOutput"));
+      extension.getCompiler().getModules().set(List.of("com.example.MyModule"));
+    });
+    // Setup repositories. This will cause an external resolve. If the repository is not reachable, it will fail.
+    project.getRepositories().add(project.getRepositories().mavenCentral());
+    ((ProjectInternal)project).evaluate();
+
+    /*
+     * -------------------------------------------------------------------------
+     * Then
+     * -------------------------------------------------------------------------
+     */
+    // Verify the result
+    // This configuration extends from compileOnly, which contains the servlet API
+    Configuration configuration = project.getConfigurations().getByName(JavaPlugin.COMPILE_CLASSPATH_CONFIGURATION_NAME);
+    assertThat(configuration)
+            .isNotNull();
+
+    var artifact = StreamSupport.stream(configuration.getIncoming().getArtifacts().spliterator(), false)
+            .filter(a -> a.getId().getComponentIdentifier().getDisplayName().startsWith("jakarta.servlet:jakarta.servlet-api"))
+            .findFirst();
+    assertThat(artifact)
+            .isPresent();
   }
 
   @Test

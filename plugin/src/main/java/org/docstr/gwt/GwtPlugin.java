@@ -16,6 +16,7 @@
 package org.docstr.gwt;
 
 import java.util.List;
+
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
@@ -23,8 +24,6 @@ import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.dsl.DependencyHandler;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.provider.ListProperty;
-import org.gradle.api.tasks.SourceSet;
-import org.gradle.api.tasks.SourceSetContainer;
 import org.gradle.api.tasks.TaskProvider;
 import org.gradle.api.tasks.testing.Test;
 
@@ -32,7 +31,6 @@ import org.gradle.api.tasks.testing.Test;
  * A plugin that adds GWT support to a project.
  */
 public class GwtPlugin implements Plugin<Project> {
-
   /**
    * Dependency Scope configuration, which extends from {@link JavaPlugin#IMPLEMENTATION_CONFIGURATION_NAME implementation} dependency scope configuration.
    */
@@ -41,11 +39,19 @@ public class GwtPlugin implements Plugin<Project> {
    * Resolvable configuration, which extends from {@link #GWT_DEV_CONFIGURATION_NAME}.
    */
   public static final String GWT_DEV_RUNTIME_CLASSPATH_CONFIGURATION_NAME = "gwtDevRuntimeClasspath";
+  /**
+   * The default GWT version if it is not overridden in the GWT configuration block.
+   */
+  public static final String GWT_DEFAULT_VERSION = "2.12.1";
+  /**
+   * The servlet dependency. Note that the versions are very important. Less than v5.0.0 uses the javax namespace. Greater than or equal uses the jakarta namespace.
+   */
+  private static final String SERVLET_API_DEPENDENCY = "jakarta.servlet:jakarta.servlet-api";
 
-  private static final String GWT_VERSION = "2.12.1";
 
   private Project project;
 
+  @Override
   public void apply(Project project) {
     this.project = project;
 
@@ -113,6 +119,7 @@ public class GwtPlugin implements Plugin<Project> {
         .dir("gwt/extra"));
     extension.getCacheDir().convention(project.getLayout().getBuildDirectory()
         .dir("gwt/gwt-unitCache"));
+    extension.getGwtVersion().convention(GWT_DEFAULT_VERSION);
 
     // Set default values for test options
     extension.getGwtTest().getShowStandardStreams().convention(false);
@@ -124,34 +131,44 @@ public class GwtPlugin implements Plugin<Project> {
     project.afterEvaluate(p -> {
       DependencyHandler dependencies = project.getDependencies();
 
-      // default to GWT_VERSION if not set
-      String gwtVersion = extension.getGwtVersion().getOrElse(GWT_VERSION);
+      // The configured GWT version
+      final String gwtVersion = extension.getGwtVersion().get();
 
       // default to Jakarta packages, unless explicitly set to false
-      Boolean useJakarta = extension.getJakarta().getOrElse(true);
-      String gwtServlet = useJakarta ? "org.gwtproject:gwt-servlet-jakarta" : "org.gwtproject:gwt-servlet";
-      String servletApi = useJakarta ? "jakarta.servlet:jakarta.servlet-api:6.1.0" : "javax.servlet:javax.servlet-api";
+      final Boolean useJakarta = extension.getJakarta().getOrElse(true);
+      final String gwtServlet = useJakarta ? "org.gwtproject:gwt-servlet-jakarta" : "org.gwtproject:gwt-servlet";
 
-      // Add GWT dependencies automatically based on the gwtVersion in the extension.
+      // Add GWT dependencies automatically based on the gwtVersion in the extension. Add the platform to both
+      // configurations in case the caller decides to split the inheritance.
       dependencies.add(
               JavaPlugin.IMPLEMENTATION_CONFIGURATION_NAME,
               dependencies.platform("org.gwtproject:gwt:" + gwtVersion));
+      dependencies.add(
+              GWT_DEV_CONFIGURATION_NAME,
+              dependencies.platform("org.gwtproject:gwt:" + gwtVersion));
 
       // Assume that the servlet API is also provided by the servlet container.  Hence, the compileOnly here.
-      dependencies.add(JavaPlugin.COMPILE_ONLY_CONFIGURATION_NAME, servletApi);
+      // Use addProvider interface because it uses Action. In Gradle's documents, Action is preferred over Closure,
+      // and it is much easier to use.
+      dependencies.addProvider(JavaPlugin.COMPILE_ONLY_CONFIGURATION_NAME, project.getProviders().provider(() -> SERVLET_API_DEPENDENCY), d -> {
+        d.version(v -> {
+          if (useJakarta) {
+            // Want jakarta namespace
+            v.strictly("[5.0.0,)");
+            v.prefer("6.1.0");
+          } else {
+            // Want javax namespace
+            v.strictly("(,5.0.0)");
+            v.prefer("4.0.4");
+          }
+        });
+      });
       dependencies.add(JavaPlugin.IMPLEMENTATION_CONFIGURATION_NAME, gwtServlet);
 
       // gwtCompile and gwtDevMode requires gwt-dev (the compiler proper) and gwt-user (JRE emulation, Widgets, etc)
       dependencies.add(GWT_DEV_CONFIGURATION_NAME, "org.gwtproject:gwt-dev");
       dependencies.add(GWT_DEV_CONFIGURATION_NAME, "org.gwtproject:gwt-user");
       dependencies.add(GWT_DEV_CONFIGURATION_NAME, "org.gwtproject:gwt-codeserver");
-
-      SourceSetContainer sourceSets = project.getExtensions()
-          .getByType(SourceSetContainer.class);
-      // Add 'src/main/java' as a resource directory for the main source set
-      SourceSet mainSourceSet = sourceSets.getByName(
-          SourceSet.MAIN_SOURCE_SET_NAME);
-      mainSourceSet.getResources().srcDir("src/main/java");
     });
   }
 
