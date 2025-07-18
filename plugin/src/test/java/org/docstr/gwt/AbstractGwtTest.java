@@ -15,8 +15,6 @@
  */
 package org.docstr.gwt;
 
-import static org.apache.commons.lang3.StringUtils.containsIgnoreCase;
-
 import io.github.classgraph.ClassGraph;
 import io.github.classgraph.Resource;
 import io.github.classgraph.ScanResult;
@@ -28,6 +26,7 @@ import java.io.Writer;
 import java.util.List;
 import java.util.logging.LogManager;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.Strings;
 import org.gradle.api.Project;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetContainer;
@@ -59,10 +58,10 @@ public abstract class AbstractGwtTest {
       List<Resource> resources = scanResult.getAllResources();
       for (Resource resource : resources) {
         String resourcePath = resource.getPath();
-        if (containsIgnoreCase(resourcePath, ".idea")
-            || containsIgnoreCase(resourcePath, "/.gradle/")
-            || containsIgnoreCase(resourcePath, "/gradle/")
-            || containsIgnoreCase(resourcePath, "gradlew")) {
+        if (Strings.CI.contains(resourcePath, ".idea")
+            || Strings.CI.contains(resourcePath, "/.gradle/")
+            || Strings.CI.contains(resourcePath, "/gradle/")
+            || Strings.CI.contains(resourcePath, "gradlew")) {
           // log.warn("Skipping path: {}", resourcePath);
           continue;
         }

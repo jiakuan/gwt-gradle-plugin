@@ -24,14 +24,11 @@ repositories {
 }
 
 dependencies {
-  implementation libs.gwt.user
-  implementation libs.gwt.dev
-  implementation libs.gwt.codeserver
-
   // Use JUnit Jupiter for testing.
   testImplementation libs.junit.jupiter
   testImplementation libs.assertj.core
   testImplementation libs.commons.io
+  testImplementation libs.commons.lang
   testImplementation libs.classgraph
   testImplementation libs.slf4j.api
   testImplementation libs.slf4j.jdk14
@@ -50,7 +47,6 @@ gradlePlugin {
       displayName = 'GWT Gradle Plugin'
       description = 'Gradle plugin to support GWT related tasks.'
       tags.set(['gwt', 'gwt-gradle', 'gwt-gradle-plugin'])
-
     }
   }
 }
@@ -123,4 +119,8 @@ publishing {
 tasks.named('test') {
   // Use JUnit Jupiter for unit tests.
   useJUnitPlatform()
+}
+
+tasks.withType(JavaCompile).configureEach {
+  options.deprecation = true
 }
