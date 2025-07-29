@@ -48,7 +48,7 @@ plugins {
 gwt {
   // Optional: Set the GWT version, defaults to 2.12.1
   // gwtVersion = '2.12.1'
-  modules ['<YOUR-GWT-MODULE>']
+  modules = ['<YOUR-GWT-MODULE>']
 }
 ```
 
@@ -62,14 +62,14 @@ buildscript {
     }
   }
   dependencies {
-    classpath "org.docstr.gwt:gwt-gradle-plugin:2.2.4"
+    classpath "org.docstr.gwt:org.docstr.gwt.gradle.plugin:2.2.4"
   }
 }
 
 apply plugin: "org.docstr.gwt"
 
 gwt {
-    modules ['<YOUR-GWT-MODULE>']
+    modules = ['<YOUR-GWT-MODULE>']
 }
 ```
 
