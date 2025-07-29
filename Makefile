@@ -37,4 +37,4 @@ publish: build
 	${PROJECT_DIR}/gradlew publishPlugins --warning-mode all
 
 site:
-	cd ${PROJECT_DIR}/doc && docstr site build && cd ${PROJECT_DIR}/../dn-hosting-sites && make deploy-gwtgradle
+	cd ${PROJECT_DIR}/doc && docstr site build && cd ${PROJECT_DIR}/../dn-hosting-sites && just deploy-gwtgradle
