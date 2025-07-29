@@ -39,7 +39,7 @@ the minimal configuration required to use the plugin:
 ```groovy
 gwt {
   // e.g. modules = ['com.example.MyModule']
-  modules['<YOUR-GWT-MODULE>']
+  modules = ['<YOUR-GWT-MODULE>']
 }
 ```
 

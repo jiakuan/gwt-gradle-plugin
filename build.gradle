@@ -41,8 +41,8 @@ scmVersion {
     ])
     pre("fileUpdate", [
         file       : "README.md",
-        pattern    : { v, p -> /org\.docstr\.gwt:gwt-gradle-plugin:([\d.a-zA-Z-]+)/ },
-        replacement: { v, p -> "org.docstr.gwt:gwt-gradle-plugin:${v}" }
+        pattern    : { v, p -> /org\.docstr\.gwt:org\.docstr\.gwt\.gradle\.plugin:([\d.a-zA-Z-]+)/ },
+        replacement: { v, p -> "org.docstr.gwt:org.docstr.gwt.gradle.plugin:${v}" }
     ])
     pre("fileUpdate", [
         file       : "doc/latest/Overview.md",
@@ -51,8 +51,8 @@ scmVersion {
     ])
     pre("fileUpdate", [
         file       : "doc/latest/Overview.md",
-        pattern    : { v, p -> /org\.docstr\.gwt:gwt-gradle-plugin:([\d.a-zA-Z-]+)/ },
-        replacement: { v, p -> "org.docstr.gwt:gwt-gradle-plugin:${v}" }
+        pattern    : { v, p -> /org\.docstr\.gwt:org\.docstr\.gwt\.gradle\.plugin:([\d.a-zA-Z-]+)/ },
+        replacement: { v, p -> "org.docstr.gwt:org.docstr.gwt.gradle.plugin:${v}" }
     ])
     pre("fileUpdate", [
         file       : "doc/latest/Quickstart.md",
