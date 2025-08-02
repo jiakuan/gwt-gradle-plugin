@@ -99,7 +99,7 @@ at [http://gwt-gradle.docstr.org](http://gwt-gradle.docstr.org).
 You can clean and build the project using the following commands:
 
 ```
-make clean build
+just clean build
 ```
 
 ### On Windows
@@ -114,5 +114,5 @@ gradlew.bat clean build
 
 - Build and test the plugin locally
 - Commit all changes to the `main` branch
-- Create a new release on GitHub with `make release`
-- Publish the plugin to the Gradle Plugin Portal with `make publish`
+- Create a new release on GitHub with `just release`
+- Publish the plugin to the Gradle Plugin Portal with `just publish`

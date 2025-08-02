@@ -57,7 +57,7 @@ Normal process would be:
 * Create a new issue for things to discuss
 * After discussion about changes, fork the project and make changes
 * Build projects to make sure no errors
-    1. run `make clean build` under project root.
+    1. run `just clean build` under project root.
     2. run `./gradlew clean build` under /examples
 * Create a new pull request for review and discussion
 * After confirmation, we will merge the pull request to master
