@@ -83,7 +83,7 @@ project:
 - `gwtSuperDev`: Starts GWT Super Dev Mode
 
 For the full list of available options, refer to
-the [Configuration](doc/Configuration.md) documentation.
+the [Configuration](doc/latest/Configuration.md) documentation.
 
 ## Version 1 (v1) Plugin
 
