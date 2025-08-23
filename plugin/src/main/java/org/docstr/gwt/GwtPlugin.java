@@ -141,18 +141,10 @@ public class GwtPlugin implements Plugin<Project> {
       // Collect all extra source directories from different configuration locations
       // Using LinkedHashSet to maintain order and avoid duplicates
       Set<Object> allExtraSourceDirs = new LinkedHashSet<>();
-      if (!extension.getExtraSourceDirs().isEmpty()) {
-        allExtraSourceDirs.addAll(extension.getExtraSourceDirs().getFiles());
-      }
-      if (!extension.getCompiler().getExtraSourceDirs().isEmpty()) {
-        allExtraSourceDirs.addAll(extension.getCompiler().getExtraSourceDirs().getFiles());
-      }
-      if (!extension.getDevMode().getExtraSourceDirs().isEmpty()) {
-        allExtraSourceDirs.addAll(extension.getDevMode().getExtraSourceDirs().getFiles());
-      }
-      if (!extension.getSuperDev().getExtraSourceDirs().isEmpty()) {
-        allExtraSourceDirs.addAll(extension.getSuperDev().getExtraSourceDirs().getFiles());
-      }
+      allExtraSourceDirs.addAll(extension.getExtraSourceDirs().getFiles());
+      allExtraSourceDirs.addAll(extension.getCompiler().getExtraSourceDirs().getFiles());
+      allExtraSourceDirs.addAll(extension.getDevMode().getExtraSourceDirs().getFiles());
+      allExtraSourceDirs.addAll(extension.getSuperDev().getExtraSourceDirs().getFiles());
       
       // Add all collected directories to the source set at once
       if (!allExtraSourceDirs.isEmpty()) {
