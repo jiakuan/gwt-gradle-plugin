@@ -15,7 +15,9 @@
  */
 package org.docstr.gwt;
 
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
@@ -136,18 +138,25 @@ public class GwtPlugin implements Plugin<Project> {
           .getByType(SourceSetContainer.class);
       SourceSet mainSourceSet = sourceSets.getByName(SourceSet.MAIN_SOURCE_SET_NAME);
       
-      // Check all possible locations for extraSourceDirs configuration
+      // Collect all extra source directories from different configuration locations
+      // Using LinkedHashSet to maintain order and avoid duplicates
+      Set<Object> allExtraSourceDirs = new LinkedHashSet<>();
       if (!extension.getExtraSourceDirs().isEmpty()) {
-        mainSourceSet.getJava().srcDirs(extension.getExtraSourceDirs());
+        allExtraSourceDirs.addAll(extension.getExtraSourceDirs().getFiles());
       }
       if (!extension.getCompiler().getExtraSourceDirs().isEmpty()) {
-        mainSourceSet.getJava().srcDirs(extension.getCompiler().getExtraSourceDirs());
+        allExtraSourceDirs.addAll(extension.getCompiler().getExtraSourceDirs().getFiles());
       }
       if (!extension.getDevMode().getExtraSourceDirs().isEmpty()) {
-        mainSourceSet.getJava().srcDirs(extension.getDevMode().getExtraSourceDirs());
+        allExtraSourceDirs.addAll(extension.getDevMode().getExtraSourceDirs().getFiles());
       }
       if (!extension.getSuperDev().getExtraSourceDirs().isEmpty()) {
-        mainSourceSet.getJava().srcDirs(extension.getSuperDev().getExtraSourceDirs());
+        allExtraSourceDirs.addAll(extension.getSuperDev().getExtraSourceDirs().getFiles());
+      }
+      
+      // Add all collected directories to the source set at once
+      if (!allExtraSourceDirs.isEmpty()) {
+        mainSourceSet.getJava().srcDirs(allExtraSourceDirs);
       }
 
       DependencyHandler dependencies = project.getDependencies();
