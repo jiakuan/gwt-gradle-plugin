@@ -145,6 +145,13 @@ public class GwtSuperDevConfig implements Action<GwtSuperDevTask> {
       task.getModules().set(extension.getModules().get());
     }
 
+    // Set extra source directories if specified
+    if (!extension.getSuperDev().getExtraSourceDirs().isEmpty()) {
+      task.getExtraSourceDirs().from(extension.getSuperDev().getExtraSourceDirs());
+    } else if (!extension.getExtraSourceDirs().isEmpty()) {
+      task.getExtraSourceDirs().from(extension.getExtraSourceDirs());
+    }
+
     // Check if the modules property is specified
     if (task.getModules().get().isEmpty()) {
       throw new GradleException(

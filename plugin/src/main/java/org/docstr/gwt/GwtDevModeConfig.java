@@ -161,6 +161,13 @@ public class GwtDevModeConfig implements Action<GwtDevModeTask> {
       task.getModules().set(extension.getModules().get());
     }
 
+    // Set extra source directories if specified
+    if (!extension.getDevMode().getExtraSourceDirs().isEmpty()) {
+      task.getExtraSourceDirs().from(extension.getDevMode().getExtraSourceDirs());
+    } else if (!extension.getExtraSourceDirs().isEmpty()) {
+      task.getExtraSourceDirs().from(extension.getExtraSourceDirs());
+    }
+
     // Check if the modules property is specified
     if (task.getModules().get().isEmpty()) {
       throw new GradleException(

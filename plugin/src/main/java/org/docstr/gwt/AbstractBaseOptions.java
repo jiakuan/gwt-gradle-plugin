@@ -15,6 +15,7 @@
  */
 package org.docstr.gwt;
 
+import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.file.DirectoryProperty;
 import org.gradle.api.provider.ListProperty;
 import org.gradle.api.provider.Property;
@@ -180,5 +181,13 @@ public abstract class AbstractBaseOptions {
    * @return The modules
    */
   public abstract ListProperty<String> getModules();
+
+  /**
+   * Extra source directories to include in the GWT compiler classpath.
+   * This allows specifying additional source paths beyond the main source set,
+   * such as sources from other modules or generated sources.
+   * @return The extra source directories
+   */
+  public abstract ConfigurableFileCollection getExtraSourceDirs();
 
 }

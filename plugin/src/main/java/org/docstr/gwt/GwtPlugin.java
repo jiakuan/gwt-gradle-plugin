@@ -24,6 +24,8 @@ import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.dsl.DependencyHandler;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.provider.ListProperty;
+import org.gradle.api.tasks.SourceSet;
+import org.gradle.api.tasks.SourceSetContainer;
 import org.gradle.api.tasks.TaskProvider;
 import org.gradle.api.tasks.testing.Test;
 
@@ -129,6 +131,25 @@ public class GwtPlugin implements Plugin<Project> {
 
   private void configureGwtProject(GwtPluginExtension extension) {
     project.afterEvaluate(p -> {
+      // Add extra source directories to Java source sets if configured
+      SourceSetContainer sourceSets = project.getExtensions()
+          .getByType(SourceSetContainer.class);
+      SourceSet mainSourceSet = sourceSets.getByName(SourceSet.MAIN_SOURCE_SET_NAME);
+      
+      // Check all possible locations for extraSourceDirs configuration
+      if (!extension.getExtraSourceDirs().isEmpty()) {
+        mainSourceSet.getJava().srcDirs(extension.getExtraSourceDirs());
+      }
+      if (!extension.getCompiler().getExtraSourceDirs().isEmpty()) {
+        mainSourceSet.getJava().srcDirs(extension.getCompiler().getExtraSourceDirs());
+      }
+      if (!extension.getDevMode().getExtraSourceDirs().isEmpty()) {
+        mainSourceSet.getJava().srcDirs(extension.getDevMode().getExtraSourceDirs());
+      }
+      if (!extension.getSuperDev().getExtraSourceDirs().isEmpty()) {
+        mainSourceSet.getJava().srcDirs(extension.getSuperDev().getExtraSourceDirs());
+      }
+
       DependencyHandler dependencies = project.getDependencies();
 
       // The configured GWT version

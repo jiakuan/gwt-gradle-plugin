@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import javax.inject.Inject;
 import org.gradle.api.GradleException;
+import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.file.DirectoryProperty;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.logging.Logger;
@@ -15,9 +16,12 @@ import org.gradle.api.model.ObjectFactory;
 import org.gradle.api.provider.ListProperty;
 import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputDirectory;
+import org.gradle.api.tasks.PathSensitive;
+import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetContainer;
 
@@ -76,6 +80,10 @@ public abstract class AbstractBaseTask extends JavaExec {
   private final Property<Boolean> incremental;
   @Input
   private final ListProperty<String> modules;
+  @InputFiles
+  @PathSensitive(PathSensitivity.RELATIVE)
+  @Optional
+  private final ConfigurableFileCollection extraSourceDirs;
 
   /**
    * Constructs a new GwtCompileTask.
@@ -101,6 +109,7 @@ public abstract class AbstractBaseTask extends JavaExec {
     setProperty = objects.listProperty(String.class);
     incremental = objects.property(Boolean.class);
     modules = objects.listProperty(String.class);
+    extraSourceDirs = objects.fileCollection();
   }
 
   @Override
@@ -116,9 +125,15 @@ public abstract class AbstractBaseTask extends JavaExec {
     FileCollection outputClasspath = mainSourceSet.getOutput().getClassesDirs()
         .plus(getProject().files(mainSourceSet.getOutput().getResourcesDir()));
 
+    // Include extra source directories if specified
+    FileCollection allSourcePaths = getProject().files(allMainSourcePaths);
+    if (!getExtraSourceDirs().isEmpty()) {
+      allSourcePaths = allSourcePaths.plus(getExtraSourceDirs());
+    }
+
     // Ensure the classpath includes compiled classes, resources, and source files
     classpath(
-        allMainSourcePaths,
+        allSourcePaths,
         outputClasspath,
         getProject().getConfigurations().getByName(GwtPlugin.GWT_DEV_RUNTIME_CLASSPATH_CONFIGURATION_NAME)
     );
@@ -391,5 +406,14 @@ public abstract class AbstractBaseTask extends JavaExec {
    */
   public final ListProperty<String> getModules() {
     return modules;
+  }
+
+  /**
+   * Extra source directories to include in the GWT compiler classpath
+   *
+   * @return The extra source directories
+   */
+  public final ConfigurableFileCollection getExtraSourceDirs() {
+    return extraSourceDirs;
   }
 }
