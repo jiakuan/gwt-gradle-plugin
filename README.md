@@ -27,6 +27,9 @@ Check out their latest Chrome extension, [MindPane](https://mindpane.net/), whic
   This refined tracking minimizes unnecessary recompilation by focusing solely
   on changes within GWT-specific code, optimizing the build process for faster
   iterations and more efficient resource usage.
+- **Extra source directories support** with `extraSourceDirs` property. Easily
+  include additional source directories for GWT compilation, perfect for
+  multi-module projects, annotation processor outputs, or generated sources.
 - **Configuration aligned with GWT compiler options** for ease of use
 - **Support for GWT 2.12+** and the latest Gradle 8.13 (minimum Gradle version is 8.1)
 - Built-in tasks for GWT compilation and dev mode
@@ -84,6 +87,10 @@ project:
 
 For the full list of available options, refer to
 the [Configuration](doc/latest/Configuration.md) documentation.
+
+## Version History and Release Notes
+
+For information about new features, bug fixes, and changes in each version, see the [GitHub Releases](https://github.com/jiakuan/gwt-gradle-plugin/releases) page.
 
 ## Version 1 (v1) Plugin
 

@@ -56,6 +56,12 @@ gwt {
   // "-Dgwt.persistentunitcachedir=[YourCacheDir]" - The directory to use for the persistent unit cache
   cacheDir = file('build/gwt-unitCache')
 
+  // Optional: Additional source directories to include in GWT compilation and Java source sets. 
+  // These directories are automatically added to both the classpath and compilation process.
+  // Useful for multi-module projects, annotation processor outputs, or generated sources.
+  // Example: extraSourceDirs = files("path/to/extra/sources", "another/source/dir")
+  extraSourceDirs = files('src/generated/java')
+
   // Optional: Generate exports for JsInterop purposes. If no -includeJsInteropExport/-excludeJsInteropExport provided, generates all exports. (defaults to OFF)
   generateJsInteropExports = false
 
@@ -90,6 +96,7 @@ gwt {
   compiler {
     //
     // All options in 'gwt' closure (except 'gwtVersion') can be overridden here
+    // Including extraSourceDirs - useful for compile-specific additional sources
     //
     
     // Optional: Enables Javascript output suitable for post-compilation by Closure Compiler (defaults to OFF)
@@ -136,6 +143,7 @@ gwt {
   devMode {
     //
     // All options in 'gwt' closure (except 'gwtVersion') can be overridden here
+    // Including extraSourceDirs - useful for dev mode specific additional sources
     //
     
     // Optional: Starts a servlet container serving the directory specified by the -war flag. (defaults to ON)
@@ -169,6 +177,7 @@ gwt {
   superDev {
     //
     // All options in 'gwt' closure (except 'gwtVersion') can be overridden here
+    // Including extraSourceDirs - useful for super dev mode specific additional sources
     //
     
     // Optional: Allows -src flags to reference missing directories. (defaults to OFF)

@@ -40,12 +40,34 @@ the minimal configuration required to use the plugin:
 gwt {
   // e.g. modules = ['com.example.MyModule']
   modules = ['<YOUR-GWT-MODULE>']
+  
+  // Optional: Add extra source directories for multi-module projects,
+  // generated sources, or annotation processor outputs
+  // extraSourceDirs = files("path/to/extra/sources")
 }
 ```
 
 Once you have enabled the plugin, you only need to specify the GWT module you
-want to compile. The plugin will take care of the rest. For more configuration
-options, refer to the [Configuration](Configuration.md) documentation.
+want to compile. The plugin will take care of the rest. 
+
+### Advanced Configuration
+
+For projects with additional source directories (such as multi-module setups or
+generated sources), you can use the `extraSourceDirs` property:
+
+```groovy
+gwt {
+  modules = ['com.example.MyModule']
+  
+  // Include additional source directories
+  extraSourceDirs = files(
+    "src/generated/java",
+    "../shared-module/src/main/java"
+  )
+}
+```
+
+For more configuration options, refer to the [Configuration](Configuration.md) documentation.
 
 ## Build the project
 

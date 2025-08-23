@@ -15,7 +15,9 @@
  */
 package org.docstr.gwt;
 
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
@@ -24,6 +26,8 @@ import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.dsl.DependencyHandler;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.provider.ListProperty;
+import org.gradle.api.tasks.SourceSet;
+import org.gradle.api.tasks.SourceSetContainer;
 import org.gradle.api.tasks.TaskProvider;
 import org.gradle.api.tasks.testing.Test;
 
@@ -129,6 +133,24 @@ public class GwtPlugin implements Plugin<Project> {
 
   private void configureGwtProject(GwtPluginExtension extension) {
     project.afterEvaluate(p -> {
+      // Add extra source directories to Java source sets if configured
+      SourceSetContainer sourceSets = project.getExtensions()
+          .getByType(SourceSetContainer.class);
+      SourceSet mainSourceSet = sourceSets.getByName(SourceSet.MAIN_SOURCE_SET_NAME);
+      
+      // Collect all extra source directories from different configuration locations
+      // Using LinkedHashSet to maintain order and avoid duplicates
+      Set<Object> allExtraSourceDirs = new LinkedHashSet<>();
+      allExtraSourceDirs.addAll(extension.getExtraSourceDirs().getFiles());
+      allExtraSourceDirs.addAll(extension.getCompiler().getExtraSourceDirs().getFiles());
+      allExtraSourceDirs.addAll(extension.getDevMode().getExtraSourceDirs().getFiles());
+      allExtraSourceDirs.addAll(extension.getSuperDev().getExtraSourceDirs().getFiles());
+      
+      // Add all collected directories to the source set at once
+      if (!allExtraSourceDirs.isEmpty()) {
+        mainSourceSet.getJava().srcDirs(allExtraSourceDirs);
+      }
+
       DependencyHandler dependencies = project.getDependencies();
 
       // The configured GWT version

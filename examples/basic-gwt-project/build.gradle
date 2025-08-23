@@ -1,6 +1,6 @@
 plugins {
   id 'java'
-  id "org.docstr.gwt" version "2.2.4"
+  id 'org.docstr.gwt' // version comes from included build
 }
 
 group = 'com.example'

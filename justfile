@@ -22,6 +22,7 @@ examples:
     cd {{project_dir}}/examples/basic-gwt-project && ./gradlew build
     cd {{project_dir}}/examples/gradle-jvm-test-suites-with-gwt && ./gradlew build
     cd {{project_dir}}/examples/basic-gwt-rpc && ./gradlew build
+    cd {{project_dir}}/examples/extra-sources-example && gradle build
 
 # Display current plugin version
 version:

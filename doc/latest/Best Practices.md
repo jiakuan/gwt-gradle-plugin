@@ -88,6 +88,14 @@ gwt {
     gen = file("${layout.buildDirectory}/gwt/gen")
     // Compile report as information for the GWT developer
     extra = file("${layout.buildDirectory}/gwt/extra")
+    
+    // Optional: Include extra source directories from other modules
+    // This is particularly useful in multi-module projects where you need
+    // to include sources from shared modules or generated sources
+    extraSourceDirs = files(
+        "../shared-module/src/main/java",
+        "src/generated/java"
+    )
 }
 
 // Additional configurations each holding a single zip file with
@@ -173,7 +181,7 @@ war {
 
 With the above, the final war file will never have any GWT libraries packaged because it only depends on the GWT JS output. An alternative to using Gradle configurations is to use Gradle variants, but I think configurations are a bit easier to set up and are good enough in this situation here.
 
-If you’re not building a WAR file or are using a backend technology other than Java, you can configure the JavaScript output directory to point directly to your frontend folder.
+If you're not building a WAR file or are using a backend technology other than Java, you can configure the JavaScript output directory to point directly to your frontend folder.
 
 ```
 gwt {
@@ -181,3 +189,70 @@ gwt {
     war = file('../my-frontend/scripts')
 }
 ```
+
+## Working with Additional Source Directories
+
+### Using extraSourceDirs for Common Scenarios
+
+The `extraSourceDirs` property is designed to handle various scenarios where you need to include additional Java source directories in your GWT compilation:
+
+#### 1. Multi-Module Projects
+When working with multiple Gradle modules where one module contains shared code:
+
+```gradle
+gwt {
+    modules = ['com.example.MyApp']
+    extraSourceDirs = files(
+        project(':shared-core').file('src/main/java'),
+        project(':shared-ui').file('src/main/java')
+    )
+}
+```
+
+#### 2. Annotation Processor Outputs
+For including generated sources from annotation processors:
+
+```gradle
+gwt {
+    modules = ['com.example.MyApp']
+    extraSourceDirs = files('build/generated/sources/annotationProcessor/java/main')
+}
+```
+
+#### 3. Generated Sources
+When you have custom code generation tasks:
+
+```gradle
+task generateSources(type: Exec) {
+    // Your source generation logic
+    outputs.dir 'src/generated/java'
+}
+
+gwt {
+    modules = ['com.example.MyApp']
+    extraSourceDirs = files('src/generated/java')
+}
+
+// Ensure sources are generated before GWT compilation
+tasks.gwtCompile.dependsOn(generateSources)
+```
+
+#### 4. Configuration-Specific Sources
+You can also configure different extra sources for different modes:
+
+```gradle
+gwt {
+    modules = ['com.example.MyApp']
+    // Common extra sources
+    extraSourceDirs = files('../shared/src/main/java')
+    
+    compiler {
+        // Additional sources only for compilation
+        extraSourceDirs = files('../shared/src/main/java', 'src/compile-only/java')
+    }
+    
+    devMode {
+        // Additional sources for development mode
+        extraSourceDirs = files('../shared/src/main/java', 'src/debug/java')
+    }
+}

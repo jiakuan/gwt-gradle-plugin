@@ -1,0 +1,27 @@
+plugins {
+    id 'java'
+    id 'org.docstr.gwt' // version comes from included build
+}
+
+repositories {
+    mavenCentral()
+}
+
+gwt {
+    gwtVersion = '2.12.1'
+    modules = ['com.example.MyModule']
+    
+    // Example of adding extra source directories
+    // These will be automatically added to both GWT compilation and Java source sets
+    // This could be sources from another module or generated sources
+    extraSourceDirs = files("$projectDir/extra-src")
+    
+    compiler {
+        style = 'PRETTY'
+    }
+}
+
+dependencies {
+    implementation 'org.gwtproject:gwt-user'
+    implementation 'org.gwtproject:gwt-dev'
+}

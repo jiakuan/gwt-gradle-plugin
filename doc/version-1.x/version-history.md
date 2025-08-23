@@ -1,5 +1,7 @@
 # Version History
 
+**Note:** This version history is for the v1 plugin. For v2 plugin version history, please see the GitHub releases page.
+
 ## 1.1+
 
 Please see Github
