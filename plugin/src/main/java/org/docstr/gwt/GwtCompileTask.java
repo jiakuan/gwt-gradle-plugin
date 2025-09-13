@@ -19,6 +19,7 @@ import javax.inject.Inject;
 import org.gradle.api.file.DirectoryProperty;
 import org.gradle.api.model.ObjectFactory;
 import org.gradle.api.provider.Property;
+import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputDirectory;
@@ -27,6 +28,7 @@ import org.gradle.api.tasks.compile.JavaCompile;
 /**
  * Task for compiling GWT modules.
  */
+@CacheableTask
 public abstract class GwtCompileTask extends AbstractBaseTask {
 
   /**
