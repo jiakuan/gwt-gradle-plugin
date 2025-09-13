@@ -42,7 +42,7 @@ To use this plugin, add the following to your `build.gradle` file:
 
 ```
 plugins {
-  id "org.docstr.gwt" version "2.2.5"
+  id "org.docstr.gwt" version "2.2.6"
 }
 
 gwt {
@@ -62,7 +62,7 @@ buildscript {
     }
   }
   dependencies {
-    classpath "org.docstr.gwt:org.docstr.gwt.gradle.plugin:2.2.5"
+    classpath "org.docstr.gwt:org.docstr.gwt.gradle.plugin:2.2.6"
   }
 }
 
