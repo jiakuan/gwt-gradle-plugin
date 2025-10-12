@@ -17,6 +17,7 @@ package org.docstr.gwt;
 
 import org.gradle.api.Action;
 import org.gradle.api.GradleException;
+import org.gradle.api.Project;
 
 /**
  * Configures the GWT dev mode task.
@@ -35,6 +36,7 @@ public class GwtDevModeConfig implements Action<GwtDevModeTask> {
 
   @Override
   public void execute(GwtDevModeTask task) {
+    Project project = task.getProject();
     if (extension.getDevMode().getMinHeapSize().isPresent()) {
       task.setMinHeapSize(extension.getDevMode().getMinHeapSize().get());
     } else {
@@ -175,7 +177,7 @@ public class GwtDevModeConfig implements Action<GwtDevModeTask> {
     }
 
     // Configure classpath and arguments during configuration phase for Configuration Cache compatibility
-    task.configureClasspath(task.getProject());
+    task.configureClasspath(project);
     task.configureArgs();
   }
 }

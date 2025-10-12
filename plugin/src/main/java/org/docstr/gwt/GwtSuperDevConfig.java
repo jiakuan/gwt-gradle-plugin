@@ -17,6 +17,7 @@ package org.docstr.gwt;
 
 import org.gradle.api.Action;
 import org.gradle.api.GradleException;
+import org.gradle.api.Project;
 
 /**
  * Configures the GWT super dev task.
@@ -36,6 +37,7 @@ public class GwtSuperDevConfig implements Action<GwtSuperDevTask> {
 
   @Override
   public void execute(GwtSuperDevTask task) {
+    Project project = task.getProject();
     if (extension.getSuperDev().getMinHeapSize().isPresent()) {
       task.setMinHeapSize(extension.getSuperDev().getMinHeapSize().get());
     } else {
@@ -159,7 +161,7 @@ public class GwtSuperDevConfig implements Action<GwtSuperDevTask> {
     }
 
     // Configure classpath and arguments during configuration phase for Configuration Cache compatibility
-    task.configureClasspath(task.getProject());
+    task.configureClasspath(project);
     task.configureArgs();
   }
 }
