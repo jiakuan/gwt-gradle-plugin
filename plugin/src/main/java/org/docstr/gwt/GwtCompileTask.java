@@ -101,10 +101,11 @@ public abstract class GwtCompileTask extends AbstractBaseTask {
     // Set GWT compiler as the main class
     getMainClass().set(COMPILER_CLASS);
 
-    // This task will depend on the compileJava task automatically
+    // This task will depend on the compileJava and processResources tasks automatically
     dependsOn(getProject().getTasks().withType(JavaCompile.class)
         .matching(task ->
             !task.getName().toLowerCase().contains("test")));
+    dependsOn(getProject().getTasks().named("processResources"));
   }
 
   /**
@@ -224,8 +225,10 @@ public abstract class GwtCompileTask extends AbstractBaseTask {
     return saveSourceOutput;
   }
 
-  @Override
-  public void exec() {
+  /**
+   * Configure task-specific arguments during configuration phase.
+   */
+  public void configureCompileArgs() {
     if (getClosureFormattedOutput().isPresent()) {
       if (getClosureFormattedOutput().get()) {
         args("-XclosureFormattedOutput");
@@ -308,8 +311,11 @@ public abstract class GwtCompileTask extends AbstractBaseTask {
       args("-saveSourceOutput",
           getSaveSourceOutput().get().getAsFile().getPath());
     }
+  }
 
-    getProject().getLogger()
+  @Override
+  public void exec() {
+    getLogger()
         .info("inputs: {}", getInputs().getFiles().getAsPath());
     super.exec();
   }

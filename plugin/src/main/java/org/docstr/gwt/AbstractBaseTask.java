@@ -84,6 +84,9 @@ public abstract class AbstractBaseTask extends JavaExec {
   @PathSensitive(PathSensitivity.RELATIVE)
   @Optional
   private final ConfigurableFileCollection extraSourceDirs;
+  @InputFiles
+  @PathSensitive(PathSensitivity.RELATIVE)
+  private final ConfigurableFileCollection gwtDevRuntimeClasspath;
 
   /**
    * Constructs a new GwtCompileTask.
@@ -110,38 +113,14 @@ public abstract class AbstractBaseTask extends JavaExec {
     incremental = objects.property(Boolean.class);
     modules = objects.listProperty(String.class);
     extraSourceDirs = objects.fileCollection();
+    gwtDevRuntimeClasspath = objects.fileCollection();
   }
 
-  @Override
-  public void exec() {
-    // Retrieve the main source set
-    SourceSetContainer sourceSets = getProject().getExtensions()
-        .getByType(SourceSetContainer.class);
-    SourceSet mainSourceSet = sourceSets.getByName(
-        SourceSet.MAIN_SOURCE_SET_NAME);
-
-    // Collect all source paths
-    Set<File> allMainSourcePaths = mainSourceSet.getAllSource().getSrcDirs();
-    FileCollection outputClasspath = mainSourceSet.getOutput().getClassesDirs()
-        .plus(getProject().files(mainSourceSet.getOutput().getResourcesDir()));
-
-    // Include extra source directories if specified
-    FileCollection allSourcePaths = getProject().files(allMainSourcePaths);
-    if (!getExtraSourceDirs().isEmpty()) {
-      allSourcePaths = allSourcePaths.plus(getExtraSourceDirs());
-    }
-
-    // Ensure the classpath includes compiled classes, resources, and source files
-    classpath(
-        allSourcePaths,
-        outputClasspath,
-        getProject().getConfigurations().getByName(GwtPlugin.GWT_DEV_RUNTIME_CLASSPATH_CONFIGURATION_NAME)
-    );
-
-    // Log the classpath
-    Logger log = getProject().getLogger();
-    getClasspath().getFiles().forEach(file -> log.debug("classpath: {}", file));
-
+  /**
+   * Configure task arguments during configuration phase.
+   * This method should be called from task configuration actions to set up all arguments.
+   */
+  public void configureArgs() {
     if (getLogLevel().isPresent()) {
       args("-logLevel", getLogLevel().get());
     }
@@ -155,14 +134,6 @@ public abstract class AbstractBaseTask extends JavaExec {
     }
 
     if (!isCodeServerTask() && getWar().isPresent()) {
-      // Ensure the war directory exists
-      if (!getWar().get().getAsFile().exists()) {
-        boolean mkdirs = getWar().get().getAsFile().mkdirs();
-        if (!mkdirs) {
-          throw new GradleException(
-              "Failed to create war directory: " + getWar().get().getAsFile());
-        }
-      }
       args("-war", getWar().get().getAsFile().getPath());
     }
 
@@ -231,8 +202,24 @@ public abstract class AbstractBaseTask extends JavaExec {
     }
 
     getModules().get().forEach(this::args);
+  }
 
-    // Logging just below visibility. Can turn up access to this package, or log the JavaExec task.
+  @Override
+  public void exec() {
+    // Ensure the war directory exists before executing
+    if (!isCodeServerTask() && getWar().isPresent()) {
+      if (!getWar().get().getAsFile().exists()) {
+        boolean mkdirs = getWar().get().getAsFile().mkdirs();
+        if (!mkdirs) {
+          throw new GradleException(
+              "Failed to create war directory: " + getWar().get().getAsFile());
+        }
+      }
+    }
+
+    // Log the classpath and args
+    Logger log = getLogger();
+    getClasspath().getFiles().forEach(file -> log.debug("classpath: {}", file));
     log.info("classpath: {}", getClasspath().getAsPath());
     log.info("allJvmArgs: {}", getAllJvmArgs().stream().map(arg -> "\"" + arg + "\"").collect(Collectors.joining(", ")));
     log.info("main: {}", getMainClass().get());
@@ -415,5 +402,14 @@ public abstract class AbstractBaseTask extends JavaExec {
    */
   public final ConfigurableFileCollection getExtraSourceDirs() {
     return extraSourceDirs;
+  }
+
+  /**
+   * The GWT dev runtime classpath
+   *
+   * @return The GWT dev runtime classpath
+   */
+  public final ConfigurableFileCollection getGwtDevRuntimeClasspath() {
+    return gwtDevRuntimeClasspath;
   }
 }

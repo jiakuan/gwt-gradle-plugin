@@ -341,6 +341,39 @@ public class GwtCompileConfig implements Action<GwtCompileTask> {
       throw new GradleException(
           "gwtCompile failed: 'modules' property is required. Please specify at least one GWT module in the gwt { ... } block.");
     }
+
+    // Configure classpath during configuration phase to avoid Configuration Cache issues
+    SourceSetContainer sourceSets = project.getExtensions()
+        .getByType(SourceSetContainer.class);
+    SourceSet mainSourceSet = sourceSets.getByName(
+        SourceSet.MAIN_SOURCE_SET_NAME);
+
+    // Collect all source paths
+    FileCollection allMainSourcePaths = project.files(mainSourceSet.getAllSource().getSrcDirs());
+    FileCollection outputClasspath = mainSourceSet.getOutput().getClassesDirs()
+        .plus(project.files(mainSourceSet.getOutput().getResourcesDir()));
+
+    // Include extra source directories if specified
+    FileCollection allSourcePaths = allMainSourcePaths;
+    if (!task.getExtraSourceDirs().isEmpty()) {
+      allSourcePaths = allSourcePaths.plus(task.getExtraSourceDirs());
+    }
+
+    // Set up the GWT dev runtime classpath
+    task.getGwtDevRuntimeClasspath().from(
+        project.getConfigurations().getByName(GwtPlugin.GWT_DEV_RUNTIME_CLASSPATH_CONFIGURATION_NAME)
+    );
+
+    // Ensure the classpath includes compiled classes, resources, and source files
+    task.classpath(
+        allSourcePaths,
+        outputClasspath,
+        task.getGwtDevRuntimeClasspath()
+    );
+
+    // Configure all arguments during configuration phase for Configuration Cache compatibility
+    task.configureArgs();
+    task.configureCompileArgs();
   }
 
   /**
