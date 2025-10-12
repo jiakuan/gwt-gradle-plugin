@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import javax.inject.Inject;
 import org.gradle.api.GradleException;
+import org.gradle.api.Project;
 import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.file.DirectoryProperty;
 import org.gradle.api.file.FileCollection;
@@ -419,19 +420,19 @@ public abstract class AbstractBaseTask extends JavaExec {
    *
    * @param project The project to get source sets and configurations from
    */
-  public void configureClasspath(org.gradle.api.Project project) {
+  public void configureClasspath(Project project) {
     SourceSetContainer sourceSets = project.getExtensions()
         .getByType(SourceSetContainer.class);
     SourceSet mainSourceSet = sourceSets.getByName(
         SourceSet.MAIN_SOURCE_SET_NAME);
 
     // Collect all source paths
-    FileCollection allMainSourcePaths = project.files(mainSourceSet.getAllSource().getSrcDirs());
+    FileCollection mainSourcePaths = project.files(mainSourceSet.getAllSource().getSrcDirs());
     FileCollection outputClasspath = mainSourceSet.getOutput().getClassesDirs()
         .plus(project.files(mainSourceSet.getOutput().getResourcesDir()));
 
     // Include extra source directories if specified
-    FileCollection allSourcePaths = allMainSourcePaths;
+    FileCollection allSourcePaths = mainSourcePaths;
     if (!getExtraSourceDirs().isEmpty()) {
       allSourcePaths = allSourcePaths.plus(getExtraSourceDirs());
     }
