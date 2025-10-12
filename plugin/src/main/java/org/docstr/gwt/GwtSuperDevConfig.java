@@ -17,10 +17,6 @@ package org.docstr.gwt;
 
 import org.gradle.api.Action;
 import org.gradle.api.GradleException;
-import org.gradle.api.Project;
-import org.gradle.api.file.FileCollection;
-import org.gradle.api.tasks.SourceSet;
-import org.gradle.api.tasks.SourceSetContainer;
 
 /**
  * Configures the GWT super dev task.
@@ -162,37 +158,8 @@ public class GwtSuperDevConfig implements Action<GwtSuperDevTask> {
           "gwtSuperDev failed: 'modules' property is required. Please specify at least one GWT module in the gwt { ... } block.");
     }
 
-    // Configure classpath during configuration phase to avoid Configuration Cache issues
-    Project project = task.getProject();
-    SourceSetContainer sourceSets = project.getExtensions()
-        .getByType(SourceSetContainer.class);
-    SourceSet mainSourceSet = sourceSets.getByName(
-        SourceSet.MAIN_SOURCE_SET_NAME);
-
-    // Collect all source paths
-    FileCollection allMainSourcePaths = project.files(mainSourceSet.getAllSource().getSrcDirs());
-    FileCollection outputClasspath = mainSourceSet.getOutput().getClassesDirs()
-        .plus(project.files(mainSourceSet.getOutput().getResourcesDir()));
-
-    // Include extra source directories if specified
-    FileCollection allSourcePaths = allMainSourcePaths;
-    if (!task.getExtraSourceDirs().isEmpty()) {
-      allSourcePaths = allSourcePaths.plus(task.getExtraSourceDirs());
-    }
-
-    // Set up the GWT dev runtime classpath
-    task.getGwtDevRuntimeClasspath().from(
-        project.getConfigurations().getByName(GwtPlugin.GWT_DEV_RUNTIME_CLASSPATH_CONFIGURATION_NAME)
-    );
-
-    // Ensure the classpath includes compiled classes, resources, and source files
-    task.classpath(
-        allSourcePaths,
-        outputClasspath,
-        task.getGwtDevRuntimeClasspath()
-    );
-
-    // Configure all arguments during configuration phase for Configuration Cache compatibility
+    // Configure classpath and arguments during configuration phase for Configuration Cache compatibility
+    task.configureClasspath(task.getProject());
     task.configureArgs();
   }
 }

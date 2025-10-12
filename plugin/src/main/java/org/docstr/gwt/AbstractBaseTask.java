@@ -412,4 +412,40 @@ public abstract class AbstractBaseTask extends JavaExec {
   public final ConfigurableFileCollection getGwtDevRuntimeClasspath() {
     return gwtDevRuntimeClasspath;
   }
+
+  /**
+   * Configures the classpath for this task during configuration phase.
+   * This method should be called from task configuration actions to avoid Configuration Cache issues.
+   *
+   * @param project The project to get source sets and configurations from
+   */
+  public void configureClasspath(org.gradle.api.Project project) {
+    SourceSetContainer sourceSets = project.getExtensions()
+        .getByType(SourceSetContainer.class);
+    SourceSet mainSourceSet = sourceSets.getByName(
+        SourceSet.MAIN_SOURCE_SET_NAME);
+
+    // Collect all source paths
+    FileCollection allMainSourcePaths = project.files(mainSourceSet.getAllSource().getSrcDirs());
+    FileCollection outputClasspath = mainSourceSet.getOutput().getClassesDirs()
+        .plus(project.files(mainSourceSet.getOutput().getResourcesDir()));
+
+    // Include extra source directories if specified
+    FileCollection allSourcePaths = allMainSourcePaths;
+    if (!getExtraSourceDirs().isEmpty()) {
+      allSourcePaths = allSourcePaths.plus(getExtraSourceDirs());
+    }
+
+    // Set up the GWT dev runtime classpath
+    getGwtDevRuntimeClasspath().from(
+        project.getConfigurations().getByName(GwtPlugin.GWT_DEV_RUNTIME_CLASSPATH_CONFIGURATION_NAME)
+    );
+
+    // Ensure the classpath includes compiled classes, resources, and source files
+    classpath(
+        allSourcePaths,
+        outputClasspath,
+        getGwtDevRuntimeClasspath()
+    );
+  }
 }
