@@ -341,6 +341,11 @@ public class GwtCompileConfig implements Action<GwtCompileTask> {
       throw new GradleException(
           "gwtCompile failed: 'modules' property is required. Please specify at least one GWT module in the gwt { ... } block.");
     }
+
+    // Configure classpath and arguments during configuration phase for Configuration Cache compatibility
+    task.configureClasspath(project);
+    task.configureArgs();
+    task.configureCompileArgs();
   }
 
   /**
