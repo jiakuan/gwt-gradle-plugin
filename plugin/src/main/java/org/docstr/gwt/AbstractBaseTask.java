@@ -16,6 +16,7 @@ import org.gradle.api.logging.Logger;
 import org.gradle.api.model.ObjectFactory;
 import org.gradle.api.provider.ListProperty;
 import org.gradle.api.provider.Property;
+import org.gradle.api.tasks.Classpath;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.JavaExec;
@@ -85,8 +86,7 @@ public abstract class AbstractBaseTask extends JavaExec {
   @PathSensitive(PathSensitivity.RELATIVE)
   @Optional
   private final ConfigurableFileCollection extraSourceDirs;
-  @InputFiles
-  @PathSensitive(PathSensitivity.RELATIVE)
+  @Classpath
   private final ConfigurableFileCollection gwtDevRuntimeClasspath;
 
   /**
