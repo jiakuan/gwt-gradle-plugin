@@ -10,8 +10,11 @@ import org.gradle.api.provider.ListProperty;
 import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
+import static org.docstr.gwt.ArgumentListUtils.*;
 import static org.docstr.gwt.GwtSuperDevTask.CODE_SERVER_CLASS;
 
 /**
@@ -19,92 +22,64 @@ import static org.docstr.gwt.GwtSuperDevTask.CODE_SERVER_CLASS;
  */
 public abstract class AbstractBaseTask extends JavaExec {
 
-  /**
-   * Configure task arguments during configuration phase.
-   * This method should be called from task configuration actions to set up all arguments.
-   */
-  public void configureArgs() {
-    if (getLogLevel().isPresent()) {
-      args("-logLevel", getLogLevel().get());
-    }
+  public AbstractBaseTask() {
 
-    if (getWorkDir().isPresent()) {
-      args("-workDir", getWorkDir().get().getAsFile().getPath());
-    }
+    getArgumentProviders().add(() -> {
+      List<String> args = new ArrayList<>();
 
-    if (!isCodeServerTask() && getGen().isPresent()) {
-      args("-gen", getGen().get().getAsFile().getPath());
-    }
+      addStringArg(args, "logLevel", getLogLevel());
 
-    if (!isCodeServerTask() && getWar().isPresent()) {
-      args("-war", getWar().get().getAsFile().getPath());
-    }
+      addStringArg(args, "workDir", getWorkDir());
 
-    if (!isCodeServerTask() && getDeploy().isPresent()) {
-      args("-deploy", getDeploy().get().getAsFile().getPath());
-    }
-
-    if (!isCodeServerTask() && getExtra().isPresent()) {
-      args("-extra", getExtra().get().getAsFile().getPath());
-    }
-
-    if (!isCodeServerTask() && getCacheDir().isPresent()) {
-      jvmArgs("-Dgwt.persistentunitcachedir=" + getCacheDir().get().getAsFile()
-          .getPath());
-    }
-
-    if (getSourceLevel().isPresent()) {
-      args("-sourceLevel", getSourceLevel().get());
-    }
-
-    if (getMethodNameDisplayMode().isPresent()) {
-      args("-XmethodNameDisplayMode", getMethodNameDisplayMode().get());
-    }
-
-    if (getGenerateJsInteropExports().isPresent()) {
-      if (getGenerateJsInteropExports().get()) {
-        args("-generateJsInteropExports");
-      } else {
-        args("-nogenerateJsInteropExports");
+      if (!isCodeServerTask()) {
+        addStringArg(args, "gen", getGen());
       }
-    }
 
-    if (getIncludeJsInteropExports().isPresent()) {
-      getIncludeJsInteropExports().get()
-          .forEach(include -> args("-includeJsInteropExports", include));
-    }
-
-    if (getExcludeJsInteropExports().isPresent()) {
-      getExcludeJsInteropExports().get()
-          .forEach(exclude -> args("-excludeJsInteropExports", exclude));
-    }
-
-    if (getStyle().isPresent()) {
-      args("-style", getStyle().get());
-    }
-
-    if (getFailOnError().isPresent()) {
-      if (getFailOnError().get()) {
-        args("-failOnError");
-      } else {
-        args("-nofailOnError");
+      if (!isCodeServerTask()) {
+        addStringArg(args, "war", getWar());
       }
-    }
 
-    if (getSetProperty().isPresent()) {
-      getSetProperty().get()
-          .forEach(property -> args("-setProperty", property));
-    }
-
-    if (getIncremental().isPresent()) {
-      if (getIncremental().get()) {
-        args("-incremental");
-      } else {
-        args("-noincremental");
+      if (!isCodeServerTask()) {
+        addStringArg(args, "deploy", getDeploy());
       }
-    }
 
-    getModules().get().forEach(this::args);
+      if (!isCodeServerTask()) {
+        addStringArg(args, "extra", getExtra());
+      }
+
+      addStringArg(args, "sourceLevel", getSourceLevel());
+
+      addStringArg(args, "XmethodNameDisplayMode", getMethodNameDisplayMode());
+
+      addBooleanArg(args, "generateJsInteropExports", getGenerateJsInteropExports());
+
+      addListArg(args, "includeJsInteropExports", getIncludeJsInteropExports());
+      addListArg(args, "excludeJsInteropExports", getExcludeJsInteropExports());
+
+      addStringArg(args, "style", getStyle());
+
+      addBooleanArg(args, "failOnError", getFailOnError());
+
+      addListArg(args, "setProperty", getSetProperty());
+
+      addBooleanArg(args, "incremental", getIncremental());
+
+      args.addAll(getModules().get());
+
+      return args;
+    });
+
+
+    getJvmArgumentProviders().add(() -> {
+      List<String> jvmArgs = new ArrayList<>();
+
+      if (!isCodeServerTask() && getCacheDir().isPresent()) {
+        jvmArgs.add("-Dgwt.persistentunitcachedir=" + getCacheDir().get().getAsFile()          .getPath());
+      }
+
+      return jvmArgs;
+
+    });
   }
 
   @Override
@@ -348,5 +323,10 @@ public abstract class AbstractBaseTask extends JavaExec {
         outputClasspath,
         getGwtDevRuntimeClasspath()
     );
+  }
+
+  @Deprecated(forRemoval = true)
+  public void configureArgs() {
+    getLogger().warn("{}.configureArgs() is deprecated", ArgumentListUtils.class.getName());
   }
 }

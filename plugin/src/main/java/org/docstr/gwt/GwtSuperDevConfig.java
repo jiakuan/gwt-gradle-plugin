@@ -162,6 +162,5 @@ public class GwtSuperDevConfig implements Action<GwtSuperDevTask> {
 
     // Configure classpath and arguments during configuration phase for Configuration Cache compatibility
     task.configureClasspath(project);
-    task.configureArgs();
   }
 }
