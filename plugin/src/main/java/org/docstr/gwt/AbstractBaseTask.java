@@ -1,121 +1,23 @@
 package org.docstr.gwt;
 
-import static org.docstr.gwt.GwtSuperDevTask.CODE_SERVER_CLASS;
-
-import java.io.File;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-import javax.inject.Inject;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.file.DirectoryProperty;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.logging.Logger;
-import org.gradle.api.model.ObjectFactory;
 import org.gradle.api.provider.ListProperty;
 import org.gradle.api.provider.Property;
-import org.gradle.api.tasks.Classpath;
-import org.gradle.api.tasks.Input;
-import org.gradle.api.tasks.InputFiles;
-import org.gradle.api.tasks.JavaExec;
-import org.gradle.api.tasks.Optional;
-import org.gradle.api.tasks.OutputDirectory;
-import org.gradle.api.tasks.PathSensitive;
-import org.gradle.api.tasks.PathSensitivity;
-import org.gradle.api.tasks.SourceSet;
-import org.gradle.api.tasks.SourceSetContainer;
+import org.gradle.api.tasks.*;
+
+import java.util.stream.Collectors;
+
+import static org.docstr.gwt.GwtSuperDevTask.CODE_SERVER_CLASS;
 
 /**
  * Base class for several GWT related tasks that share specific parameters.
  */
 public abstract class AbstractBaseTask extends JavaExec {
-
-  @Input
-  @Optional
-  private final Property<String> logLevel;
-  @OutputDirectory
-  @Optional
-  private final DirectoryProperty workDir;
-  @OutputDirectory
-  @Optional
-  private final DirectoryProperty gen;
-  @OutputDirectory
-  @Optional
-  private final DirectoryProperty war;
-  @OutputDirectory
-  @Optional
-  private final DirectoryProperty deploy;
-  @OutputDirectory
-  @Optional
-  private final DirectoryProperty extra;
-  @OutputDirectory
-  @Optional
-  private final DirectoryProperty cacheDir;
-  @Input
-  @Optional
-  private final Property<String> sourceLevel;
-  @Input
-  @Optional
-  private final Property<String> methodNameDisplayMode;
-  @Input
-  @Optional
-  private final Property<Boolean> generateJsInteropExports;
-  @Input
-  @Optional
-  private final ListProperty<String> includeJsInteropExports;
-  @Input
-  @Optional
-  private final ListProperty<String> excludeJsInteropExports;
-  @Input
-  @Optional
-  private final Property<String> style;
-  @Input
-  @Optional
-  private final Property<Boolean> failOnError;
-  @Input
-  @Optional
-  private final ListProperty<String> setProperty;
-  @Input
-  @Optional
-  private final Property<Boolean> incremental;
-  @Input
-  private final ListProperty<String> modules;
-  @InputFiles
-  @PathSensitive(PathSensitivity.RELATIVE)
-  @Optional
-  private final ConfigurableFileCollection extraSourceDirs;
-  @Classpath
-  private final ConfigurableFileCollection gwtDevRuntimeClasspath;
-
-  /**
-   * Constructs a new GwtCompileTask.
-   *
-   * @param objects The object factory
-   */
-  @Inject
-  public AbstractBaseTask(ObjectFactory objects) {
-    logLevel = objects.property(String.class);
-    workDir = objects.directoryProperty();
-    gen = objects.directoryProperty();
-    war = objects.directoryProperty();
-    deploy = objects.directoryProperty();
-    extra = objects.directoryProperty();
-    cacheDir = objects.directoryProperty();
-    sourceLevel = objects.property(String.class);
-    methodNameDisplayMode = objects.property(String.class);
-    generateJsInteropExports = objects.property(Boolean.class);
-    includeJsInteropExports = objects.listProperty(String.class);
-    excludeJsInteropExports = objects.listProperty(String.class);
-    style = objects.property(String.class);
-    failOnError = objects.property(Boolean.class);
-    setProperty = objects.listProperty(String.class);
-    incremental = objects.property(Boolean.class);
-    modules = objects.listProperty(String.class);
-    extraSourceDirs = objects.fileCollection();
-    gwtDevRuntimeClasspath = objects.fileCollection();
-  }
 
   /**
    * Configure task arguments during configuration phase.
@@ -238,9 +140,8 @@ public abstract class AbstractBaseTask extends JavaExec {
    *
    * @return The log level
    */
-  public final Property<String> getLogLevel() {
-    return logLevel;
-  }
+  @Console
+  public abstract Property<String> getLogLevel();
 
   /**
    * The compiler's working directory for internal use (must be writeable;
@@ -248,9 +149,9 @@ public abstract class AbstractBaseTask extends JavaExec {
    *
    * @return The working directory
    */
-  public final DirectoryProperty getWorkDir() {
-    return workDir;
-  }
+  @OutputDirectory
+  @Optional
+  public abstract DirectoryProperty getWorkDir();
 
   /**
    * Debugging: causes normally-transient generated types to be saved in the
@@ -258,9 +159,9 @@ public abstract class AbstractBaseTask extends JavaExec {
    *
    * @return The generated types directory
    */
-  public final DirectoryProperty getGen() {
-    return gen;
-  }
+  @OutputDirectory
+  @Optional
+  public abstract DirectoryProperty getGen();
 
   /**
    * The directory into which deployable output files will be written (defaults
@@ -268,9 +169,9 @@ public abstract class AbstractBaseTask extends JavaExec {
    *
    * @return The war directory
    */
-  public final DirectoryProperty getWar() {
-    return war;
-  }
+  @OutputDirectory
+  @Optional
+  public abstract DirectoryProperty getWar();
 
   /**
    * The directory into which deployable but not servable output files will be
@@ -279,9 +180,9 @@ public abstract class AbstractBaseTask extends JavaExec {
    *
    * @return The deploy directory
    */
-  public final DirectoryProperty getDeploy() {
-    return deploy;
-  }
+  @OutputDirectory
+  @Optional
+  public abstract DirectoryProperty getDeploy();
 
   /**
    * The directory into which extra files, not intended for deployment, will be
@@ -289,36 +190,36 @@ public abstract class AbstractBaseTask extends JavaExec {
    *
    * @return The extra directory
    */
-  public final DirectoryProperty getExtra() {
-    return extra;
-  }
+  @OutputDirectory
+  @Optional
+  public abstract DirectoryProperty getExtra();
 
   /**
    * The directory to use for the persistent unit cache
    *
    * @return The cache directory
    */
-  public final DirectoryProperty getCacheDir() {
-    return cacheDir;
-  }
+  @OutputDirectory
+  @Optional
+  public abstract DirectoryProperty getCacheDir();
 
   /**
    * The source level of the java code
    *
    * @return The source level
    */
-  public final Property<String> getSourceLevel() {
-    return sourceLevel;
-  }
+  @Input
+  @Optional
+  public abstract Property<String> getSourceLevel();
 
   /**
    * The method name display mode
    *
    * @return The method name display mode
    */
-  public final Property<String> getMethodNameDisplayMode() {
-    return methodNameDisplayMode;
-  }
+  @Input
+  @Optional
+  public abstract Property<String> getMethodNameDisplayMode();
 
   /**
    * Generate exports for JsInterop purposes. If no
@@ -327,27 +228,27 @@ public abstract class AbstractBaseTask extends JavaExec {
    *
    * @return The generate JsInterop exports flag
    */
-  public final Property<Boolean> getGenerateJsInteropExports() {
-    return generateJsInteropExports;
-  }
+  @Input
+  @Optional
+  public abstract Property<Boolean> getGenerateJsInteropExports();
 
   /**
    * Include members and classes while generating JsInterop exports
    *
    * @return The include JsInterop exports
    */
-  public final ListProperty<String> getIncludeJsInteropExports() {
-    return includeJsInteropExports;
-  }
+  @Input
+  @Optional
+  public abstract ListProperty<String> getIncludeJsInteropExports();
 
   /**
    * Exclude members and classes while generating JsInterop exports
    *
    * @return The exclude JsInterop exports
    */
-  public final ListProperty<String> getExcludeJsInteropExports() {
-    return excludeJsInteropExports;
-  }
+  @Input
+  @Optional
+  public abstract ListProperty<String> getExcludeJsInteropExports();
 
   /**
    * The style of output JavaScript: OBF, PRETTY, DETAILED, or DRAFT (defaults
@@ -355,18 +256,18 @@ public abstract class AbstractBaseTask extends JavaExec {
    *
    * @return The style
    */
-  public final Property<String> getStyle() {
-    return style;
-  }
+  @Input
+  @Optional
+  public abstract Property<String> getStyle();
 
   /**
    * Fail on errors
    *
    * @return The fail on error flag
    */
-  public final Property<Boolean> getFailOnError() {
-    return failOnError;
-  }
+  @Input
+  @Optional
+  public abstract Property<Boolean> getFailOnError();
 
   /**
    * Set the values of a property in the form of
@@ -374,45 +275,44 @@ public abstract class AbstractBaseTask extends JavaExec {
    *
    * @return The set property
    */
-  public final ListProperty<String> getSetProperty() {
-    return setProperty;
-  }
+  @Input
+  @Optional
+  public abstract ListProperty<String> getSetProperty();
 
   /**
    * Incremental compilation
    *
    * @return The incremental flag
    */
-  public final Property<Boolean> getIncremental() {
-    return incremental;
-  }
+  @Input
+  @Optional
+  public abstract Property<Boolean> getIncremental();
 
   /**
    * The modules to run
    *
    * @return The modules
    */
-  public final ListProperty<String> getModules() {
-    return modules;
-  }
+  @Input
+  public abstract ListProperty<String> getModules();
 
   /**
    * Extra source directories to include in the GWT compiler classpath
    *
    * @return The extra source directories
    */
-  public final ConfigurableFileCollection getExtraSourceDirs() {
-    return extraSourceDirs;
-  }
+  @InputFiles
+  @PathSensitive(PathSensitivity.RELATIVE)
+  @Optional
+  public abstract ConfigurableFileCollection getExtraSourceDirs();
 
   /**
    * The GWT dev runtime classpath
    *
    * @return The GWT dev runtime classpath
    */
-  public final ConfigurableFileCollection getGwtDevRuntimeClasspath() {
-    return gwtDevRuntimeClasspath;
-  }
+  @Classpath
+  public abstract ConfigurableFileCollection getGwtDevRuntimeClasspath();
 
   /**
    * Configures the classpath for this task during configuration phase.

@@ -15,9 +15,7 @@
  */
 package org.docstr.gwt;
 
-import javax.inject.Inject;
 import org.gradle.api.file.DirectoryProperty;
-import org.gradle.api.model.ObjectFactory;
 import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.Optional;
@@ -34,51 +32,11 @@ public abstract class GwtDevModeTask extends AbstractBaseTask {
    */
   public static final String DEV_MODE_CLASS = "com.google.gwt.dev.DevMode";
 
-  @Input
-  @Optional
-  private final Property<Boolean> startServer;
-  @Input
-  @Optional
-  private final Property<Integer> port;
-  @OutputDirectory
-  @Optional
-  private final DirectoryProperty logdir;
-  @Input
-  @Optional
-  private final Property<String> bindAddress;
-  @Input
-  @Optional
-  private final Property<Integer> codeServerPort;
-  @Input
-  @Optional
-  private final Property<Boolean> superDevMode;
-  @Input
-  @Optional
-  private final Property<String> server;
-  @Input
-  @Optional
-  private final Property<String> startupUrl;
-  @Input
-  @Optional
-  private final Property<String> modulePathPrefix;
-
   /**
    * Constructs a new GwtDevModeTask.
    *
-   * @param objects The object factory
    */
-  @Inject
-  public GwtDevModeTask(ObjectFactory objects) {
-    super(objects);
-    this.startServer = objects.property(Boolean.class);
-    this.port = objects.property(Integer.class);
-    this.logdir = objects.directoryProperty();
-    this.bindAddress = objects.property(String.class);
-    this.codeServerPort = objects.property(Integer.class);
-    this.superDevMode = objects.property(Boolean.class);
-    this.server = objects.property(String.class);
-    this.startupUrl = objects.property(String.class);
-    this.modulePathPrefix = objects.property(String.class);
+  public GwtDevModeTask() {
 
     // Set GWT compiler as the main class
     getMainClass().set(DEV_MODE_CLASS);
@@ -93,27 +51,27 @@ public abstract class GwtDevModeTask extends AbstractBaseTask {
    *
    * @return The startServer property
    */
-  public Property<Boolean> getStartServer() {
-    return startServer;
-  }
+  @Input
+  @Optional
+  public abstract Property<Boolean> getStartServer();
 
   /**
    * Specifies the TCP port for the embedded web server (defaults to 8888)
    *
    * @return The port property
    */
-  public Property<Integer> getPort() {
-    return port;
-  }
+  @Input
+  @Optional
+  public abstract Property<Integer> getPort();
 
   /**
    * Logs to a file in the given directory, as well as graphically
    *
    * @return The logdir property
    */
-  public DirectoryProperty getLogdir() {
-    return logdir;
-  }
+  @OutputDirectory
+  @Optional
+  public abstract DirectoryProperty getLogdir();
 
   /**
    * Specifies the bind address for the code server and web server
@@ -121,9 +79,9 @@ public abstract class GwtDevModeTask extends AbstractBaseTask {
    *
    * @return The bind address
    */
-  public Property<String> getBindAddress() {
-    return bindAddress;
-  }
+  @Input
+  @Optional
+  public abstract Property<String> getBindAddress();
 
   /**
    * Specifies the TCP port for the code server (defaults to 9997 for
@@ -131,18 +89,18 @@ public abstract class GwtDevModeTask extends AbstractBaseTask {
    *
    * @return The code server port
    */
-  public Property<Integer> getCodeServerPort() {
-    return codeServerPort;
-  }
+  @Input
+  @Optional
+  public abstract Property<Integer> getCodeServerPort();
 
   /**
    * Runs Super Dev Mode instead of classic Development Mode. (defaults to ON)
    *
    * @return The superDevMode property
    */
-  public Property<Boolean> getSuperDevMode() {
-    return superDevMode;
-  }
+  @Input
+  @Optional
+  public abstract Property<Boolean> getSuperDevMode();
 
   /**
    * Specify a different embedded web server to run
@@ -150,27 +108,27 @@ public abstract class GwtDevModeTask extends AbstractBaseTask {
    *
    * @return The server property
    */
-  public Property<String> getServer() {
-    return server;
-  }
+  @Input
+  @Optional
+  public abstract Property<String> getServer();
 
   /**
    * Automatically launches the specified URL
    *
    * @return The startup URL
    */
-  public Property<String> getStartupUrl() {
-    return startupUrl;
-  }
+  @Input
+  @Optional
+  public abstract Property<String> getStartupUrl();
 
   /**
    * The prefix to prepend to module path
    *
    * @return The module path prefix
    */
-  public Property<String> getModulePathPrefix() {
-    return modulePathPrefix;
-  }
+  @Input
+  @Optional
+  public abstract Property<String> getModulePathPrefix();
 
   @Override
   public void exec() {

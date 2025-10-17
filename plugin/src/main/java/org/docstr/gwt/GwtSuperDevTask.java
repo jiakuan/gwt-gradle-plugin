@@ -15,9 +15,7 @@
  */
 package org.docstr.gwt;
 
-import javax.inject.Inject;
 import org.gradle.api.file.DirectoryProperty;
-import org.gradle.api.model.ObjectFactory;
 import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputDirectory;
@@ -38,51 +36,10 @@ public abstract class GwtSuperDevTask extends AbstractBaseTask {
    */
   public static final String CODE_SERVER_CLASS = "com.google.gwt.dev.codeserver.CodeServer";
 
-  @Input
-  @Optional
-  private final Property<Boolean> allowMissingSrc;
-  @Input
-  @Optional
-  private final Property<Boolean> compileTest;
-  @Input
-  @Optional
-  private final Property<Integer> compileTestRecompiles;
-  @Input
-  @Optional
-  private final Property<Boolean> precompile;
-  @Input
-  @Optional
-  private final Property<Integer> port;
-  @InputDirectory
-  @Optional
-  private final DirectoryProperty src;
-  @OutputDirectory
-  @Optional
-  private final DirectoryProperty launcherDir;
-  @Input
-  @Optional
-  private final Property<String> bindAddress;
-  @Input
-  @Optional
-  private final Property<Boolean> closureFormattedOutput;
-
   /**
    * Constructs a new GwtDevModeTask.
-   *
-   * @param objects The object factory
    */
-  @Inject
-  public GwtSuperDevTask(ObjectFactory objects) {
-    super(objects);
-    this.allowMissingSrc = objects.property(Boolean.class);
-    this.compileTest = objects.property(Boolean.class);
-    this.compileTestRecompiles = objects.property(Integer.class);
-    this.precompile = objects.property(Boolean.class);
-    this.port = objects.property(Integer.class);
-    this.src = objects.directoryProperty();
-    this.launcherDir = objects.directoryProperty();
-    this.bindAddress = objects.property(String.class);
-    this.closureFormattedOutput = objects.property(Boolean.class);
+  public GwtSuperDevTask() {
 
     // Set GWT compiler as the main class
     getMainClass().set(CODE_SERVER_CLASS);
@@ -97,9 +54,9 @@ public abstract class GwtSuperDevTask extends AbstractBaseTask {
    *
    * @return The allow missing src flag
    */
-  public Property<Boolean> getAllowMissingSrc() {
-    return allowMissingSrc;
-  }
+  @Input
+  @Optional
+  public abstract Property<Boolean> getAllowMissingSrc();
 
   /**
    * <code>-[no]compileTest</code>
@@ -108,9 +65,9 @@ public abstract class GwtSuperDevTask extends AbstractBaseTask {
    *
    * @return The compile test flag
    */
-  public Property<Boolean> getCompileTest() {
-    return compileTest;
-  }
+  @Input
+  @Optional
+  public abstract Property<Boolean> getCompileTest();
 
   /**
    * <code>-compileTestRecompiles</code>
@@ -118,9 +75,9 @@ public abstract class GwtSuperDevTask extends AbstractBaseTask {
    *
    * @return The compile test recompiles
    */
-  public Property<Integer> getCompileTestRecompiles() {
-    return compileTestRecompiles;
-  }
+  @Input
+  @Optional
+  public abstract Property<Integer> getCompileTestRecompiles();
 
   /**
    * <code>-[no]precompile</code>
@@ -128,9 +85,9 @@ public abstract class GwtSuperDevTask extends AbstractBaseTask {
    *
    * @return The precompile flag
    */
-  public Property<Boolean> getPrecompile() {
-    return precompile;
-  }
+  @Input
+  @Optional
+  public abstract Property<Boolean> getPrecompile();
 
   /**
    * <code>-port</code>
@@ -138,9 +95,9 @@ public abstract class GwtSuperDevTask extends AbstractBaseTask {
    *
    * @return The code server port
    */
-  public Property<Integer> getPort() {
-    return port;
-  }
+  @Input
+  @Optional
+  public abstract Property<Integer> getPort();
 
   /**
    * <code>-src</code>
@@ -149,9 +106,9 @@ public abstract class GwtSuperDevTask extends AbstractBaseTask {
    *
    * @return The source directory
    */
-  public DirectoryProperty getSrc() {
-    return src;
-  }
+  @InputDirectory
+  @Optional
+  public abstract DirectoryProperty getSrc();
 
   /**
    * <code>-launcherDir</code>
@@ -160,9 +117,9 @@ public abstract class GwtSuperDevTask extends AbstractBaseTask {
    *
    * @return The launcher directory
    */
-  public DirectoryProperty getLauncherDir() {
-    return launcherDir;
-  }
+  @OutputDirectory
+  @Optional
+  public abstract DirectoryProperty getLauncherDir();
 
   /**
    * <code>-bindAddress</code>
@@ -171,9 +128,9 @@ public abstract class GwtSuperDevTask extends AbstractBaseTask {
    *
    * @return The bind address
    */
-  public Property<String> getBindAddress() {
-    return bindAddress;
-  }
+  @Input
+  @Optional
+  public abstract Property<String> getBindAddress();
 
   /**
    * <code>-X[no]closureFormattedOutput</code>
@@ -182,9 +139,9 @@ public abstract class GwtSuperDevTask extends AbstractBaseTask {
    *
    * @return The closure formatted output
    */
-  public Property<Boolean> getClosureFormattedOutput() {
-    return closureFormattedOutput;
-  }
+  @Input
+  @Optional
+  public abstract Property<Boolean> getClosureFormattedOutput();
 
   @Override
   public void exec() {
