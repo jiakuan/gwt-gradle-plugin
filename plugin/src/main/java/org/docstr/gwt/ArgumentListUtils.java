@@ -7,6 +7,9 @@ import org.gradle.api.provider.Provider;
 
 import java.util.Collection;
 
+/**
+ * Utility-Methods for mapping Lazy Task Properties to command line arguments for GWT.
+ */
 @UtilityClass
 public class ArgumentListUtils {
 

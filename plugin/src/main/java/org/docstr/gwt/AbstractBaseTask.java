@@ -22,6 +22,9 @@ import static org.docstr.gwt.GwtSuperDevTask.CODE_SERVER_CLASS;
  */
 public abstract class AbstractBaseTask extends JavaExec {
 
+  /**
+   * Constructs a new AbstractBaseTask.
+   */
   public AbstractBaseTask() {
 
     getArgumentProviders().add(() -> {
@@ -325,6 +328,11 @@ public abstract class AbstractBaseTask extends JavaExec {
     );
   }
 
+  /**
+   * This method exists only for binary compatibility with older versions.
+   *
+   * @deprecated This method does nothing anymore.
+   */
   @Deprecated(forRemoval = true)
   public void configureArgs() {
     getLogger().warn("{}.configureArgs() is deprecated", ArgumentListUtils.class.getName());
