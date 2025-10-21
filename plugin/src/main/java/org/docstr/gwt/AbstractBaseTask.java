@@ -335,6 +335,6 @@ public abstract class AbstractBaseTask extends JavaExec {
    */
   @Deprecated(forRemoval = true)
   public void configureArgs() {
-    getLogger().warn("{}.configureArgs() is deprecated", ArgumentListUtils.class.getName());
+    getLogger().warn("{}.configureArgs() is deprecated", AbstractBaseTask.class.getName());
   }
 }
