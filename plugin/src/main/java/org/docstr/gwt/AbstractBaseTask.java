@@ -77,7 +77,7 @@ public abstract class AbstractBaseTask extends JavaExec {
       List<String> jvmArgs = new ArrayList<>();
 
       if (!isCodeServerTask() && getCacheDir().isPresent()) {
-        jvmArgs.add("-Dgwt.persistentunitcachedir=" + getCacheDir().get().getAsFile()          .getPath());
+        jvmArgs.add("-Dgwt.persistentunitcachedir=" + getCacheDir().get().getAsFile().getPath());
       }
 
       return jvmArgs;
