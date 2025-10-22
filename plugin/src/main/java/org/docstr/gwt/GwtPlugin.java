@@ -178,6 +178,7 @@ public class GwtPlugin implements Plugin<Project> {
             // Want jakarta namespace
             v.strictly("[5.0.0,)");
             v.prefer("6.1.0");
+            v.reject("6.2.0-M1");
           } else {
             // Want javax namespace
             v.strictly("(,5.0.0)");

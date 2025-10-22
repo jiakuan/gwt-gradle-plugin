@@ -17,7 +17,6 @@ package org.docstr.gwt;
 
 import javax.inject.Inject;
 import org.gradle.api.file.DirectoryProperty;
-import org.gradle.api.model.ObjectFactory;
 import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
@@ -36,67 +35,11 @@ public abstract class GwtCompileTask extends AbstractBaseTask {
    */
   public static final String COMPILER_CLASS = "com.google.gwt.dev.Compiler";
 
-  @Input
-  @Optional
-  private final Property<Boolean> closureFormattedOutput;
-  @Input
-  @Optional
-  private final Property<Boolean> compileReport;
-  @Input
-  @Optional
-  private final Property<Boolean> strict;
-  @Input
-  @Optional
-  private final Property<Boolean> classMetadata;
-  @Input
-  @Optional
-  private final Property<Boolean> draftCompile;
-  @Input
-  @Optional
-  private final Property<Boolean> checkAssertions;
-  @Input
-  @Optional
-  private final Property<Integer> fragmentCount;
-  @Input
-  @Optional
-  private final Property<String> namespace;
-  @Input
-  @Optional
-  private final Property<Integer> optimize;
-  @Input
-  @Optional
-  private final Property<Boolean> saveSource;
-  @Input
-  @Optional
-  private final Property<Boolean> validateOnly;
-  @Input
-  @Optional
-  private final Property<Integer> localWorkers;
-  @OutputDirectory
-  @Optional
-  private final DirectoryProperty saveSourceOutput;
-
   /**
    * Constructs a new GwtCompileTask.
-   *
-   * @param objects The object factory
    */
   @Inject
-  public GwtCompileTask(ObjectFactory objects) {
-    super(objects);
-    this.closureFormattedOutput = objects.property(Boolean.class);
-    this.compileReport = objects.property(Boolean.class);
-    this.strict = objects.property(Boolean.class);
-    this.classMetadata = objects.property(Boolean.class);
-    this.draftCompile = objects.property(Boolean.class);
-    this.checkAssertions = objects.property(Boolean.class);
-    this.fragmentCount = objects.property(Integer.class);
-    this.namespace = objects.property(String.class);
-    this.optimize = objects.property(Integer.class);
-    this.saveSource = objects.property(Boolean.class);
-    this.validateOnly = objects.property(Boolean.class);
-    this.localWorkers = objects.property(Integer.class);
-    this.saveSourceOutput = objects.directoryProperty();
+  public GwtCompileTask() {
 
     // Set GWT compiler as the main class
     getMainClass().set(COMPILER_CLASS);
@@ -113,117 +56,117 @@ public abstract class GwtCompileTask extends AbstractBaseTask {
    *
    * @return The property
    */
-  public Property<Boolean> getClosureFormattedOutput() {
-    return closureFormattedOutput;
-  }
+  @Input
+  @Optional
+  public abstract Property<Boolean> getClosureFormattedOutput();
 
   /**
    * Compile a report that tells the "Story of Your Compile"
    *
    * @return The property
    */
-  public Property<Boolean> getCompileReport() {
-    return compileReport;
-  }
+  @Input
+  @Optional
+  public abstract Property<Boolean> getCompileReport();
 
   /**
    * Include metadata for some java.lang.Class methods
    *
    * @return The property
    */
-  public Property<Boolean> getStrict() {
-    return strict;
-  }
+  @Input
+  @Optional
+  public abstract Property<Boolean> getStrict();
 
   /**
    * Compile quickly with minimal optimizations
    *
    * @return The property
    */
-  public Property<Boolean> getClassMetadata() {
-    return classMetadata;
-  }
+  @Input
+  @Optional
+  public abstract Property<Boolean> getClassMetadata();
 
   /**
    * Include assert statements in compiled output
    *
    * @return The property
    */
-  public Property<Boolean> getDraftCompile() {
-    return draftCompile;
-  }
+  @Input
+  @Optional
+  public abstract Property<Boolean> getDraftCompile();
 
   /**
    * Include assert statements in compiled output
    *
    * @return The property
    */
-  public Property<Boolean> getCheckAssertions() {
-    return checkAssertions;
-  }
+  @Input
+  @Optional
+  public abstract Property<Boolean> getCheckAssertions();
 
   /**
    * The number of fragments into which the output JS should be split
    *
    * @return The property
    */
-  public Property<Integer> getFragmentCount() {
-    return fragmentCount;
-  }
+  @Input
+  @Optional
+  public abstract Property<Integer> getFragmentCount();
 
   /**
    * Puts most JavaScript globals into namespaces
    *
    * @return The property
    */
-  public Property<String> getNamespace() {
-    return namespace;
-  }
+  @Input
+  @Optional
+  public abstract Property<String> getNamespace();
 
   /**
    * The optimization level used by the compiler
    *
    * @return The property
    */
-  public Property<Integer> getOptimize() {
-    return optimize;
-  }
+  @Input
+  @Optional
+  public abstract Property<Integer> getOptimize();
 
   /**
    * Enables saving source code needed by debuggers
    *
    * @return The property
    */
-  public Property<Boolean> getSaveSource() {
-    return saveSource;
-  }
+  @Input
+  @Optional
+  public abstract Property<Boolean> getSaveSource();
 
   /**
    * Validate all source code, but do not compile
    *
    * @return The property
    */
-  public Property<Boolean> getValidateOnly() {
-    return validateOnly;
-  }
+  @Input
+  @Optional
+  public abstract Property<Boolean> getValidateOnly();
 
   /**
    * The number of local workers to use when compiling permutations
    *
    * @return The property
    */
-  public Property<Integer> getLocalWorkers() {
-    return localWorkers;
-  }
+  @Input
+  @Optional
+  public abstract Property<Integer> getLocalWorkers();
 
   /**
    * Overrides where source files useful to debuggers will be written
    *
    * @return The directory
    */
-  public DirectoryProperty getSaveSourceOutput() {
-    return saveSourceOutput;
-  }
+  @OutputDirectory
+  @Optional
+  public abstract DirectoryProperty getSaveSourceOutput();
 
   /**
    * Configure task-specific arguments during configuration phase.

@@ -344,7 +344,6 @@ public class GwtCompileConfig implements Action<GwtCompileTask> {
 
     // Configure classpath and arguments during configuration phase for Configuration Cache compatibility
     task.configureClasspath(project);
-    task.configureArgs();
     task.configureCompileArgs();
   }
 

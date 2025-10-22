@@ -178,6 +178,5 @@ public class GwtDevModeConfig implements Action<GwtDevModeTask> {
 
     // Configure classpath and arguments during configuration phase for Configuration Cache compatibility
     task.configureClasspath(project);
-    task.configureArgs();
   }
 }
