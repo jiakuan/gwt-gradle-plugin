@@ -1,5 +1,8 @@
 # GWT Gradle Plugin Justfile
 
+# Use bash with SDKMAN loaded
+set shell := ["bash", "-c", "source \"$HOME/.sdkman/bin/sdkman-init.sh\" && sdk env && eval \"$@\"", "-"]
+
 # Variables
 latest_tag := `git tag | grep -E '^v?[0-9]+(\.[0-9]+)*(-[a-zA-Z]+[0-9]*)?$' | sort -V | tail -1`
 project_dir := justfile_directory()
