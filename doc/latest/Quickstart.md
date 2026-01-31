@@ -27,7 +27,7 @@ Add the GWT Gradle Plugin to your `build.gradle` file:
 
 ```groovy
 plugins {
-  id "org.docstr.gwt" version "2.2.7"
+  id "org.docstr.gwt" version "2.2.8"
 }
 ```
 
