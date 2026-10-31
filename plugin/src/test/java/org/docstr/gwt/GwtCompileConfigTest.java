@@ -18,16 +18,10 @@ package org.docstr.gwt;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatNoException;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
-import java.util.Set;
 import java.util.TreeSet;
-import java.util.stream.Collectors;
 import org.gradle.api.Project;
-import org.gradle.testfixtures.ProjectBuilder;
 import org.junit.jupiter.api.Test;
 
 class GwtCompileConfigTest extends AbstractGwtTest {
@@ -101,20 +95,11 @@ class GwtCompileConfigTest extends AbstractGwtTest {
 
     // Then
     assertThat(sourcePaths)
-            .isNotEmpty()
-            .hasSize(2)
-            .allSatisfy(f -> {
-              assertThat(f).exists();
-            });
-
-    assertThat(sourcePaths.first())
-            .isRegularFile()
-            .isEqualTo(module.path());
-    assertThat(sourcePaths.last())
-            .isDirectory()
-            .satisfies(p -> {
-              assertThat(p.getFileName().toString()).isEqualTo("client");
-            });
+            .containsExactlyInAnyOrder(module.path(), module.path().getParent().resolve("client"));
+    assertThat(module.path()).isRegularFile();
+    assertThat(sourcePaths)
+            .filteredOn(p -> !p.equals(module.path()))
+            .allSatisfy(p -> assertThat(p).isDirectory());
   }
 
   @Test
@@ -135,28 +120,13 @@ class GwtCompileConfigTest extends AbstractGwtTest {
 
     // Then
     assertThat(sourcePaths)
-            .isNotEmpty()
-            .hasSize(3)
-            .allSatisfy(f -> {
-              assertThat(f).exists();
-            });
-
-    List<Path> pathList = sourcePaths.stream().toList();
-    assertThat(sourcePaths.first())
-            .isRegularFile()
-            .isEqualTo(pathList.get(0))
-            .isEqualTo(module.path());
-    assertThat(pathList.get(1))
-            .isDirectory()
-            .satisfies(p -> {
-              assertThat(p.getFileName().toString()).isEqualTo("client");
-            });
-    assertThat(sourcePaths.last())
-            .isDirectory()
-            .isEqualTo(pathList.get(pathList.size()-1))
-            .satisfies(p -> {
-              assertThat(p.getFileName().toString()).isEqualTo("shared");
-            });
+            .containsExactlyInAnyOrder(module.path(),
+                    module.path().getParent().resolve("client"),
+                    module.path().getParent().resolve("shared"));
+    assertThat(module.path()).isRegularFile();
+    assertThat(sourcePaths)
+            .filteredOn(p -> !p.equals(module.path()))
+            .allSatisfy(p -> assertThat(p).isDirectory());
   }
 
   @Test
@@ -177,32 +147,13 @@ class GwtCompileConfigTest extends AbstractGwtTest {
 
     // Then
     assertThat(sourcePaths)
-            .isNotEmpty()
-            .hasSize(4)
-            .allSatisfy(f -> {
-              assertThat(f).exists();
-            });
-
-    List<Path> pathList = sourcePaths.stream().toList();
-    assertThat(sourcePaths.first())
-            .isRegularFile()
-            .isEqualTo(pathList.get(0))
-            .isEqualTo(module.path());
-    assertThat(pathList.get(1))
-            .isDirectory()
-            .satisfies(p -> {
-              assertThat(p.getFileName().toString()).isEqualTo("client");
-            });
-    assertThat(pathList.get(2))
-            .isDirectory()
-            .satisfies(p -> {
-              assertThat(p.getFileName().toString()).isEqualTo("pub");
-            });
-    assertThat(sourcePaths.last())
-            .isDirectory()
-            .isEqualTo(pathList.get(pathList.size()-1))
-            .satisfies(p -> {
-              assertThat(p.getFileName().toString()).isEqualTo("shared");
-            });
+            .containsExactlyInAnyOrder(module.path(),
+                    module.path().getParent().resolve("client"),
+                    module.path().getParent().resolve("pub"),
+                    module.path().getParent().resolve("shared"));
+    assertThat(module.path()).isRegularFile();
+    assertThat(sourcePaths)
+            .filteredOn(p -> !p.equals(module.path()))
+            .allSatisfy(p -> assertThat(p).isDirectory());
   }
 }
