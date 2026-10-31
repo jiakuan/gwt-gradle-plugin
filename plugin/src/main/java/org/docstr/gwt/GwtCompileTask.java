@@ -15,14 +15,17 @@
  */
 package org.docstr.gwt;
 
+import java.util.List;
 import javax.inject.Inject;
 import org.gradle.api.file.DirectoryProperty;
 import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.Internal;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputDirectory;
 import org.gradle.api.tasks.compile.JavaCompile;
+import org.gradle.process.CommandLineArgumentProvider;
 
 /**
  * Task for compiling GWT modules.
@@ -43,6 +46,10 @@ public abstract class GwtCompileTask extends AbstractBaseTask {
 
     // Set GWT compiler as the main class
     getMainClass().set(COMPILER_CLASS);
+
+    // Keep execution-only options out of JavaExec's cache-relevant args property.
+    // Insert before the base argument provider, which appends the module names.
+    getArgumentProviders().add(0, new LocalWorkersArguments(getLocalWorkers()));
 
     // This task will depend on the compileJava and processResources tasks automatically
     dependsOn(getProject().getTasks().withType(JavaCompile.class)
@@ -151,12 +158,12 @@ public abstract class GwtCompileTask extends AbstractBaseTask {
   public abstract Property<Boolean> getValidateOnly();
 
   /**
-   * The number of local workers to use when compiling permutations
+   * The number of local workers to use when compiling permutations.
+   * Only affects parallelism, not compilation outputs or the build cache key.
    *
    * @return The property
    */
-  @Input
-  @Optional
+  @Internal
   public abstract Property<Integer> getLocalWorkers();
 
   /**
@@ -246,10 +253,6 @@ public abstract class GwtCompileTask extends AbstractBaseTask {
       }
     }
 
-    if (getLocalWorkers().isPresent()) {
-      args("-localWorkers", getLocalWorkers().get());
-    }
-
     if (getSaveSourceOutput().isPresent()) {
       args("-saveSourceOutput",
           getSaveSourceOutput().get().getAsFile().getPath());
@@ -261,5 +264,29 @@ public abstract class GwtCompileTask extends AbstractBaseTask {
     getLogger()
         .info("inputs: {}", getInputs().getFiles().getAsPath());
     super.exec();
+  }
+
+  /**
+   * Supplies the worker count without making it a compilation input.
+   */
+  private static class LocalWorkersArguments implements CommandLineArgumentProvider {
+
+    private final Property<Integer> localWorkers;
+
+    LocalWorkersArguments(Property<Integer> localWorkers) {
+      this.localWorkers = localWorkers;
+    }
+
+    @Internal
+    public Property<Integer> getLocalWorkers() {
+      return localWorkers;
+    }
+
+    @Override
+    public Iterable<String> asArguments() {
+      return localWorkers.isPresent()
+          ? List.of("-localWorkers", localWorkers.get().toString())
+          : List.of();
+    }
   }
 }
