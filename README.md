@@ -7,14 +7,6 @@ projects with the [Google Web Toolkit (GWT)](http://www.gwtproject.org/). This
 version is a complete rewrite of the original plugin, offering a cleaner
 codebase and more intuitive configuration options.
 
-## Sponsors
-
-This project is sponsored by [Document Node](https://documentnode.io), a platform dedicated to empowering content creators with tools that streamline productivity, enhance collaboration, and simplify content management.
-
-Check out their latest Chrome extension, [MindPane](https://mindpane.net/), which transforms any web page into an interactive mind map, helping you quickly grasp the main structure of documents and navigate through topics with ease. ([Chrome Web Store](https://chrome.google.com/webstore/detail/ioimcileegaodabmbcnadppghhakneae))
-
-[![icon-128.png](doc/images/icon-128.png)](https://mindpane.net/) [![x-icon.png](doc/images/x-icon.png)](https://x.com/document_node)
-
 ## Key Features
 
 - **Minimal configuration** required to use the plugin
@@ -123,3 +115,12 @@ gradlew.bat clean build
 - Commit all changes to the `main` branch
 - Create a new release on GitHub with `just release`
 - Publish the plugin to the Gradle Plugin Portal with `just publish`
+
+## Sponsors
+
+This project is sponsored by [Document Node](https://documentnode.io). We follow our curiosity into a problem, then craft what proves useful into polished, dependable tools.
+
+Check out our products:
+
+- [MarkNode](https://marknode.com/): Plan as a map. Write in Markdown. Restructure by dragging.
+- [TermTree](https://termtree.com/): See every task. Know what needs you.
