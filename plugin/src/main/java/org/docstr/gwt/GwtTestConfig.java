@@ -95,6 +95,7 @@ public class GwtTestConfig implements Action<Test> {
     // Ensure the classpath includes compiled classes, resources, and source files
     test.setClasspath(test.getClasspath().plus(project.files(
         mainSourcePaths,
+        extension.getGwtSourceDirs(),
         mainOutputClasspath,
         mainSourceSet.getRuntimeClasspath(),
 

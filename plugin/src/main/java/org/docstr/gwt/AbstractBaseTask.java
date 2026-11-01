@@ -285,6 +285,17 @@ public abstract class AbstractBaseTask extends JavaExec {
   public abstract ConfigurableFileCollection getExtraSourceDirs();
 
   /**
+   * Additional source and resource directories used only by GWT, not by javac.
+   *
+   * @return The GWT-only source directories
+   */
+  @InputFiles
+  @PathSensitive(PathSensitivity.RELATIVE)
+  @IgnoreEmptyDirectories
+  @Optional
+  public abstract ConfigurableFileCollection getGwtSourceDirs();
+
+  /**
    * The GWT dev runtime classpath
    *
    * @return The GWT dev runtime classpath
@@ -314,6 +325,7 @@ public abstract class AbstractBaseTask extends JavaExec {
     if (!getExtraSourceDirs().isEmpty()) {
       allSourcePaths = allSourcePaths.plus(getExtraSourceDirs());
     }
+    allSourcePaths = allSourcePaths.plus(getGwtSourceDirs());
 
     // Set up the GWT dev runtime classpath
     getGwtDevRuntimeClasspath().from(

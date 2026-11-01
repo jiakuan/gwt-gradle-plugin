@@ -336,6 +336,9 @@ public class GwtCompileConfig implements Action<GwtCompileTask> {
       task.getExtraSourceDirs().from(extension.getExtraSourceDirs());
     }
 
+    task.getGwtSourceDirs().from(extension.getGwtSourceDirs(),
+        extension.getCompiler().getGwtSourceDirs());
+
     // Check if the modules property is specified
     if (task.getModules().get().isEmpty()) {
       throw new GradleException(
