@@ -9,10 +9,16 @@ import org.gradle.api.logging.Logger;
 import org.gradle.api.provider.ListProperty;
 import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.*;
+import org.gradle.process.CommandLineArgumentProvider;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.io.File;
+import java.io.IOException;
+import java.io.UncheckedIOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
 
 import static org.docstr.gwt.ArgumentListUtils.*;
 import static org.docstr.gwt.GwtSuperDevTask.CODE_SERVER_CLASS;
@@ -105,7 +111,40 @@ public abstract class AbstractBaseTask extends JavaExec {
     log.info("allJvmArgs: {}", getAllJvmArgs().stream().map(arg -> "\"" + arg + "\"").collect(Collectors.joining(", ")));
     log.info("main: {}", getMainClass().get());
     log.info("args: {}", getArgs().stream().map(arg -> "\"" + arg + "\"").collect(Collectors.joining(", ")));
-    super.exec();
+    // GWT scans java.class.path and cannot use Gradle's classpath-shortening JAR.
+    // Let the Java launcher read the full classpath from a native argument file instead.
+    FileCollection originalClasspath = getClasspath();
+    File classpathArguments = writeClasspathArguments(originalClasspath.getAsPath());
+    CommandLineArgumentProvider classpathProvider = () -> List.of("@" + classpathArguments.getAbsolutePath());
+    try {
+      setClasspath(originalClasspath.filter(file -> false));
+      getJvmArgumentProviders().add(classpathProvider);
+      super.exec();
+    } finally {
+      setClasspath(originalClasspath);
+      getJvmArgumentProviders().remove(classpathProvider);
+    }
+  }
+
+  /**
+   * Writes the classpath using Java launcher argument-file quoting rules.
+   */
+  private File writeClasspathArguments(String classpath) {
+    File argumentFile = new File(getTemporaryDir(), "classpath.args");
+    String escapedClasspath = classpath
+        .replace("\\", "\\\\")
+        .replace("\"", "\\\"")
+        .replace("\n", "\\n")
+        .replace("\r", "\\r")
+        .replace("\t", "\\t")
+        .replace("\f", "\\f");
+    try {
+      Files.writeString(argumentFile.toPath(), "-classpath\n\"" + escapedClasspath + "\"\n",
+          Charset.defaultCharset());
+    } catch (IOException exception) {
+      throw new UncheckedIOException("Could not write GWT classpath argument file " + argumentFile, exception);
+    }
+    return argumentFile;
   }
 
   private boolean isCodeServerTask() {
