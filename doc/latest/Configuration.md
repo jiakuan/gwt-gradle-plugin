@@ -62,6 +62,11 @@ gwt {
   // Example: extraSourceDirs = files("path/to/extra/sources", "another/source/dir")
   extraSourceDirs = files('src/generated/java')
 
+  // Optional: Additional source/resource roots for GWT only, e.g. sources owned by another project.
+  // Unlike extraSourceDirs, these directories are NOT added to Java source sets.
+  // Their contents are tracked for GWT up-to-date checks and build caching.
+  gwtSourceDirs = files('../shared/src/main/java', '../shared/src/main/resources')
+
   // Optional: Generate exports for JsInterop purposes. If no -includeJsInteropExport/-excludeJsInteropExport provided, generates all exports. (defaults to OFF)
   generateJsInteropExports = false
 
@@ -97,6 +102,7 @@ gwt {
     //
     // All options in 'gwt' closure (except 'gwtVersion') can be overridden here
     // Including extraSourceDirs - useful for compile-specific additional sources
+    // gwtSourceDirs is additive: global directories plus compiler-specific directories.
     //
     
     // Optional: Enables Javascript output suitable for post-compilation by Closure Compiler (defaults to OFF)
@@ -144,6 +150,7 @@ gwt {
     //
     // All options in 'gwt' closure (except 'gwtVersion') can be overridden here
     // Including extraSourceDirs - useful for dev mode specific additional sources
+    // gwtSourceDirs is additive: global directories plus dev-mode-specific directories.
     //
     
     // Optional: Starts a servlet container serving the directory specified by the -war flag. (defaults to ON)
@@ -178,6 +185,7 @@ gwt {
     //
     // All options in 'gwt' closure (except 'gwtVersion') can be overridden here
     // Including extraSourceDirs - useful for super dev mode specific additional sources
+    // gwtSourceDirs is additive: global directories plus Super Dev Mode-specific directories.
     //
     
     // Optional: Allows -src flags to reference missing directories. (defaults to OFF)
@@ -220,3 +228,31 @@ gwt {
     // Please check `GwtTestOptions` for more options
   }
 }
+```
+
+### GWT-only sources from another project
+
+Use `gwtSourceDirs` when Java sources and GWT resources are owned by another project:
+
+```groovy
+dependencies {
+  implementation project(':shared')
+}
+
+gwt {
+  gwtSourceDirs.from(files('../shared/src/main/java', '../shared/src/main/resources'))
+}
+```
+
+The dependency supplies the compiled classes for Java compilation; `gwtSourceDirs`
+supplies the original sources and resources for GWT. Unlike `extraSourceDirs`, it does
+not add these directories to the consuming project's Java source sets.
+
+Global `gwtSourceDirs` are combined with directories configured in `compiler`,
+`devMode`, or `superDev`. The contents are tracked as task inputs. File collections
+with `builtBy(...)` dependencies can also be used for generated source directories.
+
+Global `gwtSourceDirs` are also added to the classpath of test tasks configured
+via `gwtTest.testTasks`, so GWT JUnit tests can compile the same external sources.
+Mode-specific directories from `compiler`, `devMode`, and `superDev` are not
+included in the test classpath. Java source sets remain unchanged.

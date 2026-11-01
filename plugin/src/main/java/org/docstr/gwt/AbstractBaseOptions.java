@@ -190,4 +190,13 @@ public abstract class AbstractBaseOptions {
    */
   public abstract ConfigurableFileCollection getExtraSourceDirs();
 
+  /**
+   * Additional source and resource directories used only by GWT, without adding them
+   * to Java source sets. Directories configured for a specific mode are combined with
+   * the directories configured on the root GWT extension.
+   *
+   * @return The GWT-only source directories
+   */
+  public abstract ConfigurableFileCollection getGwtSourceDirs();
+
 }

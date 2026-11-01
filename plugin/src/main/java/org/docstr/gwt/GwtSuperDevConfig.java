@@ -154,6 +154,9 @@ public class GwtSuperDevConfig implements Action<GwtSuperDevTask> {
       task.getExtraSourceDirs().from(extension.getExtraSourceDirs());
     }
 
+    task.getGwtSourceDirs().from(extension.getGwtSourceDirs(),
+        extension.getSuperDev().getGwtSourceDirs());
+
     // Check if the modules property is specified
     if (task.getModules().get().isEmpty()) {
       throw new GradleException(

@@ -170,6 +170,9 @@ public class GwtDevModeConfig implements Action<GwtDevModeTask> {
       task.getExtraSourceDirs().from(extension.getExtraSourceDirs());
     }
 
+    task.getGwtSourceDirs().from(extension.getGwtSourceDirs(),
+        extension.getDevMode().getGwtSourceDirs());
+
     // Check if the modules property is specified
     if (task.getModules().get().isEmpty()) {
       throw new GradleException(
